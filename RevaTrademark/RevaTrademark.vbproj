@@ -110,6 +110,9 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Janus.Windows.UI.v3, Version=3.5.0.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL" />
+    <Reference Include="RevaSettings">
+      <HintPath>..\RevaSettings\bin\Debug\RevaSettings.dll</HintPath>
+    </Reference>
     <Reference Include="SpreadsheetGear, Version=4.0.9.104, Culture=neutral, PublicKeyToken=39c186f5904944ec, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />

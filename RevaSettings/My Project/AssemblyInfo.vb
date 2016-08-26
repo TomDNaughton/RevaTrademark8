@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("RevaReports")>
+<Assembly: AssemblyTitle("RevaSettings")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("RevaReports")>
+<Assembly: AssemblyProduct("RevaSettings")>
 <Assembly: AssemblyCopyright("Copyright ©  2016")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("bb078e91-514c-48cc-a8fb-50a44998c474")>
+<Assembly: Guid("37af03e1-c245-41a6-a245-052e00496056")>
 
 ' Version information for an assembly consists of the following four values:
 '

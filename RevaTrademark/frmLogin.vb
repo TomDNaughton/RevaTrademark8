@@ -2,6 +2,7 @@ Imports System.Data
 Imports System.Data.OleDb
 Imports System.Configuration
 
+
 Public Class frmLogin
 
     Private Sub frmLogin_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -436,4 +437,14 @@ Public Class frmLogin
     Private Sub btnSQLDev_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSQLDev.Click
         HookToSQL()
     End Sub
+
+    Private Sub btnTest_Click(sender As Object, e As EventArgs) Handles btnTest.Click
+        MessageBox.Show(RevaSettings.TestSetting)
+
+
+
+
+
+    End Sub
+
 End Class
