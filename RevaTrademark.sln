@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "RevaTrademark", "RevaTrademark\RevaTrademark.vbproj", "{117FB2BB-3EFD-4805-8922-608EB170E577}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "RevaTrademarkInstall", "RevaTrademarkInstall\RevaTrademarkInstall.vdproj", "{4FC6639E-AB2A-4D71-8EAA-142B4D19DAF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{117FB2BB-3EFD-4805-8922-608EB170E577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117FB2BB-3EFD-4805-8922-608EB170E577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117FB2BB-3EFD-4805-8922-608EB170E577}.Debug|x86.ActiveCfg = Debug|x86
+		{117FB2BB-3EFD-4805-8922-608EB170E577}.Debug|x86.Build.0 = Debug|x86
+		{117FB2BB-3EFD-4805-8922-608EB170E577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117FB2BB-3EFD-4805-8922-608EB170E577}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117FB2BB-3EFD-4805-8922-608EB170E577}.Release|x86.ActiveCfg = Release|x86
+		{117FB2BB-3EFD-4805-8922-608EB170E577}.Release|x86.Build.0 = Release|x86
+		{4FC6639E-AB2A-4D71-8EAA-142B4D19DAF3}.Debug|Any CPU.ActiveCfg = Debug
+		{4FC6639E-AB2A-4D71-8EAA-142B4D19DAF3}.Debug|Any CPU.Build.0 = Debug
+		{4FC6639E-AB2A-4D71-8EAA-142B4D19DAF3}.Debug|x86.ActiveCfg = Debug
+		{4FC6639E-AB2A-4D71-8EAA-142B4D19DAF3}.Debug|x86.Build.0 = Debug
+		{4FC6639E-AB2A-4D71-8EAA-142B4D19DAF3}.Release|Any CPU.ActiveCfg = Release
+		{4FC6639E-AB2A-4D71-8EAA-142B4D19DAF3}.Release|Any CPU.Build.0 = Release
+		{4FC6639E-AB2A-4D71-8EAA-142B4D19DAF3}.Release|x86.ActiveCfg = Release
+		{4FC6639E-AB2A-4D71-8EAA-142B4D19DAF3}.Release|x86.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

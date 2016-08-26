@@ -1,0 +1,5 @@
+[GreetingLine]:
+
+I just wanted to let you know that the application process for the Patent [PatentName], application number [ApplicationNumber], is proceeding in jurisdiction [Jurisdiction].
+
+Let me know if you have any questions.

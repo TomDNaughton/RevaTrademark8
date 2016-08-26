@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="grdDates_DesignTimeLayout.LayoutString" xml:space="preserve">
+    <value>&lt;GridEXLayoutData&gt;&lt;RootTable&gt;&lt;Columns Collection="true" ElementName="Column"&gt;&lt;Column0 ID="PatentDateID"&gt;&lt;AllowSort&gt;False&lt;/AllowSort&gt;&lt;Caption&gt;PatentDateID&lt;/Caption&gt;&lt;DataMember&gt;PatentDateID&lt;/DataMember&gt;&lt;Key&gt;PatentDateID&lt;/Key&gt;&lt;Position&gt;0&lt;/Position&gt;&lt;Visible&gt;False&lt;/Visible&gt;&lt;/Column0&gt;&lt;Column1 ID="PatentID"&gt;&lt;AllowSort&gt;False&lt;/AllowSort&gt;&lt;Caption&gt;PatentID&lt;/Caption&gt;&lt;DataMember&gt;PatentID&lt;/DataMember&gt;&lt;Key&gt;PatentID&lt;/Key&gt;&lt;Position&gt;1&lt;/Position&gt;&lt;Visible&gt;False&lt;/Visible&gt;&lt;/Column1&gt;&lt;Column2 ID="ListOrder"&gt;&lt;AllowSize&gt;False&lt;/AllowSize&gt;&lt;Caption&gt;ListOrder&lt;/Caption&gt;&lt;DataMember&gt;ListOrder&lt;/DataMember&gt;&lt;Key&gt;ListOrder&lt;/Key&gt;&lt;Position&gt;2&lt;/Position&gt;&lt;Visible&gt;False&lt;/Visible&gt;&lt;/Column2&gt;&lt;Column3 ID="IntervalNumber"&gt;&lt;Caption&gt;Number&lt;/Caption&gt;&lt;BoundMode&gt;Unbound&lt;/BoundMode&gt;&lt;Key&gt;IntervalNumber&lt;/Key&gt;&lt;Position&gt;3&lt;/Position&gt;&lt;Width&gt;49&lt;/Width&gt;&lt;/Column3&gt;&lt;Column4 ID="IntervalType"&gt;&lt;Caption&gt;Interval&lt;/Caption&gt;&lt;DataMember&gt;IntervalType&lt;/DataMember&gt;&lt;EditType&gt;Combo&lt;/EditType&gt;&lt;Key&gt;IntervalType&lt;/Key&gt;&lt;Position&gt;4&lt;/Position&gt;&lt;Width&gt;97&lt;/Width&gt;&lt;HasValueList&gt;True&lt;/HasValueList&gt;&lt;/Column4&gt;&lt;Column5 ID="DateName"&gt;&lt;AllowSort&gt;False&lt;/AllowSort&gt;&lt;Caption&gt;Date Name&lt;/Caption&gt;&lt;ColumnType&gt;Link&lt;/ColumnType&gt;&lt;DataMember&gt;DateName&lt;/DataMember&gt;&lt;FilterEditType&gt;TextBox&lt;/FilterEditType&gt;&lt;Key&gt;DateName&lt;/Key&gt;&lt;Position&gt;5&lt;/Position&gt;&lt;SelectableCells&gt;None&lt;/SelectableCells&gt;&lt;Width&gt;162&lt;/Width&gt;&lt;CellStyle&gt;&lt;FontUnderline&gt;False&lt;/FontUnderline&gt;&lt;/CellStyle&gt;&lt;/Column5&gt;&lt;Column6 ID="PatentDate"&gt;&lt;AllowSort&gt;False&lt;/AllowSort&gt;&lt;Caption&gt;Date&lt;/Caption&gt;&lt;DataMember&gt;PatentDate&lt;/DataMember&gt;&lt;FilterEditType&gt;NoEdit&lt;/FilterEditType&gt;&lt;FormatString&gt;MMM dd, yyyy&lt;/FormatString&gt;&lt;Key&gt;PatentDate&lt;/Key&gt;&lt;Position&gt;6&lt;/Position&gt;&lt;SelectableCells&gt;None&lt;/SelectableCells&gt;&lt;Width&gt;96&lt;/Width&gt;&lt;HeaderStyle&gt;&lt;FontUnderline&gt;False&lt;/FontUnderline&gt;&lt;/HeaderStyle&gt;&lt;/Column6&gt;&lt;/Columns&gt;&lt;SortKeys Collection="true" ElementName="SortKey"&gt;&lt;SortKey0 ID="SortKey0"&gt;&lt;ColIndex&gt;2&lt;/ColIndex&gt;&lt;/SortKey0&gt;&lt;/SortKeys&gt;&lt;GroupCondition /&gt;&lt;RowHeight&gt;18&lt;/RowHeight&gt;&lt;/RootTable&gt;&lt;/GridEXLayoutData&gt;</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnClose.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAALEgAA
+        CxIB0t1+/AAAAmNJREFUOE+dku9PUlEYx+//5GZra622XCxnOXRUOp0yXaxM20xXtIK1VS5lNrA5m0kD
+        qUivEYVGJqWi+QNJRTGEiYHir5RIV777ds4DXMt81Yvvzr3n3OdzPs85VwBwYDwZGV9ZwMeD1tORHmzu
+        GJ69C8HU84UXzbDk8Hk+8vf0d/sjPYj9ESS2dzGdlw+xwYxHopdNJ9fabjWhNzsPGv0rXNd14IK6RVqT
+        AFZXmABsN/hDMbg983hoHUWjeRC+wDLNR2JblNKr+j0AVxcHorA4gxJgNsgAE0mA65MfnpnFvwCFlfWo
+        1BrJhNR/7OzC5Jj7x6Cx3Y2e/mkMeYM0H45sEEChuoO+YT+ZkDoHPLZNESC2/l0C1LX2UmE63lw5popL
+        kKvUwjnoIxOBq3NAc4cnCVhLwM9bYACNwY7uB61UPJ51Et7CYgS63uBUkRqOj5NkIiTVf0FvGU4BUgbs
+        DGrvP4fVMQKnwYhRRQEmzJ0IhNeQda4G9vdeMhG4ejzxEw3GDwRY4QapFio0bQQQnWNwNZvoLHzzSzie
+        fwVdznEyEbj6ZnwHd1ucqTPYa0FZayAAj73PC9cIuxFfGEfPVOBF9yiZCFx9fXMbal0nVDdaoKxpkgzO
+        X66XAOLbcelGDmer8NQ+TCYCV19hu0ZXtrAQ3WA9rqKoSoezF+sgL79NxbKCazihqMYxeRWOnL6ETFkZ
+        zC/dZCJw9eXVOBaXviG4uIrZ0DIm5yIYm1ogQE7JTbqy167PrG8PAdttQzCKA2QiaNlVVd+zsD/ridTC
+        nwYcsN+AF2bKynGIReC9/y8gU1aG34bD5neUsAVuAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnUpdate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAALEgAA
+        CxIB0t1+/AAAAfZJREFUOE+FkN1LU3Ech/cH9GIGXYUkdFM3WRBluAoq7QV6xUooME1aZRAFeZF1YQjG
+        lKKCTOrCIbVSmRCstFbLZNQYuGbLN8zRaJtnQyxW83jOfDrnyBnUDu3igQ9fPi8/fiZAI+Q6xWhvBX6H
+        GW9HoXJauOciI8ZcVaTFQeRkJx77OuWUbTbC9LXvGBP9Fgbdu0jPupESDTjb13C7YQUtV/IVj3FQxxR0
+        VpCWAsiiF+l3N/LPayRDxxGCpdSfXal4jIM6Jr+jGHmmAzFuRZxpRIpX8WNkB1/eFFFelqd4jIM6Jk/b
+        cpytBXTfKSAVrWH6s5kzh5eydf1iDpQsUTzGQZ2MaGsqJDG8m6GXq1i7epFyyjYbkRFNF/O4cCKfk3uX
+        cXTnwue1dMWxPhM0btoF6h7GOH8vSmVzhO11YYovfUv91fYvaoHtPTx6O0/rKxlrzxw3OkXqH89iuf+L
+        zbWB3AXN6vpTgeu2KapvRShv/E7ZVWX9cpii077/Fzxx+pDn5SxScxKTsRQlB88ZB3X0Ard3XEPVvQMj
+        CqMEJ6JsO1JrHNQxeoG6Pp2U8AXDuQvaezxaSF13fRjTwo7XQ3T1BRjwT+YueGB3aQVT8QShiEBgPMbH
+        YJR3n6I87x/GfCjHH9y1vWBDaSWb9tWwcU91Flv2W/gDhWf7PYI72+IAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="grdEditDate_DesignTimeLayout.LayoutString" xml:space="preserve">
+    <value>&lt;GridEXLayoutData&gt;&lt;RootTable&gt;&lt;Columns Collection="true" ElementName="Column"&gt;&lt;Column0 ID="PatentDateID"&gt;&lt;AllowSort&gt;False&lt;/AllowSort&gt;&lt;Caption&gt;PatentDateID&lt;/Caption&gt;&lt;DataMember&gt;PatentDateID&lt;/DataMember&gt;&lt;Key&gt;PatentDateID&lt;/Key&gt;&lt;Position&gt;0&lt;/Position&gt;&lt;Visible&gt;False&lt;/Visible&gt;&lt;/Column0&gt;&lt;Column1 ID="PatentID"&gt;&lt;AllowSort&gt;False&lt;/AllowSort&gt;&lt;Caption&gt;PatentID&lt;/Caption&gt;&lt;DataMember&gt;PatentID&lt;/DataMember&gt;&lt;Key&gt;PatentID&lt;/Key&gt;&lt;Position&gt;1&lt;/Position&gt;&lt;Visible&gt;False&lt;/Visible&gt;&lt;/Column1&gt;&lt;Column2 ID="JurisdictionDateID"&gt;&lt;Caption&gt;JurisdictionDateID&lt;/Caption&gt;&lt;DataMember&gt;JurisdictionDateID&lt;/DataMember&gt;&lt;Key&gt;JurisdictionDateID&lt;/Key&gt;&lt;Position&gt;2&lt;/Position&gt;&lt;Visible&gt;False&lt;/Visible&gt;&lt;/Column2&gt;&lt;Column3 ID="JurisdictionID"&gt;&lt;Caption&gt;JurisdictionID&lt;/Caption&gt;&lt;DataMember&gt;JurisdictionID&lt;/DataMember&gt;&lt;Key&gt;JurisdictionID&lt;/Key&gt;&lt;Position&gt;3&lt;/Position&gt;&lt;Visible&gt;False&lt;/Visible&gt;&lt;/Column3&gt;&lt;Column4 ID="DateID"&gt;&lt;Caption&gt;DateID&lt;/Caption&gt;&lt;DataMember&gt;DateID&lt;/DataMember&gt;&lt;Key&gt;DateID&lt;/Key&gt;&lt;Position&gt;4&lt;/Position&gt;&lt;Visible&gt;False&lt;/Visible&gt;&lt;/Column4&gt;&lt;Column5 ID="RecurNumber"&gt;&lt;Caption&gt;RecurNumber&lt;/Caption&gt;&lt;DataMember&gt;RecurNumber&lt;/DataMember&gt;&lt;Key&gt;RecurNumber&lt;/Key&gt;&lt;Position&gt;5&lt;/Position&gt;&lt;Visible&gt;False&lt;/Visible&gt;&lt;/Column5&gt;&lt;Column6 ID="PatentDate"&gt;&lt;AllowSort&gt;False&lt;/AllowSort&gt;&lt;Caption&gt;Date&lt;/Caption&gt;&lt;DataMember&gt;PatentDate&lt;/DataMember&gt;&lt;EditType&gt;CalendarCombo&lt;/EditType&gt;&lt;FilterEditType&gt;NoEdit&lt;/FilterEditType&gt;&lt;FormatString&gt;MMM dd, yyyy&lt;/FormatString&gt;&lt;Key&gt;PatentDate&lt;/Key&gt;&lt;Position&gt;6&lt;/Position&gt;&lt;SelectableCells&gt;All&lt;/SelectableCells&gt;&lt;Width&gt;108&lt;/Width&gt;&lt;HeaderStyle&gt;&lt;FontUnderline&gt;False&lt;/FontUnderline&gt;&lt;/HeaderStyle&gt;&lt;/Column6&gt;&lt;Column7 ID="Completed"&gt;&lt;Caption&gt;Completed&lt;/Caption&gt;&lt;ColumnType&gt;CheckBox&lt;/ColumnType&gt;&lt;DataMember&gt;Completed&lt;/DataMember&gt;&lt;EditType&gt;CheckBox&lt;/EditType&gt;&lt;Key&gt;Completed&lt;/Key&gt;&lt;Position&gt;7&lt;/Position&gt;&lt;Width&gt;61&lt;/Width&gt;&lt;/Column7&gt;&lt;Column8 ID="IsLocked"&gt;&lt;Caption&gt;Lock&lt;/Caption&gt;&lt;TypeNameNullValue&gt;System.Boolean&lt;/TypeNameNullValue&gt;&lt;CheckBoxNullValue&gt;False&lt;/CheckBoxNullValue&gt;&lt;ColumnType&gt;CheckBox&lt;/ColumnType&gt;&lt;DataMember&gt;IsLocked&lt;/DataMember&gt;&lt;EditType&gt;CheckBox&lt;/EditType&gt;&lt;Key&gt;IsLocked&lt;/Key&gt;&lt;Position&gt;8&lt;/Position&gt;&lt;Width&gt;42&lt;/Width&gt;&lt;DefaultValue&gt;False&lt;/DefaultValue&gt;&lt;DefaultValueType&gt;System.Boolean&lt;/DefaultValueType&gt;&lt;/Column8&gt;&lt;Column9 ID="UpdateRelated"&gt;&lt;Caption&gt;Update Related&lt;/Caption&gt;&lt;TypeNameNullValue&gt;System.Boolean&lt;/TypeNameNullValue&gt;&lt;CheckBoxNullValue&gt;False&lt;/CheckBoxNullValue&gt;&lt;BoundMode&gt;Unbound&lt;/BoundMode&gt;&lt;ColumnType&gt;CheckBox&lt;/ColumnType&gt;&lt;EditType&gt;CheckBox&lt;/EditType&gt;&lt;Key&gt;UpdateRelated&lt;/Key&gt;&lt;Position&gt;9&lt;/Position&gt;&lt;Width&gt;57&lt;/Width&gt;&lt;/Column9&gt;&lt;Column10 ID="AddNext"&gt;&lt;Caption&gt;Add Next&lt;/Caption&gt;&lt;BoundMode&gt;Unbound&lt;/BoundMode&gt;&lt;ColumnType&gt;CheckBox&lt;/ColumnType&gt;&lt;EditType&gt;CheckBox&lt;/EditType&gt;&lt;Key&gt;AddNext&lt;/Key&gt;&lt;Position&gt;10&lt;/Position&gt;&lt;Width&gt;44&lt;/Width&gt;&lt;/Column10&gt;&lt;Column11 ID="NoDay"&gt;&lt;Caption&gt;No Day&lt;/Caption&gt;&lt;TypeNameNullValue&gt;System.Boolean&lt;/TypeNameNullValue&gt;&lt;CheckBoxNullValue&gt;False&lt;/CheckBoxNullValue&gt;&lt;ColumnType&gt;CheckBox&lt;/ColumnType&gt;&lt;DataMember&gt;NoDay&lt;/DataMember&gt;&lt;EditType&gt;CheckBox&lt;/EditType&gt;&lt;Key&gt;NoDay&lt;/Key&gt;&lt;Position&gt;11&lt;/Position&gt;&lt;Width&gt;40&lt;/Width&gt;&lt;DefaultValue&gt;False&lt;/DefaultValue&gt;&lt;DefaultValueType&gt;System.Boolean&lt;/DefaultValueType&gt;&lt;/Column11&gt;&lt;Column12 ID="NoMonth"&gt;&lt;Caption&gt;No Month&lt;/Caption&gt;&lt;TypeNameNullValue&gt;System.Boolean&lt;/TypeNameNullValue&gt;&lt;CheckBoxNullValue&gt;False&lt;/CheckBoxNullValue&gt;&lt;ColumnType&gt;CheckBox&lt;/ColumnType&gt;&lt;DataMember&gt;NoMonth&lt;/DataMember&gt;&lt;EditType&gt;CheckBox&lt;/EditType&gt;&lt;Key&gt;NoMonth&lt;/Key&gt;&lt;Position&gt;12&lt;/Position&gt;&lt;Width&gt;46&lt;/Width&gt;&lt;DefaultValue&gt;False&lt;/DefaultValue&gt;&lt;DefaultValueType&gt;System.Boolean&lt;/DefaultValueType&gt;&lt;/Column12&gt;&lt;Column13 ID="EmailSent"&gt;&lt;Caption&gt;Email Sent&lt;/Caption&gt;&lt;ColumnType&gt;CheckBox&lt;/ColumnType&gt;&lt;DataMember&gt;EmailSent&lt;/DataMember&gt;&lt;EditType&gt;CheckBox&lt;/EditType&gt;&lt;Key&gt;EmailSent&lt;/Key&gt;&lt;Position&gt;13&lt;/Position&gt;&lt;Width&gt;42&lt;/Width&gt;&lt;/Column13&gt;&lt;/Columns&gt;&lt;GroupCondition /&gt;&lt;HeaderLines&gt;2&lt;/HeaderLines&gt;&lt;PreviewRowLines&gt;1&lt;/PreviewRowLines&gt;&lt;RowHeight&gt;18&lt;/RowHeight&gt;&lt;RowHeaderFormatStyle&gt;&lt;LineAlignment&gt;Far&lt;/LineAlignment&gt;&lt;TextAlignment&gt;Center&lt;/TextAlignment&gt;&lt;/RowHeaderFormatStyle&gt;&lt;/RootTable&gt;&lt;/GridEXLayoutData&gt;</value>
+  </data>
+</root>

@@ -1,0 +1,1055 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{117FB2BB-3EFD-4805-8922-608EB170E577}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>RevaTrademark.My.MyApplication</StartupObject>
+    <RootNamespace>RevaTrademark</RootNamespace>
+    <AssemblyName>RevaTrademark 8.0</AssemblyName>
+    <MyType>WindowsForms</MyType>
+    <ApplicationIcon>RevaWare32.ico</ApplicationIcon>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>0DEFDACBEAA9F37CF97FA5FD4AC6A66E5A777B30</ManifestCertificateThumbprint>
+    <ManifestKeyFile>RevaTrademark_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>C:\RevaDemoClickOnce\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>6.2.0.0</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>RevaTrademark 6.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>RevaTrademark 6.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>RevaTrademark 6.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>RevaTrademark 6.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ActiveReports.Design3, Version=5.2.0.397, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ActiveReports.PdfExport, Version=5.2.0.397, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ActiveReports.RtfExport, Version=5.2.0.397, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ActiveReports.Viewer3, Version=5.2.0.397, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ActiveReports.XlsExport, Version=5.2.0.397, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ActiveReports3, Version=5.2.0.397, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Janus.Data.v3, Version=3.5.0.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Janus.Windows.CalendarCombo.v3, Version=3.5.0.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL" />
+    <Reference Include="Janus.Windows.Common.v3, Version=3.5.0.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Janus.Windows.GridEX.v3, Version=3.5.0.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Janus.Windows.UI.v3, Version=3.5.0.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL" />
+    <Reference Include="SpreadsheetGear, Version=4.0.9.104, Culture=neutral, PublicKeyToken=39c186f5904944ec, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="aForm1.Designer.vb">
+      <DependentUpon>aForm1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="aForm1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\AllForms.vb" />
+    <Compile Include="Classes\BoundRecordSet.vb" />
+    <Compile Include="Classes\CommonFunctions.vb" />
+    <Compile Include="Classes\DataStuff.vb" />
+    <Compile Include="Classes\Export.vb" />
+    <Compile Include="Classes\Globals.vb" />
+    <Compile Include="Classes\MarkDates.vb" />
+    <Compile Include="Classes\MarkMerge.vb" />
+    <Compile Include="Classes\PatentDates.vb" />
+    <Compile Include="Classes\PatentMerge.vb" />
+    <Compile Include="Classes\PatentOutlookMerge.vb" />
+    <Compile Include="Classes\RecordSet.vb" />
+    <Compile Include="Classes\MarkOutlookMerge.vb" />
+    <Compile Include="Classes\SpellCheck.vb" />
+    <Compile Include="Classes\SQL.vb" />
+    <Compile Include="Classes\TransferDemo.vb" />
+    <Compile Include="Classes\TreatyJurisdictions.vb" />
+    <Compile Include="Classes\USPTO.vb" />
+    <Compile Include="frmAbout.Designer.vb">
+      <DependentUpon>frmAbout.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAbout.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddPatentDates.designer.vb">
+      <DependentUpon>frmAddPatentDates.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAddPatentDates.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddTrademarkDates.Designer.vb">
+      <DependentUpon>frmAddTrademarkDates.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAddTrademarkDates.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBrowser.Designer.vb">
+      <DependentUpon>frmBrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmBrowser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCompanies.Designer.vb">
+      <DependentUpon>frmCompanies.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCompanies.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmContact.designer.vb">
+      <DependentUpon>frmContact.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmContact.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmContactFromOutlook.designer.vb">
+      <DependentUpon>frmContactFromOutlook.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmContactFromOutlook.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCopyJurisDates.designer.vb">
+      <DependentUpon>frmCopyJurisDates.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCopyJurisDates.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCopyTrademarkName.designer.vb">
+      <DependentUpon>frmCopyTrademarkName.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCopyTrademarkName.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditPatentDate.Designer.vb">
+      <DependentUpon>frmEditPatentDate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditPatentDate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditTrademarkDate.Designer.vb">
+      <DependentUpon>frmEditTrademarkDate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditTrademarkDate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGeneralPopups.designer.vb">
+      <DependentUpon>frmGeneralPopups.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGeneralPopups.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImportContact.designer.vb">
+      <DependentUpon>frmImportContact.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmImportContact.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.vb">
+      <DependentUpon>frmLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMergeHelper.Designer.vb">
+      <DependentUpon>frmMergeHelper.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMergeHelper.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOppositions.Designer.vb">
+      <DependentUpon>frmOppositions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmOppositions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOppositionStatus.designer.vb">
+      <DependentUpon>frmOppositionStatus.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmOppositionStatus.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPatentPopups.designer.vb">
+      <DependentUpon>frmPatentPopups.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPatentPopups.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPatents.Designer.vb">
+      <DependentUpon>frmPatents.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPatents.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPreferences.Designer.vb">
+      <DependentUpon>frmPreferences.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPreferences.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportPreview.Designer.vb">
+      <DependentUpon>frmReportPreview.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportPreview.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReports.designer.vb">
+      <DependentUpon>frmReports.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmReports.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTestViewTable.Designer.vb">
+      <DependentUpon>frmTestViewTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTestViewTable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTrademarkPopups.Designer.vb">
+      <DependentUpon>frmTrademarkPopups.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTrademarkPopups.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTrademarks.Designer.vb">
+      <DependentUpon>frmTrademarks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTrademarks.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneralReports\rptCompanyContacts.designer.vb">
+      <DependentUpon>rptCompanyContacts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralReports\rptCompanyContacts.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="OppositionReports\rptOneOpposition.designer.vb">
+      <DependentUpon>rptOneOpposition.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OppositionReports\rptOneOpposition.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OppositionReports\rptOppositionActions.designer.vb">
+      <DependentUpon>rptOppositionActions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OppositionReports\rptOppositionActions.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OppositionReports\subrptOppositionActions.designer.vb">
+      <DependentUpon>subrptOppositionActions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OppositionReports\subrptOppositionActions.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OppositionReports\subrptOppositionMarks.designer.vb">
+      <DependentUpon>subrptOppositionMarks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OppositionReports\subrptOppositionMarks.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptOnePatent.Designer.vb">
+      <DependentUpon>rptOnePatent.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptOnePatent.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentActions.designer.vb">
+      <DependentUpon>rptPatentActions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentActions.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentAlerts.designer.vb">
+      <DependentUpon>rptPatentAlerts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentAlerts.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentAlertsPosition.designer.vb">
+      <DependentUpon>rptPatentAlertsPosition.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentAlertsPosition.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsAlpha.designer.vb">
+      <DependentUpon>rptPatentsAlpha.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsAlpha.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsByCompany.designer.vb">
+      <DependentUpon>rptPatentsByCompany.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsByCompany.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsByCompanyContacts.designer.vb">
+      <DependentUpon>rptPatentsByCompanyContacts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsByCompanyContacts.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsByCompanyList.designer.vb">
+      <DependentUpon>rptPatentsByCompanyList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsByCompanyList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsByNameList.designer.vb">
+      <DependentUpon>rptPatentsByNameList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsByNameList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsLicensed.designer.vb">
+      <DependentUpon>rptPatentsLicensed.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsLicensed.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsList.designer.vb">
+      <DependentUpon>rptPatentsList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsByCompanyDates.designer.vb">
+      <DependentUpon>rptPatentsByCompanyDates.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsByCompanyDates.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsListGroup.designer.vb">
+      <DependentUpon>rptPatentsListGroup.vb</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="PatentReports\rptPatentsListGroup.vb">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="PatentReports\subrptPatentActions.designer.vb">
+      <DependentUpon>subrptPatentActions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\subrptPatentActions.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PatentReports\subrptPatentClasses.designer.vb">
+      <DependentUpon>subrptPatentClasses.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PatentReports\subrptPatentClasses.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OppositionReports\rptOppositionAlerts.designer.vb">
+      <DependentUpon>rptOppositionAlerts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OppositionReports\rptOppositionAlerts.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OppositionReports\rptOppositionAlertsPosition.designer.vb">
+      <DependentUpon>rptOppositionAlertsPosition.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OppositionReports\rptOppositionAlertsPosition.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OppositionReports\rptOppositionsList.designer.vb">
+      <DependentUpon>rptOppositionsList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OppositionReports\rptOppositionsList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarkActions.designer.vb">
+      <DependentUpon>rptTrademarkActions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarkActions.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksAlpha.designer.vb">
+      <DependentUpon>rptTrademarksAlpha.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksAlpha.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksByCompany.designer.vb">
+      <DependentUpon>rptTrademarksByCompany.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksByCompany.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksByCompanyContacts.designer.vb">
+      <DependentUpon>rptTrademarksByCompanyContacts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksByCompanyContacts.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksLicensed.designer.vb">
+      <DependentUpon>rptTrademarksLicensed.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksLicensed.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksList.designer.vb">
+      <DependentUpon>rptTrademarksList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksByCompanyDates.designer.vb">
+      <DependentUpon>rptTrademarksByCompanyDates.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksByCompanyDates.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksListGroup.designer.vb">
+      <DependentUpon>rptTrademarksListGroup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarksListGroup.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\rtpOneTrademark.Designer.vb">
+      <DependentUpon>rtpOneTrademark.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\rtpOneTrademark.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarkAlerts.Designer.vb">
+      <DependentUpon>rptTrademarkAlerts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarkAlerts.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarkAlertsPosition.Designer.vb">
+      <DependentUpon>rptTrademarkAlertsPosition.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\rptTrademarkAlertsPosition.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OppositionReports\subrptOppositionClientMarks.designer.vb">
+      <DependentUpon>subrptOppositionClientMarks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OppositionReports\subrptOppositionClientMarks.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\subrptTrademarkActions.Designer.vb">
+      <DependentUpon>subrptTrademarkActions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\subrptTrademarkActions.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TrademarkReports\subrptTrademarkClasses.Designer.vb">
+      <DependentUpon>subrptTrademarkClasses.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TrademarkReports\subrptTrademarkClasses.vb">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="aForm1.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>aForm1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAbout.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmAbout.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddPatentDates.resx">
+      <DependentUpon>frmAddPatentDates.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddTrademarkDates.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmAddTrademarkDates.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBrowser.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmBrowser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCompanies.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmCompanies.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmContact.resx">
+      <DependentUpon>frmContact.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmContactFromOutlook.resx">
+      <DependentUpon>frmContactFromOutlook.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCopyJurisDates.resx">
+      <DependentUpon>frmCopyJurisDates.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCopyTrademarkName.resx">
+      <DependentUpon>frmCopyTrademarkName.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEditPatentDate.resx">
+      <DependentUpon>frmEditPatentDate.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEditTrademarkDate.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmEditTrademarkDate.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGeneralPopups.resx">
+      <DependentUpon>frmGeneralPopups.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmImportContact.resx">
+      <DependentUpon>frmImportContact.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMergeHelper.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmMergeHelper.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOppositions.resx">
+      <DependentUpon>frmOppositions.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOppositionStatus.resx">
+      <DependentUpon>frmOppositionStatus.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPatentPopups.resx">
+      <DependentUpon>frmPatentPopups.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPatents.resx">
+      <DependentUpon>frmPatents.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPreferences.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmPreferences.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportPreview.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmReportPreview.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReports.resx">
+      <DependentUpon>frmReports.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTestViewTable.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmTestViewTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTrademarkPopups.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmTrademarkPopups.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTrademarks.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmTrademarks.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneralReports\rptCompanyContacts.resx">
+      <DependentUpon>rptCompanyContacts.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OppositionReports\rptOneOpposition.resx">
+      <DependentUpon>rptOneOpposition.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OppositionReports\rptOppositionActions.resx">
+      <DependentUpon>rptOppositionActions.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OppositionReports\subrptOppositionActions.resx">
+      <DependentUpon>subrptOppositionActions.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OppositionReports\subrptOppositionMarks.resx">
+      <DependentUpon>subrptOppositionMarks.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptOnePatent.resx">
+      <DependentUpon>rptOnePatent.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentActions.resx">
+      <DependentUpon>rptPatentActions.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentAlerts.resx">
+      <DependentUpon>rptPatentAlerts.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentAlertsPosition.resx">
+      <DependentUpon>rptPatentAlertsPosition.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentsAlpha.resx">
+      <DependentUpon>rptPatentsAlpha.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentsByCompany.resx">
+      <DependentUpon>rptPatentsByCompany.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentsByCompanyContacts.resx">
+      <DependentUpon>rptPatentsByCompanyContacts.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentsByCompanyList.resx">
+      <DependentUpon>rptPatentsByCompanyList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentsByNameList.resx">
+      <DependentUpon>rptPatentsByNameList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentsLicensed.resx">
+      <DependentUpon>rptPatentsLicensed.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentsList.resx">
+      <DependentUpon>rptPatentsList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentsByCompanyDates.resx">
+      <DependentUpon>rptPatentsByCompanyDates.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\rptPatentsListGroup.resx">
+      <DependentUpon>rptPatentsListGroup.vb</DependentUpon>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\subrptPatentActions.resx">
+      <DependentUpon>subrptPatentActions.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatentReports\subrptPatentClasses.resx">
+      <DependentUpon>subrptPatentClasses.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OppositionReports\rptOppositionAlerts.resx">
+      <DependentUpon>rptOppositionAlerts.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OppositionReports\rptOppositionAlertsPosition.resx">
+      <DependentUpon>rptOppositionAlertsPosition.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OppositionReports\rptOppositionsList.resx">
+      <DependentUpon>rptOppositionsList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\rptTrademarkActions.resx">
+      <DependentUpon>rptTrademarkActions.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\rptTrademarksAlpha.resx">
+      <DependentUpon>rptTrademarksAlpha.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\rptTrademarksByCompany.resx">
+      <DependentUpon>rptTrademarksByCompany.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\rptTrademarksByCompanyContacts.resx">
+      <DependentUpon>rptTrademarksByCompanyContacts.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\rptTrademarksLicensed.resx">
+      <DependentUpon>rptTrademarksLicensed.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\rptTrademarksList.resx">
+      <DependentUpon>rptTrademarksList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\rptTrademarksByCompanyDates.resx">
+      <DependentUpon>rptTrademarksByCompanyDates.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\rptTrademarksListGroup.resx">
+      <DependentUpon>rptTrademarksListGroup.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\rtpOneTrademark.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>rtpOneTrademark.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\rptTrademarkAlerts.resx">
+      <DependentUpon>rptTrademarkAlerts.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\rptTrademarkAlertsPosition.resx">
+      <DependentUpon>rptTrademarkAlertsPosition.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OppositionReports\subrptOppositionClientMarks.resx">
+      <DependentUpon>subrptOppositionClientMarks.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\subrptTrademarkActions.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>subrptTrademarkActions.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrademarkReports\subrptTrademarkClasses.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>subrptTrademarkClasses.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Documents\Sec8Affidavit.doc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\Sec8Affidavit.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\SevenHalfYearLetter.doc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\SevenHalfYearLetter.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\ShoePhoneAbstract.doc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\ShoePhoneAbstract.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\ThreeHalfYearLetter.doc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\ThreeHalfYearLetter.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Documents\ProceedingEmail.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\ABCD2.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\ABCD_Logo.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\Bougainvillea.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\Dimmy.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\FiftyFifyLogo.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\RevaLogo.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\RevLogo.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\ShoePhone.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RevaTrademark.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RevaWare.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RevaWare32.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="Office">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <Private>True</Private>
+    </COMReference>
+    <COMReference Include="Outlook">
+      <Guid>{00062FFF-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>9</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <Private>True</Private>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <Private>True</Private>
+    </COMReference>
+    <COMReference Include="Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <Private>True</Private>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="ActiveReports.Chart">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="ActiveReports.Design3">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="ActiveReports.Interop">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Interop.Office">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Interop.Outlook">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Interop.VBIDE">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Janus.Windows.GridEX.v3.xml">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="Janus.Windows.UI.v3.xml">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="RevaTrademark.pdb">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="RevaTrademark.xml">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
