@@ -137,14 +137,14 @@ Public Class MarkMerge
                     dRow = dtTrademarkDates.Rows(i)
                     If IsDate(dRow("TrademarkDate")) And (dRow("DateID") = DateID) Then
                         TrademarkDate = dRow("TrademarkDate")
-                        If My.Settings.USADates = True Then
-                            If My.Settings.SpellMonthMerge = True Then
+                        If RevaSettings.USADates = True Then
+                            If RevaSettings.SpellMonthMerge = True Then
                                 strTrademarkDate = Format(TrademarkDate, "MMMM dd, yyyy")
                             Else
                                 strTrademarkDate = Format(TrademarkDate, "MMM dd, yyyy")
                             End If
                         Else
-                            If My.Settings.SpellMonthMerge = True Then
+                            If RevaSettings.SpellMonthMerge = True Then
                                 strTrademarkDate = Format(TrademarkDate, "dd MMMM yyyy")
                             Else
                                 strTrademarkDate = Format(TrademarkDate, "dd MMM yyyy")

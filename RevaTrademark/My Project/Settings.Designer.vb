@@ -69,186 +69,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property TrademarkDocuments() As String
-            Get
-                Return CType(Me("TrademarkDocuments"),String)
-            End Get
-            Set
-                Me("TrademarkDocuments") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property PatentDocuments() As String
-            Get
-                Return CType(Me("PatentDocuments"),String)
-            End Get
-            Set
-                Me("PatentDocuments") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property TrademarkGraphics() As String
-            Get
-                Return CType(Me("TrademarkGraphics"),String)
-            End Get
-            Set
-                Me("TrademarkGraphics") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property PatentGraphics() As String
-            Get
-                Return CType(Me("PatentGraphics"),String)
-            End Get
-            Set
-                Me("PatentGraphics") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ReportIcon() As String
-            Get
-                Return CType(Me("ReportIcon"),String)
-            End Get
-            Set
-                Me("ReportIcon") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property OpenOnMarks() As Boolean
-            Get
-                Return CType(Me("OpenOnMarks"),Boolean)
-            End Get
-            Set
-                Me("OpenOnMarks") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Type your server name")>  _
-        Public Property ServerName() As String
-            Get
-                Return CType(Me("ServerName"),String)
-            End Get
-            Set
-                Me("ServerName") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("RevaTrademark")>  _
-        Public Property DatabaseName() As String
-            Get
-                Return CType(Me("DatabaseName"),String)
-            End Get
-            Set
-                Me("DatabaseName") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property UserName() As String
-            Get
-                Return CType(Me("UserName"),String)
-            End Get
-            Set
-                Me("UserName") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
-        Public Property SecurityType() As Integer
-            Get
-                Return CType(Me("SecurityType"),Integer)
-            End Get
-            Set
-                Me("SecurityType") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property SavePassword() As Boolean
-            Get
-                Return CType(Me("SavePassword"),Boolean)
-            End Get
-            Set
-                Me("SavePassword") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property TrademarkDocumentsDemo() As String
-            Get
-                Return CType(Me("TrademarkDocumentsDemo"),String)
-            End Get
-            Set
-                Me("TrademarkDocumentsDemo") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property PatentDocumentsDemo() As String
-            Get
-                Return CType(Me("PatentDocumentsDemo"),String)
-            End Get
-            Set
-                Me("PatentDocumentsDemo") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property TrademarkGraphicsDemo() As String
-            Get
-                Return CType(Me("TrademarkGraphicsDemo"),String)
-            End Get
-            Set
-                Me("TrademarkGraphicsDemo") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ReportIconDemo() As String
-            Get
-                Return CType(Me("ReportIconDemo"),String)
-            End Get
-            Set
-                Me("ReportIconDemo") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
         Public Property LastMergeType() As Integer
             Get
@@ -298,8 +118,8 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=SQLOLEDB;Data Source=(local);Initial Catalog=RevaTrademark;User ID=sa;Pa"& _ 
-            "ssword=passwordhere")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Provider=SQLOLEDB;Data Source=THOMASNAUGH5871\SQLEXPRESS;Password=fatdog999;User "& _ 
+            "ID=tommy;Initial Catalog=RevaTrademarkDev7")>  _
         Public ReadOnly Property SQLConnection() As String
             Get
                 Return CType(Me("SQLConnection"),String)
@@ -330,18 +150,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property PatentGraphicsDemo() As String
-            Get
-                Return CType(Me("PatentGraphicsDemo"),String)
-            End Get
-            Set
-                Me("PatentGraphicsDemo") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property UseMergeHelper() As Boolean
             Get
@@ -349,30 +157,6 @@ Namespace My
             End Get
             Set
                 Me("UseMergeHelper") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property USADates() As Boolean
-            Get
-                Return CType(Me("USADates"),Boolean)
-            End Get
-            Set
-                Me("USADates") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property SpellMonthMerge() As Boolean
-            Get
-                Return CType(Me("SpellMonthMerge"),Boolean)
-            End Get
-            Set
-                Me("SpellMonthMerge") = value
             End Set
         End Property
         
@@ -385,54 +169,6 @@ Namespace My
             Get
                 Return CType(Me("CurrentConnection"),String)
             End Get
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("DemoVersion")>  _
-        Public Property LicenseKey() As String
-            Get
-                Return CType(Me("LicenseKey"),String)
-            End Get
-            Set
-                Me("LicenseKey") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("none")>  _
-        Public Property Password() As String
-            Get
-                Return CType(Me("Password"),String)
-            End Get
-            Set
-                Me("Password") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property BlankDatesLast() As Boolean
-            Get
-                Return CType(Me("BlankDatesLast"),Boolean)
-            End Get
-            Set
-                Me("BlankDatesLast") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property OutlookAlertTime() As Single
-            Get
-                Return CType(Me("OutlookAlertTime"),Single)
-            End Get
-            Set
-                Me("OutlookAlertTime") = value
-            End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
@@ -492,18 +228,6 @@ Namespace My
             End Get
             Set
                 Me("XLFitToPage") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property ShowHoursExpenses() As Boolean
-            Get
-                Return CType(Me("ShowHoursExpenses"),Boolean)
-            End Get
-            Set
-                Me("ShowHoursExpenses") = value
             End Set
         End Property
         
@@ -696,18 +420,6 @@ Namespace My
             End Get
             Set
                 Me("PatentExportExcelLayout") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property EmailHTML() As Boolean
-            Get
-                Return CType(Me("EmailHTML"),Boolean)
-            End Get
-            Set
-                Me("EmailHTML") = value
             End Set
         End Property
         

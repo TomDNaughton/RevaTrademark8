@@ -55,7 +55,7 @@ Public Class frmPatents
         If MsgBox("Are you sure want to exit RevaTrademark?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             'If bWasEdited = True Then SavePatent()
             SavePatent()
-            My.Settings.Save()
+
             Application.Exit()
         End If
     End Sub
@@ -227,17 +227,17 @@ Public Class frmPatents
         With Me
             If .optList.Checked Then
                 My.Settings.PatentListLayout = .grdList.GetLayout.GetXmlString
-                My.Settings.Save()
+
             End If
 
             If .optAlerts.Checked Then
                 My.Settings.PatentAlertLayout = .grdAlerts.GetLayout.GetXmlString
-                My.Settings.Save()
+
             End If
 
             If .optEmailAlerts.Checked Then
                 My.Settings.PatentEmailAlertLayout = .grdAlerts.GetLayout.GetXmlString
-                My.Settings.Save()
+
             End If
         End With
 
@@ -817,7 +817,7 @@ Public Class frmPatents
         Globals.PatentID = DataStuff.DMax("PatentID", "tblPatents")
 
         'add any contacts who are supposed to be on all Patents
-        DataStuff.RunSQL("Insert into tblPatentContacts (PatentID, ContactID, PositionID) select " & _
+        DataStuff.RunSQL("Insert into tblPatentContacts (PatentID, ContactID, PositionID) select " &
             Globals.PatentID & ", ContactID, PositionID from tblContacts where AddToPatents <> 0 and PositionID > 0")
 
         GetPatent()
@@ -888,7 +888,7 @@ Public Class frmPatents
                 Exit Sub
             End If
 
-            strMessage = "This will delete the Patent and all related Patent contacts and Patent dates." & _
+            strMessage = "This will delete the Patent and all related Patent contacts and Patent dates." &
                     vbCrLf & "This delete cannot be undone.  Are you sure?"
 
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
@@ -933,7 +933,7 @@ Public Class frmPatents
             Dim iPositionID As Integer, dtContactList As DataTable, strSQL As String
             iPositionID = cboSetPosition.Value
             If iPositionID > 0 Then
-                strSQL = "Select distinct ContactID, PositionID, ContactName, ContactCompany as CompanyName from qvwPatentContacts" & _
+                strSQL = "Select distinct ContactID, PositionID, ContactName, ContactCompany as CompanyName from qvwPatentContacts" &
                     " where PositionID=" & iPositionID & " order by ContactName"
                 dtContactList = DataStuff.GetDataTable(strSQL)
                 Me.cboSetContact.DataSource = dtContactList
@@ -948,8 +948,8 @@ Public Class frmPatents
             Dim dtPositionsList As DataTable, strSQL As String, iContactID As Integer, iPositionID As Integer
             iContactID = Me.cboSetContact.Value
             iPositionID = Me.cboSetPosition.Value
-            strSQL = "SELECT PatentContactID, CompanyName, PatentName, Jurisdiction, PatentID, ContactID, PositionID " & _
-            "from qvwPatentContacts where ContactID=" & iContactID & " and PositionID=" & iPositionID & _
+            strSQL = "SELECT PatentContactID, CompanyName, PatentName, Jurisdiction, PatentID, ContactID, PositionID " &
+            "from qvwPatentContacts where ContactID=" & iContactID & " and PositionID=" & iPositionID &
             " order by CompanyName, PatentName"
             dtPositionsList = DataStuff.GetDataTable(strSQL)
             Me.grdSetContacts.DataSource = dtPositionsList
@@ -959,7 +959,7 @@ Public Class frmPatents
 
     Private Sub btnAddContacts_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAddContacts.Click
         On Error Resume Next
-        Dim iContactID As Integer, iPositionID As Integer, i As Integer, iPatentID As Integer, _
+        Dim iContactID As Integer, iPositionID As Integer, i As Integer, iPatentID As Integer,
             GRow As Janus.Windows.GridEX.GridEXRow, strFilter As String, strSQL As String, rsContacts As New RecordSet
 
         'don't bother if nothing is selected
@@ -987,7 +987,7 @@ Public Class frmPatents
         For i = 0 To Me.grdList.SelectedItems.Count - 1
             GRow = Me.grdList.SelectedItems(i).GetRow
             iPatentID = GRow.Cells("PatentID").Value
-            strFilter = "ContactID=" & iContactID & " and PositionID=" & iPositionID & _
+            strFilter = "ContactID=" & iContactID & " and PositionID=" & iPositionID &
                 " and PatentID=" & iPatentID
             If rsContacts.RecordExists(strFilter) = False Then
                 rsContacts.AddRow()
@@ -1042,12 +1042,12 @@ Public Class frmPatents
         SetAlertEndDate()
         GetAlertDates()
         My.Settings.DateFromIndex = Me.cboStart.SelectedIndex
-        My.Settings.Save()
+
     End Sub
 
     Private Sub SetAlertStartDate()
         On Error Resume Next
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Select Case Me.cboEnd.SelectedIndex
                 Case 0
                     Me.BetweenEnd.Text = Format(DateAdd(DateInterval.Day, 7, DateTime.Now.Date), "MMM dd, yyyy")
@@ -1083,7 +1083,7 @@ Public Class frmPatents
     Private Sub BetweenStart_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BetweenStart.Validated
         On Error Resume Next
         If IsDate(Me.BetweenStart.Text) Then
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 Me.BetweenStart.Text = Format(DateValue(Me.BetweenStart.Text), "MMM dd, yyyy")
             Else
                 Me.BetweenStart.Text = Format(DateValue(Me.BetweenStart.Text), "dd MMM yyyy")
@@ -1099,13 +1099,13 @@ Public Class frmPatents
         SetAlertStartDate()
         GetAlertDates()
         My.Settings.DateToIndex = Me.cboEnd.SelectedIndex
-        My.Settings.Save()
+
     End Sub
 
     Private Sub BetweenEnd_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BetweenEnd.Validated
         On Error Resume Next
         If IsDate(Me.BetweenEnd.Text) Then
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 Me.BetweenEnd.Text = Format(DateValue(Me.BetweenEnd.Text), "MMM dd, yyyy")
             Else
                 Me.BetweenEnd.Text = Format(DateValue(Me.BetweenEnd.Text), "dd MMM yyyy")
@@ -1118,7 +1118,7 @@ Public Class frmPatents
 
     Private Sub SetAlertEndDate()
         On Error Resume Next
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Select Case Me.cboStart.SelectedIndex
                 Case 0
                     Me.BetweenStart.Text = Format(DateAdd(DateInterval.Month, -3, DateTime.Now.Date), "MMM dd, yyyy")
@@ -1159,7 +1159,7 @@ Public Class frmPatents
                     strSQL = strSQL & " and PatentDate <=" & FixDate(.BetweenEnd.Text)
 
                     If .cboSetPosition.Value > 0 And .cboSetContact.Value > 0 Then
-                        strSQL = strSQL & " and PatentID in (Select PatentID from qvwPatentContacts" & _
+                        strSQL = strSQL & " and PatentID in (Select PatentID from qvwPatentContacts" &
                             " where ContactID=" & .cboSetContact.Value & " and PositionID=" & .cboSetPosition.Value & ")"
                     End If
 
@@ -1168,7 +1168,7 @@ Public Class frmPatents
                     strSQL = strSQL & " and ActionDate <=" & FixDate(.BetweenEnd.Text)
 
                     If .cboSetPosition.Value > 0 And .cboSetContact.Value > 0 Then
-                        strSQL = strSQL & " and PatentID in (Select PatentID from qvwPatentContacts" & _
+                        strSQL = strSQL & " and PatentID in (Select PatentID from qvwPatentContacts" &
                             " where ContactID=" & .cboSetContact.Value & " and PositionID=" & .cboSetPosition.Value & ")"
                     End If
                     strSQL = strSQL & " order by PatentDate, CompanyName"
@@ -1199,8 +1199,8 @@ Public Class frmPatents
         End If
 
         If e.ChildTable.Key = "Dates" Then
-            strSQL = "SELECT PatentDateID, PatentID, JurisdictionDateID, JurisdictionID, DateID, DateName, " & _
-            "PatentDate, NoDay, NoMonth, ListOrder, Completed, IsLocked, RecursAtInterval, " & _
+            strSQL = "SELECT PatentDateID, PatentID, JurisdictionDateID, JurisdictionID, DateID, DateName, " &
+            "PatentDate, NoDay, NoMonth, ListOrder, Completed, IsLocked, RecursAtInterval, " &
             "HasRelatives, DisplayInLinked, IsRelative from qvwPatentDates where PatentID=" & PatentID
             e.ChildList = DataStuff.GetDataTable(strSQL)
         End If
@@ -1210,7 +1210,7 @@ Public Class frmPatents
         On Error Resume Next
         Dim fc As Janus.Windows.GridEX.GridEXFormatCondition, PatentDateID As Integer
         PatentDateID = grdAlerts.GetValue("PatentDateID")
-        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdAlerts.Tables("Dates").Columns("PatentDateID"), _
+        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdAlerts.Tables("Dates").Columns("PatentDateID"),
             Janus.Windows.GridEX.ConditionOperator.Equal, PatentDateID)
         fc.FormatStyle.BackColor = Color.Yellow
         Me.grdAlerts.Tables("Dates").FormatConditions.Add(fc)
@@ -1269,7 +1269,7 @@ Public Class frmPatents
 
     Private Sub PrintAlertsPosition()
         On Error Resume Next
-        Dim strSort As String, strFilter As String, strField As String, strValue As String, _
+        Dim strSort As String, strFilter As String, strField As String, strValue As String,
             i As Integer, strSQL As String, drReader As OleDb.OleDbDataReader
 
         Dim GRow As Janus.Windows.GridEX.GridEXRow
@@ -1306,44 +1306,44 @@ Public Class frmPatents
         strFilter = strFilter & "0)"
 
         Dim rptAlertsPosition As New rptPatentAlertsPosition
-        strSQL = "Select * from (" & SQL.vwReportPatentAlertsPosition & " union " & _
+        strSQL = "Select * from (" & SQL.vwReportPatentAlertsPosition & " union " &
         SQL.vwReportPatentActionAlertsPosition & ") Q " & strFilter
 
         Select Case strSort
             Case "CompanyName"
-                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                     "CompanyName, PatentName, PatentID, PatentDate"
 
             Case "PatentName"
-                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                     "PatentName, PatentID, CompanyName, PatentDate"
 
             Case "PatentDate"
-                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                     "PatentDate, PatentID,CompanyName, PatentName"
 
             Case "Status"
-                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                     "Status, PatentDate, PatentID,CompanyName, PatentName"
 
             Case "FilingBasis"
-                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                     "FilingBasis, PatentDate, PatentID,CompanyName, PatentName"
 
             Case "FileNumber"
-                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                     "FileNumber, PatentDate, PatentID,CompanyName, PatentName"
 
             Case "OurDocket"
-                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                     "OurDocket, PatentDate, PatentID,CompanyName, PatentName"
 
             Case "ClientDocket"
-                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                     "ClientDocket, PatentDate, PatentID,CompanyName, PatentName"
 
             Case Else
-                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                      "CompanyName, PatentName, PatentID, PatentDate"
 
         End Select
@@ -1400,7 +1400,7 @@ Public Class frmPatents
         Dim colCalendarItems As Outlook.Items
         Dim colItems As Outlook.Items
         Dim objCalendarFolder As Outlook.MAPIFolder
-        Dim strSubject As String, dPatentDate As Date, strDayBefore As String, strDayAfter As String, _
+        Dim strSubject As String, dPatentDate As Date, strDayBefore As String, strDayAfter As String,
             i As Integer, iLeadDays As Integer, strBody As String, GridRow As Janus.Windows.GridEX.GridEXRow
         Dim sngAlertTime As Single
 
@@ -1413,7 +1413,7 @@ Public Class frmPatents
         colCalendarItems = objCalendarFolder.Items
 
         iLeadDays = CInt(Me.LeadDays.Text)
-        sngAlertTime = Nz(My.Settings.OutlookAlertTime, 0)
+        sngAlertTime = Nz(RevaSettings.OutlookAlertTime, 0)
 
         For i = 0 To Me.grdAlerts.SelectedItems.Count - 1
             GridRow = Me.grdAlerts.SelectedItems(i).GetRow
@@ -1510,10 +1510,10 @@ Public Class frmPatents
         If Me.optEmailAlerts.Checked = True Then
             bEmailSent = Me.grdAlerts.GetValue("EmailSent")
             If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                strSQL = "update tblPatentDates set EmailSent=" & IIf(bEmailSent = True, "-1", "0") & _
+                strSQL = "update tblPatentDates set EmailSent=" & IIf(bEmailSent = True, "-1", "0") &
                     " where PatentDateID=" & iPatentDateID
             Else
-                strSQL = "update tblPatentDates set EmailSent=" & IIf(bEmailSent = True, "1", "0") & _
+                strSQL = "update tblPatentDates set EmailSent=" & IIf(bEmailSent = True, "1", "0") &
                     " where PatentDateID=" & iPatentDateID
             End If
             DataStuff.RunSQL(strSQL)
@@ -1524,18 +1524,18 @@ Public Class frmPatents
             ' a dateID of zero means it's an action alert
             If iDateID <> 0 Then
                 If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                    strSQL = "update tblPatentDates set Completed=" & IIf(bCompleted = True, "-1", "0") & _
+                    strSQL = "update tblPatentDates set Completed=" & IIf(bCompleted = True, "-1", "0") &
                         " where PatentDateID=" & iPatentDateID
                 Else
-                    strSQL = "update tblPatentDates set Completed=" & IIf(bCompleted = True, "1", "0") & _
+                    strSQL = "update tblPatentDates set Completed=" & IIf(bCompleted = True, "1", "0") &
                         " where PatentDateID=" & iPatentDateID
                 End If
             Else
                 If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                    strSQL = "update tblPatentActions set Completed=" & IIf(bCompleted = True, "-1", "0") & _
+                    strSQL = "update tblPatentActions set Completed=" & IIf(bCompleted = True, "-1", "0") &
                         " where PatentActionID=" & iPatentDateID
                 Else
-                    strSQL = "update tblPatentActions set Completed=" & IIf(bCompleted = True, "1", "0") & _
+                    strSQL = "update tblPatentActions set Completed=" & IIf(bCompleted = True, "1", "0") &
                         " where PatentActionID=" & iPatentDateID
                 End If
             End If
@@ -1571,7 +1571,7 @@ Public Class frmPatents
 
         'toggle all email alerts as sent or not sent
         If e.Column.Key = "EmailSent" Then
-            Dim GRow As Janus.Windows.GridEX.GridEXRow, i As Integer, bSent As Boolean, _
+            Dim GRow As Janus.Windows.GridEX.GridEXRow, i As Integer, bSent As Boolean,
                 strFilter As String, strSQL As String
 
             bSent = Not (Me.grdAlerts.GetValue("EmailSent"))
@@ -1608,12 +1608,12 @@ Public Class frmPatents
 
     Private Sub GenerateEmails(ByVal GRow As Janus.Windows.GridEX.GridEXRow, ByVal Email As Outlook.MailItem)
         On Error Resume Next
-        Dim strTo As String, strSubject As String, strMessage As String, _
+        Dim strTo As String, strSubject As String, strMessage As String,
              drToList As OleDb.OleDbDataReader, strSQL As String
 
         strTo = ""
-        strSQL = "SELECT distinct PatentDateID, AutoEmail, EmailSent, ReceivesAlerts, FirstName, LastName, ContactEmail " & _
-        "from qvwPatentDatesAndContacts WHERE AutoEmail <> 0 AND EmailSent = 0 AND ReceivesAlerts <> 0 " & _
+        strSQL = "SELECT distinct PatentDateID, AutoEmail, EmailSent, ReceivesAlerts, FirstName, LastName, ContactEmail " &
+        "from qvwPatentDatesAndContacts WHERE AutoEmail <> 0 AND EmailSent = 0 AND ReceivesAlerts <> 0 " &
         "and  PatentDateID=" & GRow.Cells("PatentDateID").Value
         drToList = DataStuff.GetDataReader(strSQL)
 
@@ -1652,7 +1652,7 @@ Public Class frmPatents
         strSubject = Replace(strSubject, "[PatentType]", GRow.Cells("PatentType").Value.ToString)
         strSubject = Replace(strSubject, "[Jurisdiction]", GRow.Cells("Jurisdiction").Value.ToString)
 
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             strMessage = Replace(strMessage, "[PatentDate]", Format(GRow.Cells("PatentDate").Value, "MMM dd, yyyy"))
             strSubject = Replace(strSubject, "[PatentDate]", Format(GRow.Cells("PatentDate").Value, "MMM dd, yyyy"))
         Else
@@ -1665,10 +1665,10 @@ Public Class frmPatents
         GRow.EndEdit()
 
         If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-            strSQL = "update tblPatentDates set EmailSent= -1" & _
+            strSQL = "update tblPatentDates set EmailSent= -1" &
                 " where PatentDateID=" & GRow.Cells("PatentDateID").Value
         Else
-            strSQL = "update tblPatentDates set EmailSent= 1" & _
+            strSQL = "update tblPatentDates set EmailSent= 1" &
                 " where PatentDateID=" & GRow.Cells("PatentDateID").Value
         End If
         DataStuff.RunSQL(strSQL)
@@ -1676,7 +1676,7 @@ Public Class frmPatents
         With Email
             .To = strTo
             .Subject = strSubject
-            If My.Settings.EmailHTML = True Then
+            If RevaSettings.EmailHTML = True Then
                 strMessage = strMessage.Replace(vbCrLf, "<p>")
                 .HTMLBody = strMessage
             Else
@@ -1746,7 +1746,7 @@ Public Class frmPatents
         If AllForms.frmTrademarks Is Nothing And AllForms.frmPatents Is Nothing And AllForms.frmLogin Is Nothing _
         And AllForms.frmPreferences Is Nothing And AllForms.frmReports Is Nothing _
         And AllForms.frmCompanies Is Nothing And AllForms.frmOppositions Is Nothing Then
-            My.Settings.Save()
+
             Application.Exit()
         End If
     End Sub
@@ -1761,7 +1761,7 @@ Public Class frmPatents
     Friend Sub SetDateFormats()
         On Error Resume Next
         With Me
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 .grdDates.RootTable.Columns("PatentDate").FormatString = "MMM dd, yyyy"
                 .grdAlerts.RootTable.Columns("PatentDate").FormatString = "MMM dd, yyyy"
                 .grdAlerts.RootTable.ChildTables("Actions").Columns("ActionDate").FormatString = "MMM dd, yyyy"
@@ -1779,7 +1779,7 @@ Public Class frmPatents
         End With
 
         With Me.grdLinked
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 .Tables("Dates01").Columns("PatentDate").FormatString = "MMM dd, yyyy"
                 .Tables("Dates02").Columns("PatentDate").FormatString = "MMM dd, yyyy"
                 .Tables("Dates03").Columns("PatentDate").FormatString = "MMM dd, yyyy"
@@ -2014,25 +2014,25 @@ Public Class frmPatents
                     .RecordCount.Text = ""
 
                 Case 1  'list view
-                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                     .grdList.Row < (grdList.RowCount - 1)
-                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         (.grdList.Row > 0)
                     .RecordCount.Text = (.grdList.Row + 1).ToString + " of " + .grdList.RowCount.ToString
 
                 Case 2  'either alerts view
-                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                     .grdAlerts.Row < (grdAlerts.RowCount - 1)
-                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         (.grdAlerts.Row > 0)
                     .RecordCount.Text = (.grdAlerts.Row + 1).ToString + " of " + .grdAlerts.RowCount.ToString
 
                 Case 3 'reports grid
-                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         AllForms.frmReports.grdPatents.Row < (AllForms.frmReports.grdPatents.RowCount - 1)
-                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         (AllForms.frmReports.grdPatents.Row > 0)
-                    .RecordCount.Text = (AllForms.frmReports.grdPatents.Row + 1).ToString + _
+                    .RecordCount.Text = (AllForms.frmReports.grdPatents.Row + 1).ToString +
                         " of " + AllForms.frmReports.grdPatents.RowCount.ToString
 
                 Case 4 'Patents on companies form
@@ -2110,7 +2110,7 @@ Public Class frmPatents
 
             End Select
 
-            If My.Settings.ShowHoursExpenses = True Then
+            If RevaSettings.ShowHoursExpenses = True Then
                 .grdActions.RootTable.Columns("ActionHours").Visible = True
                 .grdActions.RootTable.Columns("ActionBilled").Visible = True
                 .grdActions.RootTable.Columns("Expenses").Visible = True
@@ -2225,10 +2225,10 @@ Public Class frmPatents
     Friend Sub GetCompany()
         On Error Resume Next
         Dim dr As OleDb.OleDbDataReader, iCompanyID As Integer, strSQL As String
-        
+
         iCompanyID = Nz(rsPatents.CurrentRow("CompanyID"), 0)
 
-        strSQL = "SELECT CompanyID, CompanyName, City, StateProvince, PostalCode, Country, CompanyPhone," & _
+        strSQL = "SELECT CompanyID, CompanyName, City, StateProvince, PostalCode, Country, CompanyPhone," &
         "AddressOne, AddressTwo from tblCompanies where CompanyID=" & iCompanyID
 
         dr = DataStuff.GetDataReader(strSQL)
@@ -2363,7 +2363,7 @@ Public Class frmPatents
             Me.Tabs.SelectedIndex = 1
 
             Dim strMessage As String
-            strMessage = "You are about to change the Patent Type for this Patent.  This will delete the dates " & _
+            strMessage = "You are about to change the Patent Type for this Patent.  This will delete the dates " &
                 "for this patent and you will need to enter them again.  Proceed?"
 
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then
@@ -2387,7 +2387,7 @@ Public Class frmPatents
             Me.Tabs.SelectedIndex = 1
 
             Dim strMessage As String
-            strMessage = "You are about to change the Jurisdiction for this Patent.  This will delete the dates " & _
+            strMessage = "You are about to change the Jurisdiction for this Patent.  This will delete the dates " &
                 "for this patent and you will need to enter them again.  Proceed?"
 
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then
@@ -2434,7 +2434,7 @@ Public Class frmPatents
         On Error Resume Next
         Me.Cursor = Cursors.WaitCursor
         Dim drReader As OleDb.OleDbDataReader, rptPatent As New rptOnePatent, strSQL As String
-        strSQL = SQL.vwReportPatents & " where PatentID=" & Globals.PatentID & _
+        strSQL = SQL.vwReportPatents & " where PatentID=" & Globals.PatentID &
                 " order by CompanyName, PatentName, PatentDate"
         drReader = DataStuff.GetDataReader(strSQL)
         rptPatent.DataSource = drReader
@@ -2515,7 +2515,7 @@ Public Class frmPatents
         End If
 
         'still here, then proceed
-        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strPubNumber As String, _
+        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strPubNumber As String,
             bUsesFields As Boolean, strFieldName As String
 
         strSQL = "Select * from tblJurisdictions where JurisdictionID=" & Me.JurisdictionID.Value
@@ -2562,7 +2562,7 @@ Public Class frmPatents
         End If
 
         'still here, then proceed
-        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String, _
+        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String,
             bUsesFields As Boolean, strFieldName As String
 
         strSQL = "Select * from tblJurisdictions where JurisdictionID=" & Me.JurisdictionID.Value
@@ -2608,7 +2608,7 @@ Public Class frmPatents
         End If
 
         'still here, then proceed
-        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String, _
+        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String,
             bUsesFields As Boolean, strFieldName As String
 
         strSQL = "Select * from tblPatentTypes where PatentTypeID=" & Me.PatentTypeID.Value
@@ -2654,7 +2654,7 @@ Public Class frmPatents
         End If
 
         'still here, then proceed
-        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strPatentNumber As String, _
+        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strPatentNumber As String,
             bUsesFields As Boolean, strFieldName As String
 
         strSQL = "Select * from tblJurisdictions where JurisdictionID=" & Me.JurisdictionID.Value
@@ -2880,7 +2880,7 @@ Public Class frmPatents
     Private Sub GetActions()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "Select * from tblPatentActions where PatentID=" & Globals.PatentID & _
+        strSQL = "Select * from tblPatentActions where PatentID=" & Globals.PatentID &
             " order by ActionDate, PatentActionID"
         rsActions.GetFromSQL(strSQL)
         grdActions.DataSource = rsActions.Table
@@ -2889,7 +2889,7 @@ Public Class frmPatents
     Friend Sub GetContacts()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "SELECT PatentContactID, CompanyID, ContactID, ContactName, ContactCompany as CompanyName, ContactPhone, " & _
+        strSQL = "SELECT PatentContactID, CompanyID, ContactID, ContactName, ContactCompany as CompanyName, ContactPhone, " &
         "PositionID, PatentID, ContactEmail, WordExcel, PositionName from qvwPatentContacts where PatentID=" & Globals.PatentID
         dtContacts = DataStuff.GetDataTable(strSQL)
         Me.grdContacts.DataSource = dtContacts
@@ -2898,7 +2898,7 @@ Public Class frmPatents
     Friend Sub GetMatters()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "Select * from qvwClientMattersLinked WHERE CompanyID=" & _
+        strSQL = "Select * from qvwClientMattersLinked WHERE CompanyID=" &
             rsPatents.CurrentRow("CompanyID") & " order by FileNumber"
         dtMatters = DataStuff.GetDataTable(strSQL)
         Me.FileID.DataSource = dtMatters
@@ -2907,8 +2907,8 @@ Public Class frmPatents
     Friend Sub GetDates()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "SELECT PatentDateID, PatentID, JurisdictionDateID, JurisdictionID, DateID, DateName, PatentDate, " & _
-        "NoDay, NoMonth, ListOrder, Completed, IsLocked, RecursAtInterval, HasRelatives, DisplayInLinked, IsRelative " & _
+        strSQL = "SELECT PatentDateID, PatentID, JurisdictionDateID, JurisdictionID, DateID, DateName, PatentDate, " &
+        "NoDay, NoMonth, ListOrder, Completed, IsLocked, RecursAtInterval, HasRelatives, DisplayInLinked, IsRelative " &
         "from qvwPatentDates where PatentID=" & Globals.PatentID & " order by ListOrder"
         dtDates = DataStuff.GetDataTable(strSQL)
         Me.grdDates.DataSource = dtDates
@@ -2964,7 +2964,7 @@ Public Class frmPatents
         End If
     End Sub
 
-   
+
 
 #End Region
 
@@ -3083,9 +3083,9 @@ Public Class frmPatents
         iCompanyID = Nz(Me.CompanyID.Value, 0)
         If iCompanyID = 0 Then Exit Sub
 
-        strSQL = "Insert into tblPatentContacts (PatentID, ContactID, PositionID) Select " & _
-            Globals.PatentID & ", ContactID, PositionID from tblContacts where CompanyID=" & iCompanyID & _
-                " and PositionID is not null and PositionID in (Select PositionID from tblPositions" & _
+        strSQL = "Insert into tblPatentContacts (PatentID, ContactID, PositionID) Select " &
+            Globals.PatentID & ", ContactID, PositionID from tblContacts where CompanyID=" & iCompanyID &
+                " and PositionID is not null and PositionID in (Select PositionID from tblPositions" &
                 " where IsPatent <> 0)"
         DataStuff.RunSQL(strSQL)
 
@@ -3105,7 +3105,7 @@ Public Class frmPatents
 
         If e.Column.Key = "ContactEmail" Then
             Me.Cursor = Cursors.WaitCursor
-            Dim OL As Outlook.Application, Email As Outlook.MailItem, strTo As String, strSubject As String, _
+            Dim OL As Outlook.Application, Email As Outlook.MailItem, strTo As String, strSubject As String,
                 GRow As Janus.Windows.GridEX.GridEXRow, i As Integer
 
             strSubject = ""
@@ -3127,7 +3127,7 @@ Public Class frmPatents
                 End If
                 Email = OL.CreateItem(Outlook.OlItemType.olMailItem)
                 With Me
-                    strSubject = .CompanyID.Text & " | " & .PatentName.Text & " | " & .JurisdictionID.Text & _
+                    strSubject = .CompanyID.Text & " | " & .PatentName.Text & " | " & .JurisdictionID.Text &
                         " | App# " & IIf(.AppInternational.Text & "" <> "", .AppInternational.Text, .ApplicationNumber.Text)
                     If .PatentNumber.Text & "" <> "" Then
                         strSubject = strSubject & " | Pat# " & .PatentNumber.Text
@@ -3150,7 +3150,7 @@ Public Class frmPatents
         On Error Resume Next
 
         If (Globals.SecurityLevel = 1) And (e.Column.Key = "lnkDelete") Then
-            If MsgBox("Are you sure you want to delete this contact from the Patent?", _
+            If MsgBox("Are you sure you want to delete this contact from the Patent?",
                 MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
             Dim strSQL As String, iPatentContactID As Integer
             iPatentContactID = Me.grdContacts.GetValue("PatentContactID")
@@ -3172,7 +3172,7 @@ Public Class frmPatents
                 End If
                 Email = OL.CreateItem(Outlook.OlItemType.olMailItem)
                 With Me
-                    strSubject = .CompanyID.Text & " | " & .PatentName.Text & " | " & .JurisdictionID.Text & _
+                    strSubject = .CompanyID.Text & " | " & .PatentName.Text & " | " & .JurisdictionID.Text &
                         " | App# " & IIf(.AppInternational.Text & "" <> "", .AppInternational.Text, .ApplicationNumber.Text)
                     If .PatentNumber.Text & "" <> "" Then
                         strSubject = strSubject & " | Pat# " & .PatentNumber.Text
@@ -3218,7 +3218,7 @@ Public Class frmPatents
         If FormStatus = Status.ResetAll Then
             Dim rsContacts As New RecordSet, dRow As DataRow
             With Me.grdContacts
-                rsContacts.GetFromSQL("Select * from tblPatentContacts where PatentContactID=" & _
+                rsContacts.GetFromSQL("Select * from tblPatentContacts where PatentContactID=" &
                     .GetValue("PatentContactID"))
                 dRow = rsContacts.CurrentRow
                 dRow("PositionID") = .GetValue("PositionID")
@@ -3252,9 +3252,9 @@ Public Class frmPatents
             If grdDocumentLinks.GetValue("IsFolder") = False Then
                 With Me.OpenFileDialog
                     If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
-                        .InitialDirectory = My.Settings.PatentDocumentsDemo
+                        .InitialDirectory = RevaSettings.PatentDocumentsDemo
                     Else
-                        .InitialDirectory = My.Settings.PatentDocuments
+                        .InitialDirectory = RevaSettings.PatentDocuments
                     End If
                     .FileName = ""
                     .Filter = "Word Documents (*.docx)|*.docx|All Files|*.*"
@@ -3268,9 +3268,9 @@ Public Class frmPatents
             Else
                 With Me.FolderBrowserDialog
                     If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                        .SelectedPath = My.Settings.PatentDocumentsDemo
+                        .SelectedPath = RevaSettings.PatentDocumentsDemo
                     Else
-                        .SelectedPath = My.Settings.PatentDocuments
+                        .SelectedPath = RevaSettings.PatentDocuments
                     End If
                     If .ShowDialog = Windows.Forms.DialogResult.OK Then
                         Me.grdDocumentLinks.SetValue("DocumentLink", .SelectedPath & "")
@@ -3344,9 +3344,9 @@ Public Class frmPatents
         If Globals.SecurityLevel = 3 Then Exit Sub
         With Me.OpenFileDialog
             If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
-                .InitialDirectory = My.Settings.PatentGraphicsDemo
+                .InitialDirectory = RevaSettings.PatentGraphicsDemo
             Else
-                .InitialDirectory = My.Settings.PatentGraphics
+                .InitialDirectory = RevaSettings.PatentGraphics
             End If
             .FileName = ""
             .Filter = "All Files|*.*"
@@ -3446,14 +3446,14 @@ Public Class frmPatents
             Dim rsRecord As New RecordSet, dRow As DataRow, i As Integer
 
             If Me.chkReOrder.Checked = False Then
-                rsRecord.GetFromSQL("Select PatentDateID, PatentDate, ListOrder from tblPatentDates " & _
+                rsRecord.GetFromSQL("Select PatentDateID, PatentDate, ListOrder from tblPatentDates " &
                     "where PatentID=" & Globals.PatentID & " order by PatentDate, ListOrder")
             Else
-                rsRecord.GetFromSQL("Select PatentDateID, PatentDate, ListOrder from tblPatentDates " & _
+                rsRecord.GetFromSQL("Select PatentDateID, PatentDate, ListOrder from tblPatentDates " &
                     "where PatentID=" & Globals.PatentID & " order by PatentDate DESC, ListOrder DESC")
             End If
 
-            If My.Settings.BlankDatesLast = True Then
+            If RevaSettings.BlankDatesLast = True Then
                 Dim iListOrder As Integer
                 iListOrder = 1
                 'tick up the ones with dates first
@@ -3563,7 +3563,7 @@ Public Class frmPatents
 
             If iOrder > 1 Then
                 Dim rsRecord As New RecordSet, dRow As DataRow, i As Integer
-                rsRecord.GetFromSQL("Select PatentDateID, ListOrder from tblPatentDates where PatentID=" & _
+                rsRecord.GetFromSQL("Select PatentDateID, ListOrder from tblPatentDates where PatentID=" &
                     Globals.PatentID)
                 For i = 0 To rsRecord.Table.Rows.Count - 1
                     dRow = rsRecord.Table.Rows(i)
@@ -3588,7 +3588,7 @@ Public Class frmPatents
 
             If iOrder < Me.grdDates.RowCount Then
                 Dim rsRecord As New RecordSet, dRow As DataRow, i As Integer
-                rsRecord.GetFromSQL("Select PatentDateID, ListOrder from tblPatentDates where PatentID=" & _
+                rsRecord.GetFromSQL("Select PatentDateID, ListOrder from tblPatentDates where PatentID=" &
                     Globals.PatentID)
                 For i = 0 To rsRecord.Table.Rows.Count - 1
                     dRow = rsRecord.Table.Rows(i)
@@ -3784,9 +3784,9 @@ Public Class frmPatents
 
         With Me.OpenFileDialog
             If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
-                .InitialDirectory = My.Settings.PatentDocumentsDemo
+                .InitialDirectory = RevaSettings.PatentDocumentsDemo
             Else
-                .InitialDirectory = My.Settings.PatentDocuments
+                .InitialDirectory = RevaSettings.PatentDocuments
             End If
             .FileName = ""
 
@@ -3812,7 +3812,7 @@ Public Class frmPatents
                     My.Settings.LastMergeOutlook = .FileName & ""
                 End If
 
-                My.Settings.Save()
+
 
             End If
         End With
@@ -3866,8 +3866,8 @@ Public Class frmPatents
         Dim strMessage As String
 
         If ContactSelected() = False Then
-            strMessage = "You have not selected any contacts.  You can still create the merge document in Word," & _
-                " but there won't be any contact information if you merge the document immediately." & _
+            strMessage = "You have not selected any contacts.  You can still create the merge document in Word," &
+                " but there won't be any contact information if you merge the document immediately." &
                 " Do you still want to create the document?"
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
 
@@ -3875,9 +3875,9 @@ Public Class frmPatents
 
         With Me.SaveFileDialog
             If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
-                .InitialDirectory = My.Settings.PatentDocumentsDemo
+                .InitialDirectory = RevaSettings.PatentDocumentsDemo
             Else
-                .InitialDirectory = My.Settings.PatentDocuments
+                .InitialDirectory = RevaSettings.PatentDocuments
             End If
 
             .FileName = ""
@@ -3888,7 +3888,7 @@ Public Class frmPatents
             .ShowDialog()
             If Len(.FileName & "") > 3 Then
                 Me.MergeDocument.Text = .FileName & ""
-                My.Settings.Save()
+
             End If
         End With
 
@@ -3899,7 +3899,7 @@ Public Class frmPatents
 
         My.Settings.LastMergeType = 1
         My.Settings.LastMergeWord = Me.MergeDocument.Text
-        My.Settings.Save()
+
 
         Dim PM As New PatentMerge
         With PM
@@ -3921,7 +3921,7 @@ Public Class frmPatents
 
         My.Settings.LastMergeType = 1
         My.Settings.LastMergeWord = Me.MergeDocument.Text
-        My.Settings.Save()
+
 
         Dim PM As New PatentMerge
         With PM
@@ -3986,7 +3986,7 @@ Public Class frmPatents
 
         My.Settings.LastMergeOutlook = Me.MergeDocument.Text
         My.Settings.LastMergeType = 3
-        My.Settings.Save()
+
 
         Dim OM As New PatentOutlookMerge
         With OM
@@ -4009,7 +4009,7 @@ Public Class frmPatents
 
         'make sure merge texts exists
         Dim strSQL As String, dr As OleDb.OleDbDataReader
-        strSQL = "Select EmailMessage from tblPatentJurisdictionDates where JurisdictionDateID=" & _
+        strSQL = "Select EmailMessage from tblPatentJurisdictionDates where JurisdictionDateID=" &
             Me.grdDates.GetValue("JurisdictionDateID")
         dr = DataStuff.GetDataReader(strSQL)
         dr.Read()
@@ -4021,7 +4021,7 @@ Public Class frmPatents
         'okay, go for it
 
         My.Settings.LastMergeType = 4
-        My.Settings.Save()
+
 
         Dim OM As New PatentOutlookMerge
         With OM

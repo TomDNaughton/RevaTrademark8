@@ -133,14 +133,14 @@ Public Class PatentMerge
                     dRow = dtPatentDates.Rows(i)
                     If IsDate(dRow("PatentDate")) And (dRow("DateID") = DateID) Then
                         PatentDate = dRow("PatentDate")
-                        If My.Settings.USADates = True Then
-                            If My.Settings.SpellMonthMerge = True Then
+                        If RevaSettings.USADates = True Then
+                            If RevaSettings.SpellMonthMerge = True Then
                                 strPatentDate = Format(PatentDate, "MMMM dd, yyyy")
                             Else
                                 strPatentDate = Format(PatentDate, "MMM dd, yyyy")
                             End If
                         Else
-                            If My.Settings.SpellMonthMerge = True Then
+                            If RevaSettings.SpellMonthMerge = True Then
                                 strPatentDate = Format(PatentDate, "dd MMMM yyyy")
                             Else
                                 strPatentDate = Format(PatentDate, "dd MMM yyyy")

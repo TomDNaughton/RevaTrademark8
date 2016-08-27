@@ -54,17 +54,17 @@ Public Class frmPreferences
         GetFolderPreferences()
 
         With Me
-            .optOpenTrademarks.Checked = (My.Settings.OpenOnMarks = True)
-            .optOpenPatents.Checked = (My.Settings.OpenOnMarks = False)
-            .optUSDates.Checked = (My.Settings.USADates = True)
-            .optEuroDates.Checked = (My.Settings.USADates = False)
-            .chkSpellMonth.Checked = My.Settings.SpellMonthMerge
-            .chkBlankDatesLast.Checked = My.Settings.BlankDatesLast
-            .chkEmailHTML.Checked = My.Settings.EmailHTML
-            .chkHoursExpenses.Checked = (My.Settings.ShowHoursExpenses = True)
-            .cboOutlookAlertTime.SelectedValue = My.Settings.OutlookAlertTime
-            .optLinksMarks.Checked = (My.Settings.OpenOnMarks = True)
-            .optLinksPatents.Checked = (My.Settings.OpenOnMarks = False)
+            .optOpenTrademarks.Checked = (RevaSettings.OpenOnMarks = True)
+            .optOpenPatents.Checked = (RevaSettings.OpenOnMarks = False)
+            .optUSDates.Checked = (RevaSettings.USADates = True)
+            .optEuroDates.Checked = (RevaSettings.USADates = False)
+            .chkSpellMonth.Checked = RevaSettings.SpellMonthMerge
+            .chkBlankDatesLast.Checked = RevaSettings.BlankDatesLast
+            .chkEmailHTML.Checked = RevaSettings.EmailHTML
+            .chkHoursExpenses.Checked = (RevaSettings.ShowHoursExpenses = True)
+            .cboOutlookAlertTime.SelectedValue = RevaSettings.OutlookAlertTime
+            .optLinksMarks.Checked = (RevaSettings.OpenOnMarks = True)
+            .optLinksPatents.Checked = (RevaSettings.OpenOnMarks = False)
             .optLinksMarks.Enabled = .chkEnableEdit.Checked
             .optLinksPatents.Enabled = .chkEnableEdit.Checked
         End With
@@ -240,7 +240,7 @@ Public Class frmPreferences
         If AllForms.frmTrademarks Is Nothing And AllForms.frmPatents Is Nothing And AllForms.frmLogin Is Nothing _
         And AllForms.frmPreferences Is Nothing And AllForms.frmReports Is Nothing _
         And AllForms.frmCompanies Is Nothing And AllForms.frmOppositions Is Nothing Then
-            My.Settings.Save()
+
             Application.Exit()
         End If
     End Sub
@@ -325,7 +325,7 @@ Public Class frmPreferences
     Private Sub btnExit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExit.Click
         On Error Resume Next
         If MsgBox("Are you sure want to exit RevaTrademark?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-            My.Settings.Save()
+
             Application.Exit()
         End If
     End Sub
@@ -339,8 +339,8 @@ Public Class frmPreferences
         Dim strSQL As String
 
         'Filing Bases marked as treaties are a type of jurisdiction
-        strSQL = "Select JurisdictionID, Jurisdiction from tblJurisdictions where IsTrademark <> 0 " & _
-        "UNION Select FilingBasisID * (-1) as JurisdictionID, FilingBasis + ' (Treaty)' as Jurisdiction " & _
+        strSQL = "Select JurisdictionID, Jurisdiction from tblJurisdictions where IsTrademark <> 0 " &
+        "UNION Select FilingBasisID * (-1) as JurisdictionID, FilingBasis + ' (Treaty)' as Jurisdiction " &
         "from tblFilingBasis where IsTreaty <> 0 ORDER BY Jurisdiction"
         dtMarkJurisdictions = DataStuff.GetDataTable(strSQL)
         Me.cboMarkJurisdiction.DataSource = dtMarkJurisdictions
@@ -355,16 +355,16 @@ Public Class frmPreferences
         Dim strSQL As String
 
         'STATUS FOR TRADEMARKS
-        strSQL = "Select StatusID, Status from tblStatus where IsTrademark <> 0 " & _
-        "UNION Select - 1, '(All)' from tblStatus " & _
+        strSQL = "Select StatusID, Status from tblStatus where IsTrademark <> 0 " &
+        "UNION Select - 1, '(All)' from tblStatus " &
         "UNION Select - 2, '(None)' from tblStatus ORDER BY StatusID"
         'it's not multi-column so we use a datareader
         drMarkStatus = DataStuff.GetDataReader(strSQL)
         Me.grdTrademarkJurisDates.RootTable.Columns("StatusID").ValueList.PopulateValueList(drMarkStatus, "StatusID", "Status")
 
         'STATUS FOR PATENTS
-        strSQL = "Select StatusID, Status from tblStatus where IsPatent <> 0 " & _
-        "UNION Select - 1, '(All)' from tblStatus " & _
+        strSQL = "Select StatusID, Status from tblStatus where IsPatent <> 0 " &
+        "UNION Select - 1, '(All)' from tblStatus " &
         "UNION Select - 2, '(None)' from tblStatus ORDER BY StatusID"
         'it's not multi-column so we use a datareader
         drPatentStatus = DataStuff.GetDataReader(strSQL)
@@ -375,8 +375,8 @@ Public Class frmPreferences
     Friend Sub FillFilingBasis()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "Select FilingBasisID, FilingBasis from tblFilingBasis where IsTreaty=0" & vbCrLf & _
-        "Union Select - 1, '(All)' from tblFilingBasis" & vbCrLf & _
+        strSQL = "Select FilingBasisID, FilingBasis from tblFilingBasis where IsTreaty=0" & vbCrLf &
+        "Union Select - 1, '(All)' from tblFilingBasis" & vbCrLf &
         "UNION Select - 2, '(None)' from tblFilingBasis ORDER BY FilingBasisID"
 
         'it's not multi-column so we use a datareader
@@ -967,14 +967,14 @@ Public Class frmPreferences
 
         iJurisdictionID = Me.cboMarkJurisdiction.Value
 
-        strSQL = "Select *, (Select DateName from tblDatesTemplate where DateID = tblJurisdictionDates.DateID) as DateName " & _
+        strSQL = "Select *, (Select DateName from tblDatesTemplate where DateID = tblJurisdictionDates.DateID) as DateName " &
             "from tblJurisdictionDates where JurisdictionID=" & iJurisdictionID
 
         rsMarkJurisDates.GetFromSQL(strSQL)
         Me.grdTrademarkJurisDates.DataSource = rsMarkJurisDates.Table
 
         'datareader to bind drop-down for related dates
-        strSQL = "Select DateID, DateName, ListOrder from tblDatesTemplate where DateID in (" & _
+        strSQL = "Select DateID, DateName, ListOrder from tblDatesTemplate where DateID in (" &
             "Select DateID from tblJurisdictionDates where JurisdictionID=" & iJurisdictionID & ")"
         strSQL = strSQL & " UNION Select 0, '(None)', -1 from tblDatesTemplate order by ListOrder"
 
@@ -1256,7 +1256,7 @@ Public Class frmPreferences
         If (e.Column.Key = "lnkBatchUpdate") And (Globals.SecurityLevel < 3) Then
             Dim strMessage As String, iJurisdictionID As Integer, iDateID As Integer
 
-            strMessage = "This will update the selected date throughout the database.  Dates marked as " & _
+            strMessage = "This will update the selected date throughout the database.  Dates marked as " &
                 "completed will not be affected.  Proceed?"
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
 
@@ -1816,7 +1816,7 @@ Public Class frmPreferences
 
     Private Sub btnAddPatentDates_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAddPatentDates.Click
         On Error Resume Next
-        Dim iJurisdictionID As Integer, iPatentTypeID As Integer, GRow As Janus.Windows.GridEX.GridEXRow, _
+        Dim iJurisdictionID As Integer, iPatentTypeID As Integer, GRow As Janus.Windows.GridEX.GridEXRow,
         i As Integer, strSQL As String, iDateID As Integer, strFilter As String
 
         iJurisdictionID = Me.cboPatentJurisdiction.Value
@@ -1838,7 +1838,7 @@ Public Class frmPreferences
             Exit Sub
         End If
 
-        strSQL = "Select * from tblPatentJurisdictionDates where JurisdictionID=" & iJurisdictionID & _
+        strSQL = "Select * from tblPatentJurisdictionDates where JurisdictionID=" & iJurisdictionID &
             " and PatentTypeID=" & iPatentTypeID
         rsPatentJurisDates.GetFromSQL(strSQL)
 
@@ -1886,14 +1886,14 @@ Public Class frmPreferences
         iJurisdictionID = Me.cboPatentJurisdiction.Value
         iPatentTypeID = Me.cboPatentType.Value
 
-        strSQL = "Select *, (Select DateName from tblPatentDatesTemplate where DateID = tblPatentJurisdictionDates.DateID) as DateName " & _
+        strSQL = "Select *, (Select DateName from tblPatentDatesTemplate where DateID = tblPatentJurisdictionDates.DateID) as DateName " &
             "from tblPatentJurisdictionDates where JurisdictionID=" & iJurisdictionID & " and PatentTypeID=" & iPatentTypeID
         rsPatentJurisDates.GetFromSQL(strSQL)
         Me.grdPatentJurisDates.DataSource = rsPatentJurisDates.Table
 
         'datareader to bind drop-down for related dates
-        strSQL = "Select DateID, DateName, ListOrder from tblPatentDatesTemplate where DateID in (" & _
-            "Select DateID from tblPatentJurisdictionDates where JurisdictionID=" & iJurisdictionID & _
+        strSQL = "Select DateID, DateName, ListOrder from tblPatentDatesTemplate where DateID in (" &
+            "Select DateID from tblPatentJurisdictionDates where JurisdictionID=" & iJurisdictionID &
             " and PatentTypeID=" & iPatentTypeID & ")"
         strSQL = strSQL & " UNION Select 0, '(None)', -1 from tblPatentDatesTemplate order by ListOrder"
 
@@ -2100,7 +2100,7 @@ Public Class frmPreferences
         If (e.Column.Key = "lnkBatchUpdate") And (Globals.SecurityLevel < 3) Then
             Dim strMessage As String, iJurisdictionID As Integer, iPatentTypeID As Integer, iDateID As Integer
 
-            strMessage = "This will update the selected date throughout the database.  Dates marked as " & _
+            strMessage = "This will update the selected date throughout the database.  Dates marked as " &
                 "completed will not be affected.  Proceed?"
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
 
@@ -2176,19 +2176,19 @@ Public Class frmPreferences
         On Error Resume Next
         If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
             With Me
-                .TrademarkDocs.Text = My.Settings.TrademarkDocumentsDemo
-                .TrademarkGraphics.Text = My.Settings.TrademarkGraphicsDemo
-                .PatentDocs.Text = My.Settings.PatentDocumentsDemo
-                .PatentGraphics.Text = My.Settings.PatentGraphicsDemo
-                .ReportIcon.Text = My.Settings.ReportIconDemo
+                .TrademarkDocs.Text = RevaSettings.TrademarkDocumentsDemo
+                .TrademarkGraphics.Text = RevaSettings.TrademarkGraphicsDemo
+                .PatentDocs.Text = RevaSettings.PatentDocumentsDemo
+                .PatentGraphics.Text = RevaSettings.PatentGraphicsDemo
+                .ReportIcon.Text = RevaSettings.ReportIconDemo
             End With
         Else
             With Me
-                .TrademarkDocs.Text = My.Settings.TrademarkDocuments
-                .TrademarkGraphics.Text = My.Settings.TrademarkGraphics
-                .PatentDocs.Text = My.Settings.PatentDocuments
-                .PatentGraphics.Text = My.Settings.PatentGraphics
-                .ReportIcon.Text = My.Settings.ReportIcon
+                .TrademarkDocs.Text = RevaSettings.TrademarkDocuments
+                .TrademarkGraphics.Text = RevaSettings.TrademarkGraphics
+                .PatentDocs.Text = RevaSettings.PatentDocuments
+                .PatentGraphics.Text = RevaSettings.PatentGraphics
+                .ReportIcon.Text = RevaSettings.ReportIcon
             End With
         End If
 
@@ -2204,12 +2204,12 @@ Public Class frmPreferences
                 Me.TrademarkDocs.Text = strFolder
                 With My.Settings
                     If .CurrentConnection = .AccessConnection Then
-                        .TrademarkDocumentsDemo = strFolder
+                        RevaSettings.TrademarkDocumentsDemo = strFolder
                     Else
-                        .TrademarkDocuments = strFolder
+                        RevaSettings.TrademarkDocuments = strFolder
                     End If
                 End With
-                My.Settings.Save()
+
             End If
         End With
     End Sub
@@ -2224,12 +2224,12 @@ Public Class frmPreferences
                 Me.TrademarkGraphics.Text = strFolder
                 With My.Settings
                     If .CurrentConnection = .AccessConnection Then
-                        .TrademarkGraphicsDemo = strFolder
+                        RevaSettings.TrademarkGraphicsDemo = strFolder
                     Else
-                        .TrademarkGraphics = strFolder
+                        RevaSettings.TrademarkGraphics = strFolder
                     End If
                 End With
-                My.Settings.Save()
+
             End If
         End With
     End Sub
@@ -2244,12 +2244,12 @@ Public Class frmPreferences
                 Me.PatentDocs.Text = strFolder
                 With My.Settings
                     If .CurrentConnection = .AccessConnection Then
-                        .PatentDocumentsDemo = strFolder
+                        RevaSettings.PatentDocumentsDemo = strFolder
                     Else
-                        .PatentDocuments = strFolder
+                        RevaSettings.PatentDocuments = strFolder
                     End If
                 End With
-                My.Settings.Save()
+
             End If
         End With
     End Sub
@@ -2264,12 +2264,12 @@ Public Class frmPreferences
                 Me.PatentGraphics.Text = strFolder
                 With My.Settings
                     If .CurrentConnection = .AccessConnection Then
-                        .PatentGraphicsDemo = strFolder
+                        RevaSettings.PatentGraphicsDemo = strFolder
                     Else
-                        .PatentGraphics = strFolder
+                        RevaSettings.PatentGraphics = strFolder
                     End If
                 End With
-                My.Settings.Save()
+
             End If
         End With
     End Sub
@@ -2297,12 +2297,12 @@ Public Class frmPreferences
     Private Sub SaveOpenSetting()
         On Error Resume Next
         If Me.optOpenTrademarks.Checked = True Then
-            My.Settings.OpenOnMarks = True
+            RevaSettings.OpenOnMarks = True
         End If
         If Me.optOpenPatents.Checked = True Then
-            My.Settings.OpenOnMarks = False
+            RevaSettings.OpenOnMarks = False
         End If
-        My.Settings.Save()
+
     End Sub
 
     Private Sub SaveFolderLocations()
@@ -2310,35 +2310,35 @@ Public Class frmPreferences
         ' This is new, since we're now allowing users to type in folder locations in addition to navigating to them.
         With Me
             If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                My.Settings.TrademarkDocumentsDemo = Me.TrademarkDocs.Text
-                My.Settings.TrademarkGraphicsDemo = Me.TrademarkGraphics.Text
-                My.Settings.PatentDocumentsDemo = Me.PatentDocs.Text
-                My.Settings.PatentGraphicsDemo = Me.PatentGraphics.Text
-                My.Settings.ReportIconDemo = Me.ReportIcon.Text
+                RevaSettings.TrademarkDocumentsDemo = Me.TrademarkDocs.Text
+                RevaSettings.TrademarkGraphicsDemo = Me.TrademarkGraphics.Text
+                RevaSettings.PatentDocumentsDemo = Me.PatentDocs.Text
+                RevaSettings.PatentGraphicsDemo = Me.PatentGraphics.Text
+                RevaSettings.ReportIconDemo = Me.ReportIcon.Text
             Else
-                My.Settings.TrademarkDocuments = Me.TrademarkDocs.Text
-                My.Settings.TrademarkGraphics = Me.TrademarkGraphics.Text
-                My.Settings.PatentDocuments = Me.PatentDocs.Text
-                My.Settings.PatentGraphics = Me.PatentGraphics.Text
-                My.Settings.ReportIcon = Me.ReportIcon.Text
+                RevaSettings.TrademarkDocuments = Me.TrademarkDocs.Text
+                RevaSettings.TrademarkGraphics = Me.TrademarkGraphics.Text
+                RevaSettings.PatentDocuments = Me.PatentDocs.Text
+                RevaSettings.PatentGraphics = Me.PatentGraphics.Text
+                RevaSettings.ReportIcon = Me.ReportIcon.Text
             End If
         End With
-        My.Settings.Save()
+
     End Sub
 
     Private Sub SaveDateSettings()
         On Error Resume Next
         If Me.optEuroDates.Checked = True Then
-            My.Settings.USADates = False
+            RevaSettings.USADates = False
         End If
         If Me.optUSDates.Checked = True Then
-            My.Settings.USADates = True
+            RevaSettings.USADates = True
         End If
 
-        My.Settings.Save()
+
         If Not (AllForms.frmTrademarks Is Nothing) Then
             With AllForms.frmTrademarks
-                If My.Settings.USADates = True Then
+                If RevaSettings.USADates = True Then
                     .grdDates.RootTable.Columns("TrademarkDate").FormatString = "MMM dd, yyyy"
                     .grdAlerts.RootTable.Columns("TrademarkDate").FormatString = "MMM dd, yyyy"
                     .grdTreatyFilings.RootTable.Columns("FilingDate").FormatString = "MMM dd, yyyy"
@@ -2357,7 +2357,7 @@ Public Class frmPreferences
 
         If Not (AllForms.frmPatents Is Nothing) Then
             With AllForms.frmPatents
-                If My.Settings.USADates = True Then
+                If RevaSettings.USADates = True Then
                     .grdDates.RootTable.Columns("PatentDate").FormatString = "MMM dd, yyyy"
                     .grdAlerts.RootTable.Columns("PatentDate").FormatString = "MMM dd, yyyy"
                     .grdTreatyFilings.RootTable.Columns("FilingDate").FormatString = "MMM dd, yyyy"
@@ -2374,40 +2374,40 @@ Public Class frmPreferences
     Private Sub chkSpellMonth_Validated(ByVal sender As Object, ByVal e As System.EventArgs) Handles chkSpellMonth.Validated
         On Error Resume Next
         If Me.chkSpellMonth.Checked = True Then
-            My.Settings.SpellMonthMerge = True
+            RevaSettings.SpellMonthMerge = True
         Else
-            My.Settings.SpellMonthMerge = False
+            RevaSettings.SpellMonthMerge = False
         End If
-        My.Settings.Save()
+
     End Sub
 
     Private Sub chkBlankDatesLast_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkBlankDatesLast.Validated
         On Error Resume Next
         If Me.chkBlankDatesLast.Checked = True Then
-            My.Settings.BlankDatesLast = True
+            RevaSettings.BlankDatesLast = True
         Else
-            My.Settings.BlankDatesLast = False
+            RevaSettings.BlankDatesLast = False
         End If
-        My.Settings.Save()
+
     End Sub
 
     Private Sub chkEmailHTML_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkEmailHTML.Validated
         On Error Resume Next
         If Me.chkEmailHTML.Checked = True Then
-            My.Settings.EmailHTML = True
+            RevaSettings.EmailHTML = True
         Else
-            My.Settings.EmailHTML = False
+            RevaSettings.EmailHTML = False
         End If
     End Sub
 
     Private Sub chkHoursExpenses_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkHoursExpenses.Validated
         On Error Resume Next
         If Me.chkHoursExpenses.Checked = True Then
-            My.Settings.ShowHoursExpenses = True
+            RevaSettings.ShowHoursExpenses = True
         Else
-            My.Settings.ShowHoursExpenses = False
+            RevaSettings.ShowHoursExpenses = False
         End If
-        My.Settings.Save()
+
 
         If Not (AllForms.frmTrademarks Is Nothing) Then
             AllForms.frmTrademarks.SetOptions()
@@ -2429,19 +2429,19 @@ Public Class frmPreferences
             If .ShowDialog() = Windows.Forms.DialogResult.OK Then
                 Me.ReportIcon.Text = .FileName
                 If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                    My.Settings.ReportIconDemo = .FileName
+                    RevaSettings.ReportIconDemo = .FileName
                 Else
-                    My.Settings.ReportIcon = .FileName
+                    RevaSettings.ReportIcon = .FileName
                 End If
-                My.Settings.Save()
+
             End If
         End With
     End Sub
 
     Private Sub cboOutlookAlertTime_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboOutlookAlertTime.Validated
         On Error Resume Next
-        My.Settings.OutlookAlertTime = Me.cboOutlookAlertTime.SelectedValue
-        My.Settings.Save()
+        RevaSettings.OutlookAlertTime = Me.cboOutlookAlertTime.SelectedValue
+
     End Sub
 
 #End Region

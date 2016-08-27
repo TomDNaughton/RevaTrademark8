@@ -123,14 +123,14 @@ Public Class Export
 
                     'have to format the dates or they'll get wacky on us
                     If IsDate(dRow.Item(j)) Then
-                        If My.Settings.USADates = True Then
-                            If My.Settings.SpellMonthMerge = True Then
+                        If RevaSettings.USADates = True Then
+                            If RevaSettings.SpellMonthMerge = True Then
                                 .Cells(i + 2, j + 1).NumberFormat = "MMMM dd, yyyy"
                             Else
                                 .Cells(i + 2, j + 1).NumberFormat = "MMM dd, yyyy"
                             End If
                         Else
-                            If My.Settings.SpellMonthMerge = True Then
+                            If RevaSettings.SpellMonthMerge = True Then
                                 .Cells(i + 2, j + 1).NumberFormat = "dd MMMM yyyy"
                             Else
                                 .Cells(i + 2, j + 1).NumberFormat = "dd MMM yyyy"

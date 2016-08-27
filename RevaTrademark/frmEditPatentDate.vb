@@ -4,7 +4,7 @@ Public Class frmEditPatentDate
         On Error Resume Next
         AllForms.frmEditPatentDate = Me
         Me.lblDateName.Text = AllForms.frmPatents.grdDates.CurrentRow.Cells("DateName").Value
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Me.grdEditDate.RootTable.Columns("PatentDate").FormatString = "MMM dd, yyyy"
             Me.grdDates.RootTable.Columns("PatentDate").FormatString = "MMM dd, yyyy"
         Else

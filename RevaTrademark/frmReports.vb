@@ -25,7 +25,7 @@ Public Class frmReports
     Private Sub btnExit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExit.Click
         On Error Resume Next
         If MsgBox("Are you sure want to exit RevaTrademark?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-            My.Settings.Save()
+            
             Application.Exit()
         End If
     End Sub
@@ -92,7 +92,7 @@ Public Class frmReports
             SetMarkDateCompleted(2)
             SetSelected(.grdMarkDates, True)
 
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 .grdMarkDates.RootTable.Columns("DateFrom").FormatString = "MMM dd, yyyy"
                 .grdMarkDates.RootTable.Columns("DateTo").FormatString = "MMM dd, yyyy"
                 .grdMarks.RootTable.Columns("TrademarkDate").FormatString = "MMM dd, yyyy"
@@ -138,7 +138,7 @@ Public Class frmReports
             GetTrademarkStoredFilters()
             GetPatentStoredFilters()
 
-            If My.Settings.OpenOnMarks = True Then
+            If RevaSettings.OpenOnMarks = True Then
                 .Tabs.SelectedIndex = 0
             Else
                 .Tabs.SelectedIndex = 1
@@ -194,7 +194,7 @@ Public Class frmReports
         End With
     End Sub
 
-   
+
 
     Private Sub frmReports_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         On Error Resume Next
@@ -210,7 +210,7 @@ Public Class frmReports
         If AllForms.frmTrademarks Is Nothing And AllForms.frmPatents Is Nothing And AllForms.frmLogin Is Nothing _
         And AllForms.frmPreferences Is Nothing And AllForms.frmReports Is Nothing _
         And AllForms.frmCompanies Is Nothing And AllForms.frmOppositions Is Nothing Then
-            My.Settings.Save()
+
             Application.Exit()
         End If
     End Sub
@@ -392,7 +392,7 @@ Public Class frmReports
         Dim iPositionID As Integer, dtContactList As DataTable, strSQL As String
         iPositionID = cboMarkPosition.Value
         If iPositionID > 0 Then
-            strSQL = "Select distinct ContactID, PositionID, ContactName, ContactCompany as CompanyName from qvwTrademarkContacts" & _
+            strSQL = "Select distinct ContactID, PositionID, ContactName, ContactCompany as CompanyName from qvwTrademarkContacts" &
                 " where PositionID=" & iPositionID & " order by ContactName"
             dtContactList = DataStuff.GetDataTable(strSQL)
             Me.cboMarkContact.DataSource = dtContactList
@@ -754,7 +754,7 @@ Public Class frmReports
             .chkMarkDateFilters.Checked = False
         End With
 
-      
+
 
         ' Companies
         i = dtFilters.Rows.Count
@@ -902,7 +902,6 @@ Public Class frmReports
 
         If Not (My.Settings.Item(LayoutName) Is Nothing) Then
             My.Settings.Item(LayoutName) = Me.grdMarks.GetLayout.GetXmlString
-            My.Settings.Save()
         End If
 
     End Sub
@@ -1068,9 +1067,9 @@ Public Class frmReports
                     .lblMarkReportWidth.Visible = True
                     SetMarkReportMargin()
 
-                    '============================== Formatted reports ============================
-                Case "rptTrademarksByCompany", "rptTrademarksAlpha", "rptTrademarksByCompanyContacts", _
-                    "rptTrademarksByNameList", "rptTrademarksByCompanyDates", "rptTrademarkActions", _
+                '============================== Formatted reports ============================
+                Case "rptTrademarksByCompany", "rptTrademarksAlpha", "rptTrademarksByCompanyContacts",
+                    "rptTrademarksByNameList", "rptTrademarksByCompanyDates", "rptTrademarkActions",
                     "rptTrademarkActions", "rptTrademarksLicensed"
 
                     GetTrademarksList()
@@ -1080,8 +1079,8 @@ Public Class frmReports
                     .grdMarks.RootTable.Groups.Clear()
                     .lblMarkReportWidth.Visible = False
 
-                    '============================== Export reports ============================
-                    ' For these we have to load the layout FIRST, since we'll need to add/remove date and position columns after the fact
+                '============================== Export reports ============================
+                ' For these we have to load the layout FIRST, since we'll need to add/remove date and position columns after the fact
                 Case "MarkExportExcel"
                     LoadMarkReportLayout()
                     GetTrademarksForExport(True)
@@ -1120,8 +1119,8 @@ Public Class frmReports
         On Error Resume Next
         Dim strSQL As String
 
-        strSQL = "Select distinct TrademarkID, TrademarkName, TrademarkType, CompanyName, Jurisdiction, ApplicationNumber, " & _
-        "RegistrationNumber, Status, FilingBasis, FileNumber, RegistrationType, OurDocket, ClientDocket, GoodsServices " & _
+        strSQL = "Select distinct TrademarkID, TrademarkName, TrademarkType, CompanyName, Jurisdiction, ApplicationNumber, " &
+        "RegistrationNumber, Status, FilingBasis, FileNumber, RegistrationType, OurDocket, ClientDocket, GoodsServices " &
         "from qvwTrademarksFullList " & GetTrademarkFilters(False)
 
         dtMarks = DataStuff.GetDataTable(strSQL)
@@ -1133,8 +1132,8 @@ Public Class frmReports
         On Error Resume Next
         Dim strSQL As String
 
-        strSQL = "Select distinct TrademarkID, TrademarkName, TrademarkType, CompanyName, Jurisdiction, ApplicationNumber, " & _
-        "RegistrationNumber, Status, FilingBasis, FileNumber, RegistrationType, OurDocket, ClientDocket, GoodsServices, " & _
+        strSQL = "Select distinct TrademarkID, TrademarkName, TrademarkType, CompanyName, Jurisdiction, ApplicationNumber, " &
+        "RegistrationNumber, Status, FilingBasis, FileNumber, RegistrationType, OurDocket, ClientDocket, GoodsServices, " &
         "DateName, TrademarkDate, NoDay, NoMonth, Completed from qvwTrademarksFullList" & GetTrademarkFilters(True)
 
         dtMarks = DataStuff.GetDataTable(strSQL)
@@ -1159,9 +1158,9 @@ Public Class frmReports
         Next
         strFilter = strFilter & "0)"
 
-        strSQL = "select distinct qvwTrademarkDates.TrademarkID as TrademarkID, TrademarkDateID, TrademarkName, TrademarkType, Jurisdiction, ApplicationNumber, RegistrationNumber," & _
-        " Status, GraphicPath as Graphic, GoodsServices, OurDocket, ClientDocket, DateName, Q.TrademarkDate as TrademarkDate from qvwTrademarkDates " & _
-        " inner join (Select TrademarkID as MarkID, Min(TrademarkDate) as TrademarkDate from tblTrademarkDates " & strFilter & _
+        strSQL = "select distinct qvwTrademarkDates.TrademarkID as TrademarkID, TrademarkDateID, TrademarkName, TrademarkType, Jurisdiction, ApplicationNumber, RegistrationNumber," &
+        " Status, GraphicPath as Graphic, GoodsServices, OurDocket, ClientDocket, DateName, Q.TrademarkDate as TrademarkDate from qvwTrademarkDates " &
+        " inner join (Select TrademarkID as MarkID, Min(TrademarkDate) as TrademarkDate from tblTrademarkDates " & strFilter &
         " group by TrademarkID) Q on Q.MarkID = qvwTrademarkDates.TrademarkID and Q.TrademarkDate = qvwTrademarkDates.TrademarkDate " & GetTrademarkFilters(False)
 
         dtMarks = DataStuff.GetDataTable(strSQL)
@@ -1175,8 +1174,8 @@ Public Class frmReports
         Dim strColumnName As String, UpdateRows As DataRow(), strSQL As String, strFilter As String, strClasses As String
         Dim bShowGraphic As Boolean, bShowClasses As Boolean, GRow As Janus.Windows.GridEX.GridEXRow, bDateSelected As Boolean
 
-        strSQL = "Select distinct TrademarkID, TrademarkName, TrademarkType, CompanyName, Jurisdiction, ApplicationNumber, " & _
-              "RegistrationNumber, Status, FilingBasis, FileNumber, RegistrationType, OurDocket, ClientDocket, GoodsServices, GraphicPath as Graphic " & _
+        strSQL = "Select distinct TrademarkID, TrademarkName, TrademarkType, CompanyName, Jurisdiction, ApplicationNumber, " &
+              "RegistrationNumber, Status, FilingBasis, FileNumber, RegistrationType, OurDocket, ClientDocket, GoodsServices, GraphicPath as Graphic " &
               "from qvwTrademarksFullList " & GetTrademarkFilters(False)
 
         dtMarks = DataStuff.GetDataTable(strSQL)
@@ -1212,8 +1211,8 @@ Public Class frmReports
 
         If (Me.chkMarkDateFilters.Checked = True) And (bDateSelected = True) Then
             'get trademark dates marked for Word/Excel export
-            strSQL = "Select distinct TrademarkID, DateName, Max(TrademarkDate) as TrademarkDate from tblTrademarkDates " & _
-                    "inner join tblDatesTemplate on tblTrademarkDates.DateID = tblDatesTemplate.DateID " & _
+            strSQL = "Select distinct TrademarkID, DateName, Max(TrademarkDate) as TrademarkDate from tblTrademarkDates " &
+                    "inner join tblDatesTemplate on tblTrademarkDates.DateID = tblDatesTemplate.DateID " &
                     strFilter & GetDatesToPrint() & " Group by TrademarkID, TrademarkDate, DateName"
 
             ' Okay, it's a hack.  I admit it.  Both tables have DateID in them.
@@ -1222,7 +1221,7 @@ Public Class frmReports
         End If
 
         ' get positions marked for Word/Excel export
-        strSQL = "Select distinct TrademarkID, PositionName, ContactName from qvwTrademarkContacts " & strFilter & _
+        strSQL = "Select distinct TrademarkID, PositionName, ContactName from qvwTrademarkContacts " & strFilter &
                 " and WordExcel <> 0 and PositionName <> ''"
         dtTrademarkContacts = DataStuff.GetDataTable(strSQL)
 
@@ -1250,7 +1249,7 @@ Public Class frmReports
                         dtMarks.Columns.Add(strColumnName)
                     End If
                     If IsDate(UpdateRows(i).Item("TrademarkDate")) Then
-                        If My.Settings.USADates = True Then
+                        If RevaSettings.USADates = True Then
                             MarkRow(strColumnName) = Convert.ToDateTime(UpdateRows(i).Item("TrademarkDate")).ToString("MMM dd, yyyy")
                         Else
                             MarkRow(strColumnName) = Convert.ToDateTime(UpdateRows(i).Item("TrademarkDate")).ToString("dd MMM,yyyy")
@@ -1372,7 +1371,7 @@ Public Class frmReports
                 .Columns("TrademarkDate").ShowInFieldChooser = True
                 .Columns("TrademarkDate").Caption = "Date"
 
-                If My.Settings.USADates = True Then
+                If RevaSettings.USADates = True Then
                     Me.grdMarks.RootTable.Columns("TrademarkDate").FormatString = "MMM dd, yyyy"
                 Else
                     Me.grdMarks.RootTable.Columns("TrademarkDate").FormatString = "dd MMM yyyy"
@@ -1454,8 +1453,8 @@ Public Class frmReports
 
     Private Function GetTrademarkFilters(ByVal AddSelectedDates As Boolean) As String
         On Error Resume Next
-        Dim strFilter As String, i As Integer, FilterRows As Object(), GRow As Janus.Windows.GridEX.GridEXRow, _
-            bDateFilters As Boolean, bRowDateFilter As Boolean, bDatesSelected As Boolean, dtLinkedCompanies As DataTable, _
+        Dim strFilter As String, i As Integer, FilterRows As Object(), GRow As Janus.Windows.GridEX.GridEXRow,
+            bDateFilters As Boolean, bRowDateFilter As Boolean, bDatesSelected As Boolean, dtLinkedCompanies As DataTable,
             LinkedCompanies As DataRow(), dRow As DataRow, j As Integer
 
         With Me
@@ -1596,7 +1595,7 @@ Public Class frmReports
 
             If bDateFilters = True Then
                 'August 2010 -- switching from AND to OR for the date filters
-                strFilter = strFilter & " and TrademarkID in (Select TrademarkID from " & _
+                strFilter = strFilter & " and TrademarkID in (Select TrademarkID from " &
                     "tblTrademarkDates where ((TrademarkID = 0) "
                 For i = 0 To Me.grdMarkDates.RowCount - 1
                     GRow = grdMarkDates.GetRow(i)
@@ -1625,7 +1624,7 @@ Public Class frmReports
                                 End If
 
                                 If (.Cells("Completed").Value) <> 2 Then
-                                    strFilter = strFilter & " and Completed" & _
+                                    strFilter = strFilter & " and Completed" &
                                     IIf(.Cells("Completed").Value = 0, "=0", "<>0")
                                 End If
                                 strFilter = strFilter & ")"
@@ -1652,8 +1651,8 @@ Public Class frmReports
 
             'NEW August 2010 -- simple alerts filter option
             If .chkMarkAlerts.Checked = True Then
-                strFilter = strFilter & " and TrademarkDate >=" & FixDate(.MarkAlertsFrom.Text) & _
-                    " and TrademarkDate <=" & FixDate(.MarkAlertsTo.Text) & " and DateID in " & _
+                strFilter = strFilter & " and TrademarkDate >=" & FixDate(.MarkAlertsFrom.Text) &
+                    " and TrademarkDate <=" & FixDate(.MarkAlertsTo.Text) & " and DateID in " &
                     "(Select DateID from tblDatesTemplate WHERE IsAlert <> 0)"
             End If
         End With
@@ -1708,17 +1707,17 @@ Public Class frmReports
                             strFilter = strFilter & " or (DateID =" & GRow.Cells("DateID").Value
 
                             If IsDate(GRow.Cells("DateFrom").Text) Then
-                                strFilter = strFilter & " and TrademarkDate >=" & _
+                                strFilter = strFilter & " and TrademarkDate >=" &
                                 FixDate(GRow.Cells("DateFrom").Text)
                             End If
 
                             If IsDate(GRow.Cells("DateTo").Text) Then
-                                strFilter = strFilter & " and TrademarkDate <=" & _
+                                strFilter = strFilter & " and TrademarkDate <=" &
                                 FixDate(GRow.Cells("DateTo").Text)
                             End If
 
                             If (GRow.Cells("Completed").Value) <> 2 Then
-                                strFilter = strFilter & " and Completed" & _
+                                strFilter = strFilter & " and Completed" &
                                 IIf(GRow.Cells("Completed").Value = 0, "=0", "<>0")
                             End If
 
@@ -1734,8 +1733,8 @@ Public Class frmReports
 
         If Me.chkMarkAlerts.Checked = True Then
             'strFilter = " and DateID in (Select DateID from tblDatesTemplate where IsAlert <> 0)"
-            strFilter = " and (TrademarkDate >=" & FixDate(Me.MarkAlertsFrom.Text) & _
-                    " and TrademarkDate <=" & FixDate(Me.MarkAlertsTo.Text) & " and DateID in " & _
+            strFilter = " and (TrademarkDate >=" & FixDate(Me.MarkAlertsFrom.Text) &
+                    " and TrademarkDate <=" & FixDate(Me.MarkAlertsTo.Text) & " and DateID in " &
                     "(Select DateID from tblDatesTemplate WHERE IsAlert <> 0))"
         End If
 
@@ -1824,7 +1823,7 @@ Public Class frmReports
         End If
 
         If Me.grdMarks.RecordCount = 0 Then
-            MsgBox("There are no trademarks in the preview grid. Click the Preview Trademarks button to see which " & _
+            MsgBox("There are no trademarks in the preview grid. Click the Preview Trademarks button to see which " &
                        "trademarks match your filters.")
             Exit Sub
         End If
@@ -1853,11 +1852,11 @@ Public Class frmReports
                 AllForms.frmReportPreview.ReportViewer.Document = rptReport.Document
                 rptReport.Run()
 
-                '============================== Formatted reports ============================
+            '============================== Formatted reports ============================
             Case "rptTrademarksByCompany"
                 Dim rptReport As New rptTrademarksByCompany
 
-                strSQL = SQL.vwReportTrademarks & GetTrademarksToPrint() & GetDatesToPrint() & _
+                strSQL = SQL.vwReportTrademarks & GetTrademarksToPrint() & GetDatesToPrint() &
                     " order by CompanyName, CompanyID, TrademarkName, TrademarkID, ListOrder"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -1868,7 +1867,7 @@ Public Class frmReports
             Case "rptTrademarksAlpha"
                 Dim rptReport As New rptTrademarksAlpha
 
-                strSQL = SQL.vwReportTrademarks & GetTrademarksToPrint() & GetDatesToPrint() & _
+                strSQL = SQL.vwReportTrademarks & GetTrademarksToPrint() & GetDatesToPrint() &
                     " order by TrademarkName, TrademarkID, ListOrder"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -1879,9 +1878,9 @@ Public Class frmReports
             Case "rptTrademarksByCompanyContacts"
                 Dim rptReport As New rptTrademarksByCompanyContacts
 
-                strSQL = "SELECT TrademarkName, Jurisdiction, ApplicationNumber, RegistrationNumber, " & vbCrLf & _
-                "TrademarkContactID, CompanyName, ContactName, ContactCompany, PositionName," & vbCrLf & _
-                "TrademarkID, PositionID, CompanyID, ContactID from qvwTrademarkContacts" & GetTrademarksToPrint() & _
+                strSQL = "SELECT TrademarkName, Jurisdiction, ApplicationNumber, RegistrationNumber, " & vbCrLf &
+                "TrademarkContactID, CompanyName, ContactName, ContactCompany, PositionName," & vbCrLf &
+                "TrademarkID, PositionID, CompanyID, ContactID from qvwTrademarkContacts" & GetTrademarksToPrint() &
                 " order by CompanyName, TrademarkName, TrademarkID, ContactName"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -1893,7 +1892,7 @@ Public Class frmReports
             Case "rptTrademarksByCompanyDates"
                 Dim rptReport As New rptTrademarksByCompanyDates
 
-                strSQL = SQL.vwReportTrademarks & GetTrademarksToPrint() & GetDatesToPrint() & _
+                strSQL = SQL.vwReportTrademarks & GetTrademarksToPrint() & GetDatesToPrint() &
                     " order by qvwTrademarkDates.CompanyName, CompanyID, TrademarkName, TrademarkID, ListOrder"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -1905,7 +1904,7 @@ Public Class frmReports
             Case "rptTrademarkActions"
                 Dim rptReport As New rptTrademarkActions
 
-                strSQL = "SELECT * from qvwTrademarkActions " & GetTrademarksToPrint() & _
+                strSQL = "SELECT * from qvwTrademarkActions " & GetTrademarksToPrint() &
                 " order by CompanyName, CompanyID, TrademarkName, TrademarkID, ActionDate"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -1917,7 +1916,7 @@ Public Class frmReports
             Case "rptTrademarksLicensed"
                 Dim rptReport As New rptTrademarksLicensed
 
-                strSQL = "Select * from qvwTrademarksLicensed" & GetTrademarksToPrint() & _
+                strSQL = "Select * from qvwTrademarksLicensed" & GetTrademarksToPrint() &
                     " order by CompanyName, CompanyID, TrademarkName, TrademarkID, Licensee"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -1925,7 +1924,7 @@ Public Class frmReports
                 AllForms.frmReportPreview.ReportViewer.Document = rptReport.Document
                 rptReport.Run()
 
-                '============================== Export reports ============================
+            '============================== Export reports ============================
 
             Case "MarkExportExcel"
                 Dim ExcelExport As New Export
@@ -2079,7 +2078,7 @@ Public Class frmReports
         Dim iPositionID As Integer, dtContactList As DataTable, strSQL As String
         iPositionID = cboPatentPosition.Value
         If iPositionID > 0 Then
-            strSQL = "Select distinct ContactID, PositionID, ContactName, ContactCompany as CompanyName from qvwPatentContacts" & _
+            strSQL = "Select distinct ContactID, PositionID, ContactName, ContactCompany as CompanyName from qvwPatentContacts" &
                 " where PositionID=" & iPositionID & " order by ContactName"
             dtContactList = DataStuff.GetDataTable(strSQL)
             Me.cboPatentContact.DataSource = dtContactList
@@ -2100,7 +2099,7 @@ Public Class frmReports
         Dim iPositionID As Integer, dtContactList As DataTable, strSQL As String
         iPositionID = cboPatentPosition.Value
         If iPositionID > 0 Then
-            strSQL = "Select distinct ContactID, PositionID, ContactName, ContactCompany as CompanyName from qvwPatentContacts" & _
+            strSQL = "Select distinct ContactID, PositionID, ContactName, ContactCompany as CompanyName from qvwPatentContacts" &
                 " where PositionID=" & iPositionID & " order by ContactName"
             dtContactList = DataStuff.GetDataTable(strSQL)
             Me.cboPatentContact.DataSource = dtContactList
@@ -2600,7 +2599,7 @@ Public Class frmReports
 
         If Not (My.Settings.Item(LayoutName) Is Nothing) Then
             My.Settings.Item(LayoutName) = Me.grdPatents.GetLayout.GetXmlString
-            My.Settings.Save()
+
         End If
 
     End Sub
@@ -2703,7 +2702,7 @@ Public Class frmReports
         Dim strReportName As String, strReportLayout As String
         strReportName = Me.grdPatentReports.GetValue("ReportFileName")
         strReportLayout = Me.grdPatentReports.GetValue("ReportFileName")
-       
+
         'becuz user may have added fields to grid and then hit preview again
         Me.grdPatents.RemoveFilters()
         If Me.grdPatents.RowCount > 0 Then
@@ -2764,9 +2763,9 @@ Public Class frmReports
                     .lblPatentReportWidth.Visible = True
                     SetPatentReportMargin()
 
-                    '============================== Formatted reports ============================
-                Case "rptPatentsByCompany", "rptPatentsAlpha", "rptPatentsByCompanyContacts", _
-                    "rptPatentsByNameList", "rptPatentsByCompanyDates", "rptPatentActions", _
+                '============================== Formatted reports ============================
+                Case "rptPatentsByCompany", "rptPatentsAlpha", "rptPatentsByCompanyContacts",
+                    "rptPatentsByNameList", "rptPatentsByCompanyDates", "rptPatentActions",
                     "rptPatentActions", "rptPatentsLicensed"
 
                     GetPatentsList()
@@ -2776,8 +2775,8 @@ Public Class frmReports
                     .grdPatents.RootTable.Groups.Clear()
                     .lblPatentReportWidth.Visible = False
 
-                    '============================== Export reports ============================
-                    ' For these we have to load the layout FIRST, since we'll need to add/remove date and position columns after the fact
+                '============================== Export reports ============================
+                ' For these we have to load the layout FIRST, since we'll need to add/remove date and position columns after the fact
                 Case "PatentExportExcel"
                     LoadPatentReportLayout()
                     GetPatentsForExport(True)
@@ -2814,8 +2813,8 @@ Public Class frmReports
         On Error Resume Next
         Dim strSQL As String
 
-        strSQL = "Select distinct PatentID, PatentName, PatentType, CompanyName, Jurisdiction, ApplicationNumber, " & _
-        "PatentNumber, Status, FilingBasis, FileNumber, OurDocket, ClientDocket, Claims, Category, Subcategory " & _
+        strSQL = "Select distinct PatentID, PatentName, PatentType, CompanyName, Jurisdiction, ApplicationNumber, " &
+        "PatentNumber, Status, FilingBasis, FileNumber, OurDocket, ClientDocket, Claims, Category, Subcategory " &
         "from qvwPatentsFullList " & GetPatentFilters(False)
 
         dtPatents = DataStuff.GetDataTable(strSQL)
@@ -2827,8 +2826,8 @@ Public Class frmReports
         On Error Resume Next
         Dim strSQL As String
 
-        strSQL = "Select distinct PatentID, PatentName, PatentType, CompanyName, Jurisdiction, ApplicationNumber, " & _
-        "PatentNumber, Status, FilingBasis, FileNumber, PatentType, OurDocket, ClientDocket, Claims, Category, Subcategory, " & _
+        strSQL = "Select distinct PatentID, PatentName, PatentType, CompanyName, Jurisdiction, ApplicationNumber, " &
+        "PatentNumber, Status, FilingBasis, FileNumber, PatentType, OurDocket, ClientDocket, Claims, Category, Subcategory, " &
         "DateName, PatentDate, NoDay, NoMonth, Completed from qvwPatentsFullList " & GetPatentFilters(True)
 
         dtPatents = DataStuff.GetDataTable(strSQL)
@@ -2853,9 +2852,9 @@ Public Class frmReports
         Next
         strFilter = strFilter & "0)"
 
-        strSQL = "select distinct qvwPatentDates.PatentID as PatentID, PatentDateID, PatentName, PatentType, Jurisdiction, ApplicationNumber, PatentNumber," & _
-        " Status, GraphicPath, OurDocket, ClientDocket, DateName, Q.PatentDate as PatentDate from qvwPatentDates " & _
-        " inner join (Select PatentID as PatID, Min(PatentDate) as PatentDate from tblPatentDates " & strFilter & _
+        strSQL = "select distinct qvwPatentDates.PatentID as PatentID, PatentDateID, PatentName, PatentType, Jurisdiction, ApplicationNumber, PatentNumber," &
+        " Status, GraphicPath, OurDocket, ClientDocket, DateName, Q.PatentDate as PatentDate from qvwPatentDates " &
+        " inner join (Select PatentID as PatID, Min(PatentDate) as PatentDate from tblPatentDates " & strFilter &
         " group by PatentID) Q on Q.PatID = qvwPatentDates.PatentID and Q.PatentDate = qvwPatentDates.PatentDate " & GetPatentFilters(False)
 
         dtPatents = DataStuff.GetDataTable(strSQL)
@@ -2870,8 +2869,8 @@ Public Class frmReports
         Dim strColumnName As String, UpdateRows As DataRow(), strSQL As String, strFilter As String, strClasses As String
         Dim bShowGraphic As Boolean, bShowClasses As Boolean, GRow As Janus.Windows.GridEX.GridEXRow, bDateSelected As Boolean
 
-        strSQL = "Select distinct PatentID, PatentName, PatentType, CompanyName, Jurisdiction, ApplicationNumber, " & _
-              "PatentNumber, Status, FilingBasis, FileNumber, PatentType, OurDocket, ClientDocket, " & _
+        strSQL = "Select distinct PatentID, PatentName, PatentType, CompanyName, Jurisdiction, ApplicationNumber, " &
+              "PatentNumber, Status, FilingBasis, FileNumber, PatentType, OurDocket, ClientDocket, " &
               "Category, Subcategory, Claims, GraphicPath as Graphic from qvwPatentsFullList " & GetPatentFilters(False)
 
         dtPatents = DataStuff.GetDataTable(strSQL)
@@ -2908,8 +2907,8 @@ Public Class frmReports
 
         If (Me.chkPatentDateFilters.Checked = True) And (bDateSelected = True) Then
             'get Patent dates Patented for Word/Excel export
-            strSQL = "Select distinct PatentID, DateName, Max(PatentDate) as PatentDate from tblPatentDates " & _
-                    "inner join tblPatentDatesTemplate on tblPatentDates.DateID = tblPatentDatesTemplate.DateID " & _
+            strSQL = "Select distinct PatentID, DateName, Max(PatentDate) as PatentDate from tblPatentDates " &
+                    "inner join tblPatentDatesTemplate on tblPatentDates.DateID = tblPatentDatesTemplate.DateID " &
                     strFilter & GetPatentDatesToPrint() & " Group by PatentID, PatentDate, DateName"
 
             ' Okay, it's a hack.  I admit it.  Both tables have DateID in them.
@@ -2918,7 +2917,7 @@ Public Class frmReports
         End If
 
         ' get positions Patented for Word/Excel export
-        strSQL = "Select PatentID, PositionName, ContactName from qvwPatentContacts " & strFilter & _
+        strSQL = "Select PatentID, PositionName, ContactName from qvwPatentContacts " & strFilter &
                 " and WordExcel <> 0"
         dtPatentContacts = DataStuff.GetDataTable(strSQL)
 
@@ -2946,7 +2945,7 @@ Public Class frmReports
                         dtPatents.Columns.Add(strColumnName)
                     End If
                     If IsDate(UpdateRows(i).Item("PatentDate")) Then
-                        If My.Settings.USADates = True Then
+                        If RevaSettings.USADates = True Then
                             PatentRow(strColumnName) = Convert.ToDateTime(UpdateRows(i).Item("PatentDate")).ToString("MMM dd, yyyy")
                         Else
                             PatentRow(strColumnName) = Convert.ToDateTime(UpdateRows(i).Item("PatentDate")).ToString("dd MMM,yyyy")
@@ -3065,7 +3064,7 @@ Public Class frmReports
                 .Columns("PatentDate").ShowInFieldChooser = True
                 .Columns("PatentDate").Caption = "Date"
 
-                If My.Settings.USADates = True Then
+                If RevaSettings.USADates = True Then
                     Me.grdPatents.RootTable.Columns("PatentDate").FormatString = "MMM dd, yyyy"
                 Else
                     Me.grdPatents.RootTable.Columns("PatentDate").FormatString = "dd MMM yyyy"
@@ -3147,8 +3146,8 @@ Public Class frmReports
 
     Private Function GetPatentFilters(ByVal AddSelectedDates As Boolean) As String
         On Error Resume Next
-        Dim strFilter As String, i As Integer, FilterRows As Object(), GRow As Janus.Windows.GridEX.GridEXRow, _
-            bDateFilters As Boolean, bDatesSelected As Boolean, bRowDateFilter As Boolean, dtLinkedCompanies As DataTable, _
+        Dim strFilter As String, i As Integer, FilterRows As Object(), GRow As Janus.Windows.GridEX.GridEXRow,
+            bDateFilters As Boolean, bDatesSelected As Boolean, bRowDateFilter As Boolean, dtLinkedCompanies As DataTable,
             LinkedCompanies As DataRow(), dRow As DataRow, j As Integer
 
         With Me
@@ -3265,7 +3264,7 @@ Public Class frmReports
 
             If (.cboPatentContact.SelectedIndex >= 0) And (.cboPatentPosition.SelectedIndex >= 0) _
                 And (.chkPatentPositions.Checked = True) Then
-                strFilter = strFilter & " and ContactID=" & cboPatentContact.Value & _
+                strFilter = strFilter & " and ContactID=" & cboPatentContact.Value &
                     " and PositionID=" & cboPatentPosition.Value
             End If
 
@@ -3301,7 +3300,7 @@ Public Class frmReports
 
             If bDateFilters = True Then
                 'August 2010 -- switching from AND to OR for the date filters
-                strFilter = strFilter & " and PatentID in (Select PatentID from " & _
+                strFilter = strFilter & " and PatentID in (Select PatentID from " &
                     "tblPatentDates where ((PatentID = 0) "
                 For i = 0 To Me.grdPatentDates.RowCount - 1
                     GRow = grdPatentDates.GetRow(i)
@@ -3330,7 +3329,7 @@ Public Class frmReports
                                 End If
 
                                 If (.Cells("Completed").Value) <> 2 Then
-                                    strFilter = strFilter & " and Completed" & _
+                                    strFilter = strFilter & " and Completed" &
                                     IIf(.Cells("Completed").Value = 0, "=0", "<>0")
                                 End If
                                 strFilter = strFilter & ")"
@@ -3357,8 +3356,8 @@ Public Class frmReports
 
             'NEW August 2010 -- simple alerts filter option
             If .chkPatentAlerts.Checked = True Then
-                strFilter = strFilter & " and PatentDate >=" & FixDate(.PatentAlertsFrom.Text) & _
-                    " and PatentDate <=" & FixDate(.PatentAlertsTo.Text) & " and DateID in " & _
+                strFilter = strFilter & " and PatentDate >=" & FixDate(.PatentAlertsFrom.Text) &
+                    " and PatentDate <=" & FixDate(.PatentAlertsTo.Text) & " and DateID in " &
                     "(Select DateID from tblDatesTemplate WHERE IsAlert <> 0)"
             End If
         End With
@@ -3410,17 +3409,17 @@ Public Class frmReports
                             strFilter = strFilter & " or (DateID =" & GRow.Cells("DateID").Value
 
                             If IsDate(GRow.Cells("DateFrom").Text) Then
-                                strFilter = strFilter & " and PatentDate >=" & _
+                                strFilter = strFilter & " and PatentDate >=" &
                                 FixDate(GRow.Cells("DateFrom").Text)
                             End If
 
                             If IsDate(GRow.Cells("DateTo").Text) Then
-                                strFilter = strFilter & " and PatentDate <=" & _
+                                strFilter = strFilter & " and PatentDate <=" &
                                 FixDate(GRow.Cells("DateTo").Text)
                             End If
 
                             If (GRow.Cells("Completed").Value) <> 2 Then
-                                strFilter = strFilter & " and Completed" & _
+                                strFilter = strFilter & " and Completed" &
                                 IIf(GRow.Cells("Completed").Value = 0, "=0", "<>0")
                             End If
 
@@ -3436,8 +3435,8 @@ Public Class frmReports
 
         If Me.chkPatentAlerts.Checked = True Then
             'strFilter = " and DateID in (Select DateID from tblDatesTemplate where IsAlert <> 0)"
-            strFilter = " and (PatentDate >=" & FixDate(Me.PatentAlertsFrom.Text) & _
-                    " and PatentDate <=" & FixDate(Me.PatentAlertsTo.Text) & " and DateID in " & _
+            strFilter = " and (PatentDate >=" & FixDate(Me.PatentAlertsFrom.Text) &
+                    " and PatentDate <=" & FixDate(Me.PatentAlertsTo.Text) & " and DateID in " &
                     "(Select DateID from tblPatentDatesTemplate WHERE IsAlert <> 0))"
         End If
 
@@ -3523,7 +3522,7 @@ Public Class frmReports
         End If
 
         If Me.grdPatents.RecordCount = 0 Then
-            MsgBox("There are no Patents in the preview grid. Click the Preview Patents button to see which " & _
+            MsgBox("There are no Patents in the preview grid. Click the Preview Patents button to see which " &
                        "Patents match your filters.")
             Exit Sub
         End If
@@ -3552,11 +3551,11 @@ Public Class frmReports
                 AllForms.frmReportPreview.ReportViewer.Document = rptReport.Document
                 rptReport.Run()
 
-                '============================== Formatted reports ============================
+            '============================== Formatted reports ============================
             Case "rptPatentsByCompany"
                 Dim rptReport As New rptPatentsByCompany
 
-                strSQL = SQL.vwReportPatents & GetPatentsToPrint() & GetPatentDatesToPrint() & _
+                strSQL = SQL.vwReportPatents & GetPatentsToPrint() & GetPatentDatesToPrint() &
                     " order by CompanyName, CompanyID, PatentName, PatentID, ListOrder"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -3567,7 +3566,7 @@ Public Class frmReports
             Case "rptPatentsAlpha"
                 Dim rptReport As New rptPatentsAlpha
 
-                strSQL = SQL.vwReportPatents & GetPatentsToPrint() & GetPatentDatesToPrint() & _
+                strSQL = SQL.vwReportPatents & GetPatentsToPrint() & GetPatentDatesToPrint() &
                     " order by PatentName, PatentID, ListOrder"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -3578,9 +3577,9 @@ Public Class frmReports
             Case "rptPatentsByCompanyContacts"
                 Dim rptReport As New rptPatentsByCompanyContacts
 
-                strSQL = "SELECT PatentName, Jurisdiction, ApplicationNumber, PatentNumber, PatentContactID, CompanyName, " & vbCrLf & _
-                "ContactName, ContactCompany, PositionName, PatentID, PositionID, " & vbCrLf & _
-                "CompanyID, ContactID from qvwPatentContacts" & GetPatentsToPrint() & _
+                strSQL = "SELECT PatentName, Jurisdiction, ApplicationNumber, PatentNumber, PatentContactID, CompanyName, " & vbCrLf &
+                "ContactName, ContactCompany, PositionName, PatentID, PositionID, " & vbCrLf &
+                "CompanyID, ContactID from qvwPatentContacts" & GetPatentsToPrint() &
                 " order by CompanyName, PatentName, PatentID, ContactName"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -3592,7 +3591,7 @@ Public Class frmReports
             Case "rptPatentsByCompanyDates"
                 Dim rptReport As New rptPatentsByCompanyDates
 
-                strSQL = SQL.vwReportPatents & GetPatentsToPrint() & GetPatentDatesToPrint() & _
+                strSQL = SQL.vwReportPatents & GetPatentsToPrint() & GetPatentDatesToPrint() &
                     " order by CompanyName, CompanyID, PatentName, PatentID, ListOrder"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -3604,7 +3603,7 @@ Public Class frmReports
             Case "rptPatentActions"
                 Dim rptReport As New rptPatentActions
 
-                strSQL = "Select * from qvwPatentActions" & GetPatentsToPrint() & _
+                strSQL = "Select * from qvwPatentActions" & GetPatentsToPrint() &
                     " order by CompanyName, CompanyID, PatentName, PatentID, ActionDate"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -3615,7 +3614,7 @@ Public Class frmReports
             Case "rptPatentsLicensed"
                 Dim rptReport As New rptPatentsLicensed
 
-                strSQL = "Select * from qvwPatentsLicensed" & GetPatentsToPrint() & _
+                strSQL = "Select * from qvwPatentsLicensed" & GetPatentsToPrint() &
                     " order by CompanyName, CompanyID, PatentName, PatentID, Licensee"
                 ReportTable = DataStuff.GetDataTable(strSQL)
                 rptReport.DataSource = ReportTable
@@ -3623,7 +3622,7 @@ Public Class frmReports
                 AllForms.frmReportPreview.ReportViewer.Document = rptReport.Document
                 rptReport.Run()
 
-                '============================== Export reports ============================
+            '============================== Export reports ============================
 
             Case "PatentExportExcel"
                 Dim ExcelExport As New Export
@@ -4143,7 +4142,7 @@ Public Class frmReports
         On Error Resume Next
         wkbReport.GetLock()
         Dim WorkBookSet As SpreadsheetGear.IWorkbookSet = wkbReport.ActiveWorkbookSet
-        Dim categoryFlags As SpreadsheetGear.Windows.Forms.RangeExplorerCategoryFlags = _
+        Dim categoryFlags As SpreadsheetGear.Windows.Forms.RangeExplorerCategoryFlags =
             SpreadsheetGear.Windows.Forms.RangeExplorerCategoryFlags.All
         Dim explorer As New SpreadsheetGear.Windows.Forms.RangeExplorer(WorkBookSet, categoryFlags)
         explorer.Show(wkbReport)
@@ -4223,31 +4222,31 @@ Public Class frmReports
     Private Sub XLLandscape_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles XLLandscape.CheckedChanged
         On Error Resume Next
         My.Settings.XLLandscape = Me.XLLandscape.Checked
-        My.Settings.Save()
+
     End Sub
 
     Private Sub XLFitToPage_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles XLFitToPage.CheckedChanged
         On Error Resume Next
         My.Settings.XLFitToPage = Me.XLFitToPage.Checked
-        My.Settings.Save()
+
     End Sub
 
     Private Sub XLPageNumbers_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles XLPageNumbers.CheckedChanged
         On Error Resume Next
         My.Settings.XLPageNumbers = Me.XLPageNumbers.Checked
-        My.Settings.Save()
+
     End Sub
 
     Private Sub XLDatePrinted_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles XLDatePrinted.CheckedChanged
         On Error Resume Next
         My.Settings.XLDatePrinted = Me.XLDatePrinted.Checked
-        My.Settings.Save()
+
     End Sub
 
     Private Sub XLHeaderRows_SelectedValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles XLHeaderRows.SelectedValueChanged
         On Error Resume Next
         My.Settings.XLHeaderRows = Me.XLHeaderRows.SelectedValue
-        My.Settings.Save()
+
     End Sub
 
 #End Region
@@ -4277,13 +4276,13 @@ Public Class frmReports
 
     Private Sub SetPrintOptions()
         On Error Resume Next
-        Dim strRows As String, strDate As String, strPages As String, i As Integer, _
+        Dim strRows As String, strDate As String, strPages As String, i As Integer,
             WKS As SpreadsheetGear.IWorksheet
         With Me
             .wkbReport.GetLock()
             strPages = "Page &P of &N"
 
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 strDate = Format(Now, "MMMM dd, yyyy")
             Else
                 strDate = Format(Now, "dd MMMM yyyy")

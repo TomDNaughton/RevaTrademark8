@@ -351,7 +351,7 @@ Public Class frmOppositions
             Dim iPositionID As Integer, dtContactList As DataTable, strSQL As String
             iPositionID = cboSetPosition.Value
             If iPositionID > 0 Then
-                strSQL = "Select distinct ContactID, PositionID, ContactName, ContactCompany as CompanyName from qvwTrademarkContacts" & _
+                strSQL = "Select distinct ContactID, PositionID, ContactName, ContactCompany as CompanyName from qvwTrademarkContacts" &
                     " where PositionID=" & iPositionID & " order by ContactName"
                 dtContactList = DataStuff.GetDataTable(strSQL)
                 Me.cboSetContact.DataSource = dtContactList
@@ -395,8 +395,8 @@ Public Class frmOppositions
         Next
         strFilter = strFilter & "0)"
 
-        strSQL = "SELECT distinct OppositionID, StatusID, CompanyID, OppositionName, JurisdictionID, ProceedingNumber, " & _
-        "CompanyName, OppositionCompany, ListOrder, DateName, OppositionDate, Completed, " & _
+        strSQL = "SELECT distinct OppositionID, StatusID, CompanyID, OppositionName, JurisdictionID, ProceedingNumber, " &
+        "CompanyName, OppositionCompany, ListOrder, DateName, OppositionDate, Completed, " &
         "IsAlert, Status, Jurisdiction from qvwOppositionDates where " & strFilter & " order by " & strSort
 
         drReader = DataStuff.GetDataReader(strSQL)
@@ -416,7 +416,7 @@ Public Class frmOppositions
         Globals.OppositionID = DataStuff.DMax("OppositionID", "tblOppositions")
 
         ' add any contacts who are supposed to be on all Trademarks, which will include Oppositions for marks
-        DataStuff.RunSQL("Insert into tblOppositionContacts (OppositionID, ContactID, PositionID) select distinct" & _
+        DataStuff.RunSQL("Insert into tblOppositionContacts (OppositionID, ContactID, PositionID) select distinct" &
             Globals.OppositionID & ", ContactID, PositionID from tblContacts where PositionID > 0 and AddToTrademarks<>0")
 
         GetOpposition()
@@ -442,7 +442,7 @@ Public Class frmOppositions
             Dim strMessage As String, iOppositionID As Integer
             iOppositionID = Me.grdList.GetValue("OppositionID")
 
-            strMessage = "This will delete the Opposition and all related Opposition contacts and Opposition dates." & _
+            strMessage = "This will delete the Opposition and all related Opposition contacts and Opposition dates." &
                     vbCrLf & "This delete cannot be undone.  Are you sure?"
 
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
@@ -462,12 +462,12 @@ Public Class frmOppositions
         SetAlertEndDate()
         GetAlertDates()
         My.Settings.DateFromIndex = Me.cboStart.SelectedIndex
-        My.Settings.Save()
+
     End Sub
 
     Private Sub SetAlertStartDate()
         On Error Resume Next
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Select Case Me.cboEnd.SelectedIndex
                 Case 0
                     Me.BetweenEnd.Text = Format(DateAdd(DateInterval.Day, 7, DateTime.Now.Date), "MMM dd, yyyy")
@@ -503,7 +503,7 @@ Public Class frmOppositions
     Private Sub BetweenStart_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BetweenStart.Validated
         On Error Resume Next
         If IsDate(Me.BetweenStart.Text) Then
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 Me.BetweenStart.Text = Format(DateValue(Me.BetweenStart.Text), "MMM dd, yyyy")
             Else
                 Me.BetweenStart.Text = Format(DateValue(Me.BetweenStart.Text), "dd MMM yyyy")
@@ -519,13 +519,13 @@ Public Class frmOppositions
         SetAlertStartDate()
         GetAlertDates()
         My.Settings.DateToIndex = Me.cboEnd.SelectedIndex
-        My.Settings.Save()
+
     End Sub
 
     Private Sub BetweenEnd_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BetweenEnd.Validated
         On Error Resume Next
         If IsDate(Me.BetweenEnd.Text) Then
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 Me.BetweenEnd.Text = Format(DateValue(Me.BetweenEnd.Text), "MMM dd, yyyy")
             Else
                 Me.BetweenEnd.Text = Format(DateValue(Me.BetweenEnd.Text), "dd MMM yyyy")
@@ -538,7 +538,7 @@ Public Class frmOppositions
 
     Private Sub SetAlertEndDate()
         On Error Resume Next
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Select Case Me.cboStart.SelectedIndex
                 Case 0
                     Me.BetweenStart.Text = Format(DateAdd(DateInterval.Month, -3, DateTime.Now.Date), "MMM dd, yyyy")
@@ -574,14 +574,14 @@ Public Class frmOppositions
 
             With Me
                 If IsDate(.BetweenEnd.Text) And IsDate(.BetweenStart.Text) Then
-                    strSQL = "SELECT distinct OppositionID, OppositionName, CompanyName, Jurisdiction, ProceedingNumber, DateName, IsAlert, Completed, " & _
-                    "OppositionDate, DateID, JurisdictionID, CompanyID, ShowInAlerts, OppositionDateID, EmailSent, Suspended " & _
+                    strSQL = "SELECT distinct OppositionID, OppositionName, CompanyName, Jurisdiction, ProceedingNumber, DateName, IsAlert, Completed, " &
+                    "OppositionDate, DateID, JurisdictionID, CompanyID, ShowInAlerts, OppositionDateID, EmailSent, Suspended " &
                     "from qvwOppositionDates where IsAlert <> 0 and ShowInAlerts <> 0 and Suspended = 0"
                     strSQL = strSQL & " and OppositionDate >=" & FixDate(.BetweenStart.Text)
                     strSQL = strSQL & " and OppositionDate <=" & FixDate(.BetweenEnd.Text)
 
                     If .cboSetPosition.Value > 0 And .cboSetContact.Value > 0 Then
-                        strSQL = strSQL & " and OppositionID in (Select OppositionID from qvwOppositionContacts" & _
+                        strSQL = strSQL & " and OppositionID in (Select OppositionID from qvwOppositionContacts" &
                             " where ContactID=" & .cboSetContact.Value & " and PositionID=" & .cboSetPosition.Value & ")"
                     End If
 
@@ -636,7 +636,7 @@ Public Class frmOppositions
         End If
 
         If e.ChildTable.Key = "Dates" Then
-            strSQL = "Select OppositionID, DateName, Completed, OppositionDate, DateID, OppositionDateID " & _
+            strSQL = "Select OppositionID, DateName, Completed, OppositionDate, DateID, OppositionDateID " &
             "from qvwOppositionDates where OppositionID=" & OppositionID
             e.ChildList = DataStuff.GetDataTable(strSQL)
         End If
@@ -647,7 +647,7 @@ Public Class frmOppositions
         On Error Resume Next
         Dim fc As Janus.Windows.GridEX.GridEXFormatCondition, OppositionDateID As Integer
         OppositionDateID = grdAlerts.GetValue("OppositionDateID")
-        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdAlerts.Tables("Dates").Columns("OppositionDateID"), _
+        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdAlerts.Tables("Dates").Columns("OppositionDateID"),
             Janus.Windows.GridEX.ConditionOperator.Equal, OppositionDateID)
         fc.FormatStyle.BackColor = Color.Yellow
         Me.grdAlerts.Tables("Dates").FormatConditions.Add(fc)
@@ -665,7 +665,7 @@ Public Class frmOppositions
 
     Private Sub PrintAlerts()
         On Error Resume Next
-        Dim strSort As String, strFilter As String, strField As String, strValue As String, _
+        Dim strSort As String, strFilter As String, strField As String, strValue As String,
             i As Integer, strSQL As String, drReader As OleDb.OleDbDataReader
 
         Dim GRow As Janus.Windows.GridEX.GridEXRow
@@ -701,26 +701,26 @@ Public Class frmOppositions
 
         If Me.cboSetPosition.Value > 0 Then
             Dim rptAlertsPosition As New rptOppositionAlertsPosition
-            strSQL = "SELECT distinct OppositionDateID, OppositionID, CompanyID, OppositionName, JurisdictionID, " & _
-            "ProceedingNumber, CompanyName, Jurisdiction, ListOrder, OppositionDate, Completed, DateID, " & _
-            "IsAlert, DateName, '' AS SubTitle, ContactID, PositionID, ContactName, PositionName, Suspended " & _
+            strSQL = "SELECT distinct OppositionDateID, OppositionID, CompanyID, OppositionName, JurisdictionID, " &
+            "ProceedingNumber, CompanyName, Jurisdiction, ListOrder, OppositionDate, Completed, DateID, " &
+            "IsAlert, DateName, '' AS SubTitle, ContactID, PositionID, ContactName, PositionName, Suspended " &
             "from qvwOppositionDatesAndContacts where IsAlert <> 0 and ShowInAlerts <> 0 and Suspended = 0" & strFilter
 
             Select Case strSort
                 Case "CompanyName"
-                    strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                    strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                         "CompanyName, OppositionName, OppositionID, OppositionDate"
 
                 Case "OppositionName"
-                    strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                    strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                         "OppositionName, OppositionID, CompanyName, OppositionDate"
 
                 Case "OppositionDate"
-                    strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                    strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                         "OppositionDate, OppositionID,CompanyName, OppositionName"
 
                 Case Else
-                    strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " & _
+                    strSQL = strSQL & " order by PositionName, PositionID, ContactName, ContactID, " &
                          "CompanyName, OppositionName, OppositionID, OppositionDate"
 
             End Select
@@ -735,8 +735,8 @@ Public Class frmOppositions
 
         Else
             Dim rptAlerts As New rptOppositionAlerts
-            strSQL = "SELECT distinct OppositionDateID, OppositionID, CompanyID, OppositionName, JurisdictionID, ProceedingNumber, CompanyName, " & _
-            "Jurisdiction, ListOrder, DateName, OppositionDate, Completed, DateID, ShowInAlerts, IsAlert, Suspended " & _
+            strSQL = "SELECT distinct OppositionDateID, OppositionID, CompanyID, OppositionName, JurisdictionID, ProceedingNumber, CompanyName, " &
+            "Jurisdiction, ListOrder, DateName, OppositionDate, Completed, DateID, ShowInAlerts, IsAlert, Suspended " &
             "from qvwOppositionDates Where IsAlert <> 0 and ShowInAlerts <> 0 and Suspended = 0" & strFilter
 
             Select Case strSort
@@ -769,7 +769,7 @@ Public Class frmOppositions
 
     Private Sub PrintList()
         On Error Resume Next
-        Dim strSort As String, strFilter As String, strField As String, strValue As String, _
+        Dim strSort As String, strFilter As String, strField As String, strValue As String,
             i As Integer, strSQL As String, drReader As OleDb.OleDbDataReader
 
         Dim GRow As Janus.Windows.GridEX.GridEXRow
@@ -841,7 +841,7 @@ Public Class frmOppositions
         Dim colCalendarItems As Outlook.Items
         Dim colItems As Outlook.Items
         Dim objCalendarFolder As Outlook.MAPIFolder
-        Dim strSubject As String, dOppositionDate As Date, strDayBefore As String, strDayAfter As String, _
+        Dim strSubject As String, dOppositionDate As Date, strDayBefore As String, strDayAfter As String,
             i As Integer, iLeadDays As Integer, strBody As String, GridRow As Janus.Windows.GridEX.GridEXRow
         Dim sngAlertTime As Single
 
@@ -854,7 +854,7 @@ Public Class frmOppositions
         colCalendarItems = objCalendarFolder.Items
 
         iLeadDays = CInt(Me.LeadDays.Text)
-        sngAlertTime = Nz(My.Settings.OutlookAlertTime, 0)
+        sngAlertTime = Nz(RevaSettings.OutlookAlertTime, 0)
 
         For i = 0 To Me.grdAlerts.SelectedItems.Count - 1
             GridRow = Me.grdAlerts.SelectedItems(i).GetRow
@@ -950,10 +950,10 @@ Public Class frmOppositions
         If Me.optEmailAlerts.Checked = True Then
             bEmailSent = Me.grdAlerts.GetValue("EmailSent")
             If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                strSQL = "update tblOppositionDates set EmailSent=" & IIf(bEmailSent = True, "-1", "0") & _
+                strSQL = "update tblOppositionDates set EmailSent=" & IIf(bEmailSent = True, "-1", "0") &
                     " where OppositionDateID=" & iOppositionDateID
             Else
-                strSQL = "update tblOppositionDates set EmailSent=" & IIf(bEmailSent = True, "1", "0") & _
+                strSQL = "update tblOppositionDates set EmailSent=" & IIf(bEmailSent = True, "1", "0") &
                     " where OppositionDateID=" & iOppositionDateID
             End If
             DataStuff.RunSQL(strSQL)
@@ -962,10 +962,10 @@ Public Class frmOppositions
         If Me.optAlerts.Checked = True Then
             bCompleted = Me.grdAlerts.GetValue("Completed")
             If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                strSQL = "update tblOppositionDates set Completed=" & IIf(bCompleted = True, "-1", "0") & _
+                strSQL = "update tblOppositionDates set Completed=" & IIf(bCompleted = True, "-1", "0") &
                     " where OppositionDateID=" & iOppositionDateID
             Else
-                strSQL = "update tblOppositionDates set Completed=" & IIf(bCompleted = True, "1", "0") & _
+                strSQL = "update tblOppositionDates set Completed=" & IIf(bCompleted = True, "1", "0") &
                     " where OppositionDateID=" & iOppositionDateID
             End If
             DataStuff.RunSQL(strSQL)
@@ -998,7 +998,7 @@ Public Class frmOppositions
 
         'toggle all email alerts as sent or not sent
         If e.Column.Key = "EmailSent" Then
-            Dim GRow As Janus.Windows.GridEX.GridEXRow, i As Integer, bSent As Boolean, _
+            Dim GRow As Janus.Windows.GridEX.GridEXRow, i As Integer, bSent As Boolean,
                 strFilter As String, strSQL As String
 
             bSent = Not (Me.grdAlerts.GetValue("EmailSent"))
@@ -1036,12 +1036,12 @@ Public Class frmOppositions
 
     Private Sub GenerateEmails(ByVal GRow As Janus.Windows.GridEX.GridEXRow, ByVal Email As Outlook.MailItem)
         On Error Resume Next
-        Dim strTo As String, strSubject As String, strMessage As String, _
+        Dim strTo As String, strSubject As String, strMessage As String,
              drToList As OleDb.OleDbDataReader, strSQL As String
 
         strTo = ""
-        strSQL = "SELECT distinct OppositionDateID, AutoEmail, EmailSent, ReceivesAlerts, FirstName, LastName, ContactEmail " & _
-        "from qvwOppositionDatesAndContacts where AutoEmail <> 0 and EmailSent = 0 and ReceivesAlerts <> 0 and OppositionDateID=" & _
+        strSQL = "SELECT distinct OppositionDateID, AutoEmail, EmailSent, ReceivesAlerts, FirstName, LastName, ContactEmail " &
+        "from qvwOppositionDatesAndContacts where AutoEmail <> 0 and EmailSent = 0 and ReceivesAlerts <> 0 and OppositionDateID=" &
         GRow.Cells("OppositionDateID").Text
         drToList = DataStuff.GetDataReader(strSQL)
 
@@ -1073,7 +1073,7 @@ Public Class frmOppositions
         strSubject = Replace(strSubject, "[Status]", GRow.Cells("Status").Value.ToString)
         strSubject = Replace(strSubject, "[Jurisdiction]", GRow.Cells("Jurisdiction").Value.ToString)
 
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             strMessage = Replace(strMessage, "[OppositionDate]", Format(GRow.Cells("OppositionDate").Value, "MMM dd, yyyy"))
             strSubject = Replace(strSubject, "[OppositionDate]", Format(GRow.Cells("OppositionDate").Value, "MMM dd, yyyy"))
         Else
@@ -1086,10 +1086,10 @@ Public Class frmOppositions
         GRow.EndEdit()
 
         If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-            strSQL = "update tblOppositionDates set EmailSent= -1" & _
+            strSQL = "update tblOppositionDates set EmailSent= -1" &
                 " where OppositionDateID=" & GRow.Cells("OppositionDateID").Value
         Else
-            strSQL = "update tblOppositionDates set EmailSent= 1" & _
+            strSQL = "update tblOppositionDates set EmailSent= 1" &
                 " where OppositionDateID=" & GRow.Cells("OppositionDateID").Value
         End If
         DataStuff.RunSQL(strSQL)
@@ -1097,7 +1097,7 @@ Public Class frmOppositions
         With Email
             .To = strTo
             .Subject = strSubject
-            If My.Settings.EmailHTML = True Then
+            If RevaSettings.EmailHTML = True Then
                 strMessage = strMessage.Replace(vbCrLf, "<p>")
                 .HTMLBody = strMessage
             Else
@@ -1169,7 +1169,7 @@ Public Class frmOppositions
         If AllForms.frmTrademarks Is Nothing And AllForms.frmPatents Is Nothing And AllForms.frmLogin Is Nothing _
         And AllForms.frmPreferences Is Nothing And AllForms.frmReports Is Nothing _
         And AllForms.frmCompanies Is Nothing And AllForms.frmOppositions Is Nothing Then
-            My.Settings.Save()
+
             Application.Exit()
         End If
     End Sub
@@ -1189,7 +1189,7 @@ Public Class frmOppositions
     Friend Sub SetDateFormats()
         On Error Resume Next
         With Me
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 .grdDates.RootTable.Columns("OppositionDate").FormatString = "MMM dd, yyyy"
                 .grdAlerts.RootTable.Columns("OppositionDate").FormatString = "MMM dd, yyyy"
                 .grdAlerts.RootTable.ChildTables("Actions").Columns("ActionDate").FormatString = "MMM dd, yyyy"
@@ -1406,16 +1406,16 @@ Public Class frmOppositions
 
             Select Case Globals.NavigateOppositionsFrom
                 Case 1  'list view
-                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                     .grdList.Row < (grdList.RowCount - 1)
-                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         (.grdList.Row > 0)
                     .RecordCount.Text = (.grdList.Row + 1) & " of " & .grdList.RowCount
 
                 Case 2  'either alerts view
-                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                     .grdAlerts.Row < (grdAlerts.RowCount - 1)
-                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         (.grdAlerts.Row > 0)
                     .RecordCount.Text = (.grdAlerts.Row + 1).ToString & " of " & .grdAlerts.RowCount.ToString
 
@@ -1496,7 +1496,7 @@ Public Class frmOppositions
         End If
 
         'still here, then proceed
-        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strProceeding As String, _
+        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strProceeding As String,
             bUsesFields As Boolean, strFieldName As String, strSQL As String
 
         strSQL = "Select * from tblJurisdictions where JurisdictionID=" & Me.JurisdictionID.Value
@@ -1604,8 +1604,8 @@ Public Class frmOppositions
             Me.Tabs.SelectedIndex = 1
 
             Dim strMessage As String
-            strMessage = "You are about to change the jurisdiction for this opposition.  " & _
-                "Opposition dates with the same names will remain intact, " & _
+            strMessage = "You are about to change the jurisdiction for this opposition.  " &
+                "Opposition dates with the same names will remain intact, " &
                 "but others will be deleted.  Proceed?"
 
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then
@@ -1628,8 +1628,8 @@ Public Class frmOppositions
         Me.Cursor = Cursors.WaitCursor
         strSort = "CompanyName, OppositionName, Jurisdiction, OppositionID, ListOrder, OppositionDate"
 
-        strSQL = "SELECT OppositionID, StatusID, CompanyID, OppositionName, JurisdictionID, ProceedingNumber, CompanyName, " & _
-        "OppositionCompany, ListOrder, DateName, OppositionDate, Completed, IsAlert, Status, Jurisdiction " & _
+        strSQL = "SELECT OppositionID, StatusID, CompanyID, OppositionName, JurisdictionID, ProceedingNumber, CompanyName, " &
+        "OppositionCompany, ListOrder, DateName, OppositionDate, Completed, IsAlert, Status, Jurisdiction " &
         "from qvwOppositionDates where OppositionID=" & Globals.OppositionID & " order by " & strSort
 
         drReader = DataStuff.GetDataReader(strSQL)
@@ -1750,7 +1750,7 @@ Public Class frmOppositions
         Dim strSQL As String, iCompanyID As Integer
         iCompanyID = rsOpposition.CurrentRow("CompanyID")
 
-        strSQL = "Select distinct TrademarkID, TrademarkName, RegistrationNumber, ApplicationNumber, Jurisdiction" & _
+        strSQL = "Select distinct TrademarkID, TrademarkName, RegistrationNumber, ApplicationNumber, Jurisdiction" &
             " from qvwTrademarks where CompanyID=" & iCompanyID & " order by TrademarkName"
         dtCompanyMarks = DataStuff.GetDataTable(strSQL)
         Me.grdClientMarks.DropDowns("cboTrademarks").SetDataBinding(dtCompanyMarks, "")
@@ -1759,7 +1759,7 @@ Public Class frmOppositions
     Private Sub GetActions()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "Select * from tblOppositionActions where OppositionID=" & Globals.OppositionID & _
+        strSQL = "Select * from tblOppositionActions where OppositionID=" & Globals.OppositionID &
             " order by ActionDate, OppositionActionID"
         rsActions.GetFromSQL(strSQL)
         Me.grdActions.DataSource = rsActions.Table
@@ -1768,7 +1768,7 @@ Public Class frmOppositions
     Friend Sub GetContacts()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "SELECT distinct CompanyID, ContactID, OppositionContactID, CompanyName, ContactName, ContactPhone, " & _
+        strSQL = "SELECT distinct CompanyID, ContactID, OppositionContactID, CompanyName, ContactName, ContactPhone, " &
         "OppositionID, PositionID, ContactEmail from qvwOppositionContacts where OppositionID=" & Globals.OppositionID
         dtContacts = DataStuff.GetDataTable(strSQL)
         Me.grdContacts.DataSource = dtContacts
@@ -1792,14 +1792,14 @@ Public Class frmOppositions
 
     Friend Sub GetClientMarks()
         On Error Resume Next
-        rsClientMarks.GetFromSQL("Select * from tblOppositionClientTrademarks where OppositionID=" & _
+        rsClientMarks.GetFromSQL("Select * from tblOppositionClientTrademarks where OppositionID=" &
             Globals.OppositionID)
         Me.grdClientMarks.DataSource = rsClientMarks.Table
     End Sub
 
     Friend Sub GetOppositionMarks()
         On Error Resume Next
-        rsOppositionMarks.GetFromSQL("Select * from tblOppositionTrademarks where OppositionID=" & _
+        rsOppositionMarks.GetFromSQL("Select * from tblOppositionTrademarks where OppositionID=" &
             Globals.OppositionID)
         Me.grdOppositionMarks.DataSource = rsOppositionMarks.Table
     End Sub
@@ -1949,7 +1949,7 @@ Public Class frmOppositions
                 End If
 
                 'still here, then proceed
-                Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String, _
+                Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String,
                     bUsesFields As Boolean, strFieldName As String, strSQL As String
 
                 strSQL = "Select * from tblJurisdictions where JurisdictionID=" & Me.JurisdictionID.Value
@@ -1991,7 +1991,7 @@ Public Class frmOppositions
 
 
                 'still here, then proceed
-                Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strRegNumber As String, _
+                Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strRegNumber As String,
                     bUsesFields As Boolean, strFieldName As String, strSQL As String
 
                 strSQL = "Select * from tblJurisdictions where JurisdictionID=" & Me.JurisdictionID.Value
@@ -2047,7 +2047,7 @@ Public Class frmOppositions
                 End If
 
                 'still here, then proceed
-                Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String, _
+                Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String,
                     bUsesFields As Boolean, strFieldName As String, strSQL As String
 
                 strSQL = "Select * from tblJurisdictions where JurisdictionID=" & Me.JurisdictionID.Value
@@ -2088,7 +2088,7 @@ Public Class frmOppositions
                 End If
 
                 'still here, then proceed
-                Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strRegNumber As String, _
+                Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strRegNumber As String,
                     bUsesFields As Boolean, strFieldName As String, strSQL As String
 
                 strSQL = "Select * from tblJurisdictions where JurisdictionID=" & Me.JurisdictionID.Value
@@ -2165,9 +2165,9 @@ Public Class frmOppositions
         Me.Cursor = Cursors.WaitCursor
         strSort = "CompanyName, OppositionName, Jurisdiction, OppositionID, ActionDate"
 
-        strSQL = "SELECT OppositionID, StatusID, CompanyID, OppositionName, JurisdictionID, ProceedingNumber, CompanyName, " & _
-        "Jurisdiction, Status, ActionDate, OppositionAction, ActionHours, ActionBilled, Expenses, BilledHours, " & _
-        "UnbilledHours, BilledExpenses, UnbilledExpenses, ExpensesBilled from qvwOppositionActions where OppositionID=" & _
+        strSQL = "SELECT OppositionID, StatusID, CompanyID, OppositionName, JurisdictionID, ProceedingNumber, CompanyName, " &
+        "Jurisdiction, Status, ActionDate, OppositionAction, ActionHours, ActionBilled, Expenses, BilledHours, " &
+        "UnbilledHours, BilledExpenses, UnbilledExpenses, ExpensesBilled from qvwOppositionActions where OppositionID=" &
         Globals.OppositionID & " order by " & strSort
 
         drReader = DataStuff.GetDataReader(strSQL)
@@ -2189,9 +2189,9 @@ Public Class frmOppositions
         iCompanyID = Nz(Me.CompanyID.Value, 0)
         If iCompanyID = 0 Then Exit Sub
 
-        strSQL = "Insert into tblOppositionContacts (OppositionID, ContactID, PositionID) Select " & _
-            Globals.OppositionID & ", ContactID, PositionID from tblContacts where CompanyID=" & iCompanyID & _
-                " and PositionID is not null and PositionID in (Select PositionID from tblPositions" & _
+        strSQL = "Insert into tblOppositionContacts (OppositionID, ContactID, PositionID) Select " &
+            Globals.OppositionID & ", ContactID, PositionID from tblContacts where CompanyID=" & iCompanyID &
+                " and PositionID is not null and PositionID in (Select PositionID from tblPositions" &
                 " where IsTrademark <> 0)"
         DataStuff.RunSQL(strSQL)
 
@@ -2211,7 +2211,7 @@ Public Class frmOppositions
 
         If e.Column.Key = "ContactEmail" Then
             Me.Cursor = Cursors.WaitCursor
-            Dim OL As Outlook.Application, Email As Outlook.MailItem, strTo As String, strSubject As String, _
+            Dim OL As Outlook.Application, Email As Outlook.MailItem, strTo As String, strSubject As String,
                 GRow As Janus.Windows.GridEX.GridEXRow, i As Integer
 
             strSubject = ""
@@ -2233,7 +2233,7 @@ Public Class frmOppositions
                 End If
                 Email = OL.CreateItem(Outlook.OlItemType.olMailItem)
                 With Me
-                    strSubject = .OppositionName.Text & " | " & .JurisdictionID.Text & _
+                    strSubject = .OppositionName.Text & " | " & .JurisdictionID.Text &
                         " | Proc# " & .ProceedingNumber.Text
                 End With
                 With Email
@@ -2253,7 +2253,7 @@ Public Class frmOppositions
         On Error Resume Next
 
         If (Globals.SecurityLevel = 1) And (e.Column.Key = "lnkDelete") Then
-            If MsgBox("Are you sure you want to delete this contact from the Opposition?", _
+            If MsgBox("Are you sure you want to delete this contact from the Opposition?",
                 MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
             Dim strSQL As String, iOppositionContactID As Integer
             iOppositionContactID = Me.grdContacts.GetValue("OppositionContactID")
@@ -2275,7 +2275,7 @@ Public Class frmOppositions
                 End If
                 Email = OL.CreateItem(Outlook.OlItemType.olMailItem)
                 With Me
-                    strSubject = .OppositionName.Text & " | " & .JurisdictionID.Text & _
+                    strSubject = .OppositionName.Text & " | " & .JurisdictionID.Text &
                         " | Proc# " & .ProceedingNumber.Text
 
                 End With
@@ -2318,7 +2318,7 @@ Public Class frmOppositions
         On Error Resume Next
         Dim rsContacts As New RecordSet, dRow As DataRow
         With Me.grdContacts
-            rsContacts.GetFromSQL("Select * from tblOppositionContacts where OppositionContactID=" & _
+            rsContacts.GetFromSQL("Select * from tblOppositionContacts where OppositionContactID=" &
                 .GetValue("OppositionContactID"))
             dRow = rsContacts.CurrentRow
             dRow("PositionID") = .GetValue("PositionID")
@@ -2342,9 +2342,9 @@ Public Class frmOppositions
             If grdDocumentLinks.GetValue("IsFolder") = False Then
                 With Me.OpenFileDialog
                     If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
-                        .InitialDirectory = My.Settings.TrademarkDocumentsDemo
+                        .InitialDirectory = RevaSettings.TrademarkDocumentsDemo
                     Else
-                        .InitialDirectory = My.Settings.TrademarkDocuments
+                        .InitialDirectory = RevaSettings.TrademarkDocuments
                     End If
                     .FileName = ""
                     .Filter = "Word Documents (*.docx)|*.docx|All Files|*.*"
@@ -2358,9 +2358,9 @@ Public Class frmOppositions
             Else
                 With Me.FolderBrowserDialog
                     If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                        .SelectedPath = My.Settings.TrademarkDocumentsDemo
+                        .SelectedPath = RevaSettings.TrademarkDocumentsDemo
                     Else
-                        .SelectedPath = My.Settings.TrademarkDocuments
+                        .SelectedPath = RevaSettings.TrademarkDocuments
                     End If
                     If .ShowDialog = Windows.Forms.DialogResult.OK Then
                         Me.grdDocumentLinks.SetValue("DocumentLink", .SelectedPath & "")

@@ -118,7 +118,7 @@ Public Class MarkOutlookMerge
                     Email = OL.CreateItem(Outlook.OlItemType.olMailItem)
                     With Email
                         .To = dtContacts.Rows(iContact).Item("ContactEmail")
-                        If My.Settings.EmailHTML = True Then
+                        If RevaSettings.EmailHTML = True Then
                             strEmailBody = strEmailBody.Replace(vbCrLf, "<p>")
                             .HTMLBody = strEmailBody
                         Else
@@ -148,7 +148,7 @@ Public Class MarkOutlookMerge
             Email = OL.CreateItem(Outlook.OlItemType.olMailItem)
             With Email
                 .To = strContacts
-                If My.Settings.EmailHTML = True Then
+                If RevaSettings.EmailHTML = True Then
                     strEmailBody = strEmailBody.Replace(vbCrLf, "<p>")
                     .HTMLBody = strEmailBody
                 Else
@@ -182,8 +182,8 @@ Public Class MarkOutlookMerge
         Dim strField As String, strValue As String, iRows As Integer, dRow As DataRow, _
             bUSADates As Boolean, bSpellMonth As Boolean
 
-        bUSADates = My.Settings.USADates
-        bSpellMonth = My.Settings.SpellMonthMerge
+        bUSADates = RevaSettings.USADates
+        bSpellMonth = RevaSettings.SpellMonthMerge
 
         iRows = dtTrademarkDates.Rows.Count
         For iRows = 0 To (iRows - 1)

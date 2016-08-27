@@ -2,7 +2,7 @@ Public NotInheritable Class frmAbout
 
     Private Sub frmAbout_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         On Error Resume Next
-        Me.LicenseNumber.Text = My.Settings.LicenseKey
+        Me.LicenseNumber.Text = RevaSettings.LicenseKey
         Me.lblUser.Text = Environment.UserDomainName & "\" & Environment.UserName
         Me.lblSecurity.Text = Globals.SecurityLevel
     End Sub
@@ -43,14 +43,14 @@ Public NotInheritable Class frmAbout
 
             Case Else
                 MsgBox("Sorry, that is not a legitimate license number.  Please try again.")
-                Me.LicenseNumber.Text = My.Settings.LicenseKey & ""
+                Me.LicenseNumber.Text = RevaSettings.LicenseKey & ""
 
         End Select
     End Sub
 
     Private Sub SaveLicense()
         On Error Resume Next
-        My.Settings.LicenseKey = Me.LicenseNumber.Text
+        RevaSettings.LicenseKey = Me.LicenseNumber.Text
         If Me.LicenseNumber.Text = "DemoVersion" Then Exit Sub
         MsgBox("Thank you.  To log in to the SQL Server database, select Connection from the File menu.")
         Me.Close()

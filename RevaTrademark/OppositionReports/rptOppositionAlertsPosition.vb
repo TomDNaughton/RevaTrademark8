@@ -8,7 +8,7 @@ Public Class rptOppositionAlertsPosition
 
     Private Sub PageHeader1_Format(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PageHeader1.Format
         On Error Resume Next
-        Me.ReportGraphic.Image = System.Drawing.Image.FromFile(My.Settings.ReportIcon)
+        Me.ReportGraphic.Image = System.Drawing.Image.FromFile(RevaSettings.ReportIcon)
     End Sub
 
     Private Sub OppositionIDHeader_Format(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OppositionIDHeader.Format

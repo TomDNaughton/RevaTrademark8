@@ -15,7 +15,7 @@ Public Class frmLogin
         AllForms.frmLogin = Me
 
         Dim strLicense As String
-        strLicense = My.Settings.LicenseKey & ""
+        strLicense = RevaSettings.LicenseKey & ""
 
         Select Case strLicense
             Case "DemoVersion"
@@ -58,6 +58,12 @@ Public Class frmLogin
             SetSecurityOptions()
         End With
 
+        If System.Diagnostics.Debugger.IsAttached Then
+            btnSQLDev.Visible = True
+            btnHookDev.Visible = True
+            btnTest.Visible = True
+        End If
+
     End Sub
 
     Private Sub SetSecurityOptions()
@@ -77,8 +83,8 @@ Public Class frmLogin
                 .chkSavePassword.Enabled = False
                 .grpSecurityType.Enabled = False
             Else
-                .optIntegrated.Checked = My.Settings.SecurityType = 1
-                .optSpecific.Checked = My.Settings.SecurityType = 2
+                .optIntegrated.Checked = RevaSettings.SecurityType = 1
+                .optSpecific.Checked = RevaSettings.SecurityType = 2
                 .Server.Enabled = True
                 .Database.Enabled = True
                 .UserID.Enabled = True
@@ -92,24 +98,24 @@ Public Class frmLogin
                 .optSQL.Checked = True
 
                 If .Server.Text & "" = "" Then
-                    .Server.Text = My.Settings.ServerName & ""
+                    .Server.Text = RevaSettings.ServerName & ""
                 End If
 
                 If .Database.Text & "" = "" Then
-                    .Database.Text = My.Settings.DatabaseName & ""
+                    .Database.Text = RevaSettings.DatabaseName & ""
                 End If
 
                 If .UserID.Text & "" = "" Then
-                    .UserID.Text = My.Settings.UserName & ""
+                    .UserID.Text = RevaSettings.UserName & ""
                 End If
 
 
-                If My.Settings.SavePassword = True Then
-                    '.Password.Text = GetPassword(My.Settings.SQLConnection)
-                    .Password.Text = My.Settings.Password
+                If RevaSettings.SavePassword = True Then
+                    '.Password.Text = GetPassword(RevaSettings.SQLConnection)
+                    .Password.Text = RevaSettings.Password
                 End If
 
-                .chkSavePassword.Checked = (My.Settings.SavePassword = True)
+                .chkSavePassword.Checked = (RevaSettings.SavePassword = True)
 
             End If
 
@@ -119,8 +125,8 @@ Public Class frmLogin
     Private Sub optIntegrated_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles optIntegrated.CheckedChanged
         On Error Resume Next
         If Me.optIntegrated.Checked = True Then
-            My.Settings.SecurityType = 1
-            My.Settings.Save()
+            RevaSettings.SecurityType = 1
+
             SetSecurityOptions()
         End If
     End Sub
@@ -128,8 +134,8 @@ Public Class frmLogin
     Private Sub optSpecific_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles optSpecific.CheckedChanged
         On Error Resume Next
         If Me.optSpecific.Checked = True Then
-            My.Settings.SecurityType = 2
-            My.Settings.Save()
+            RevaSettings.SecurityType = 2
+
             SetSecurityOptions()
         End If
     End Sub
@@ -182,22 +188,22 @@ Public Class frmLogin
         Dim strPath As String
         strPath = Application.StartupPath & "\"
         strPath = Replace(strPath, "\\", "\")
-        If My.Settings.TrademarkDocumentsDemo & "" = "" Then
-            My.Settings.TrademarkDocumentsDemo = strPath & "Documents"
+        If RevaSettings.TrademarkDocumentsDemo & "" = "" Then
+            RevaSettings.TrademarkDocumentsDemo = strPath & "Documents"
         End If
-        If My.Settings.PatentDocumentsDemo & "" = "" Then
-            My.Settings.PatentDocumentsDemo = strPath & "Documents"
+        If RevaSettings.PatentDocumentsDemo & "" = "" Then
+            RevaSettings.PatentDocumentsDemo = strPath & "Documents"
         End If
-        If My.Settings.TrademarkGraphicsDemo & "" = "" Then
-            My.Settings.TrademarkGraphicsDemo = strPath & "Graphics"
+        If RevaSettings.TrademarkGraphicsDemo & "" = "" Then
+            RevaSettings.TrademarkGraphicsDemo = strPath & "Graphics"
         End If
-        If My.Settings.PatentGraphicsDemo & "" = "" Then
-            My.Settings.PatentGraphicsDemo = strPath & "Graphics"
+        If RevaSettings.PatentGraphicsDemo & "" = "" Then
+            RevaSettings.PatentGraphicsDemo = strPath & "Graphics"
         End If
-        If My.Settings.ReportIconDemo & "" = "" Then
-            My.Settings.ReportIconDemo = strPath & "Graphics\RevaLogo.bmp"
+        If RevaSettings.ReportIconDemo & "" = "" Then
+            RevaSettings.ReportIconDemo = strPath & "Graphics\RevaLogo.bmp"
         End If
-        My.Settings.Save()
+
     End Sub
 
     Private Sub btnLogIn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLogIn.Click
@@ -211,11 +217,11 @@ Public Class frmLogin
                     strLogin = My.Settings.AccessConnection
                     SetDemoFolders()
                 Else
-                    My.Settings.DatabaseName = .Database.Text
-                    My.Settings.ServerName = .Server.Text
-                    My.Settings.UserName = .UserID.Text
-                    My.Settings.Password = .Password.Text
-                    My.Settings.SavePassword = .chkSavePassword.Checked
+                    RevaSettings.DatabaseName = .Database.Text
+                    RevaSettings.ServerName = .Server.Text
+                    RevaSettings.UserName = .UserID.Text
+                    RevaSettings.Password = .Password.Text
+                    RevaSettings.SavePassword = .chkSavePassword.Checked
                     strLogin = "Provider=SQLOLEDB.1;Data Source=" & .Server.Text & ";"
                     strLogin = strLogin & "Initial Catalog=" & .Database.Text & ";"
                     If .optIntegrated.Checked = True Then
@@ -228,7 +234,7 @@ Public Class frmLogin
             End With
 
             SaveCurrentConnection(strLogin)
-            My.Settings.Save()
+            RevaData.ConnectionString = My.Settings.CurrentConnection
 
 
             If Not (AllForms.frmTrademarks Is Nothing) Then
@@ -261,7 +267,7 @@ Public Class frmLogin
 
             SetSecurity()
 
-            If My.Settings.OpenOnMarks = True Then
+            If RevaSettings.OpenOnMarks = True Then
                 AllForms.OpenTrademarks()
             Else
                 AllForms.OpenPatents()
@@ -289,7 +295,7 @@ Public Class frmLogin
         Setting.ConnectionString = strConnection
         Config.Save(ConfigurationSaveMode.Full, False)
         My.MySettings.Default.Item("CurrentConnection") = strConnection
-        My.Settings.Save()
+
 
     End Sub
 
@@ -309,7 +315,7 @@ Public Class frmLogin
         Setting.ConnectionString = strConnection
         Config.Save(ConfigurationSaveMode.Full, True)
         My.MySettings.Default.Item("SQLConnection") = strConnection
-        My.Settings.Save()
+
 
     End Sub
 
@@ -379,7 +385,7 @@ Public Class frmLogin
         strLogin = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\_TrademarkDev\RevaVB\RevaTrademark\RevaTrademark.mdb;Persist Security Info=True"
 
         SaveCurrentConnection(strLogin)
-        My.Settings.Save()
+
 
         AllForms.frmTrademarks.Close()
         AllForms.frmPatents.Close()
@@ -390,7 +396,7 @@ Public Class frmLogin
 
         SetSecurity()
 
-        If My.Settings.OpenOnMarks = True Then
+        If RevaSettings.OpenOnMarks = True Then
             AllForms.OpenTrademarks()
         Else
             AllForms.OpenPatents()
@@ -403,10 +409,10 @@ Public Class frmLogin
     Private Sub HookToSQL()
         On Error Resume Next
         Dim strLogin As String, strUser As String
-        strLogin = "Provider=SQLOLEDB;Data Source=Acerlaptop\SQLExpress;User ID=sa; password=fatdog999;Initial Catalog=RevaTrademark"
+        strLogin = "Provider=SQLOLEDB;Data Source=THOMASNAUGH5871\SQLEXPRESS;Password=fatdog999;User ID=tommy;Initial Catalog=RevaTrademarkDev7"
 
         SaveCurrentConnection(strLogin)
-        My.Settings.Save()
+        RevaData.ConnectionString = My.Settings.CurrentConnection
 
         AllForms.frmTrademarks.Close()
         AllForms.frmPatents.Close()
@@ -420,7 +426,7 @@ Public Class frmLogin
         Globals.SecurityLevel = DataStuff.DMin("SecurityLevel", "qvwRoleMembers", "UserName='" & strUser & "'")
         Globals.SecurityLevel = 1
         Globals.PurchaseLevel = 5
-        If My.Settings.OpenOnMarks = True Then
+        If RevaSettings.OpenOnMarks = True Then
             AllForms.OpenTrademarks()
         Else
             AllForms.OpenPatents()
@@ -439,10 +445,6 @@ Public Class frmLogin
     End Sub
 
     Private Sub btnTest_Click(sender As Object, e As EventArgs) Handles btnTest.Click
-
-
-
-
 
 
     End Sub

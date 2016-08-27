@@ -55,7 +55,7 @@ Public Class frmTrademarks
         If MsgBox("Are you sure want to exit RevaTrademark?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             'If bWasEdited = True Then SaveTrademark()
             SaveTrademark()
-            My.Settings.Save()
+            
             Application.Exit()
         End If
     End Sub
@@ -244,21 +244,21 @@ Public Class frmTrademarks
         With Me
             If .optList.Checked Then
                 My.Settings.TrademarkListLayout = .grdList.GetLayout.GetXmlString
-                My.Settings.Save()
+                
             End If
 
             If .optAlerts.Checked Then
                 My.Settings.TrademarkAlertLayout = .grdAlerts.GetLayout.GetXmlString
-                My.Settings.Save()
+                
             End If
 
             If .optEmailAlerts.Checked Then
                 My.Settings.TrademarkEmailAlertLayout = .grdAlerts.GetLayout.GetXmlString
-                My.Settings.Save()
+                
             End If
 
             My.Settings.TrademarkStatusLayout = .grdStatusCheck.GetLayout.GetXmlString
-            My.Settings.Save()
+            
         End With
 
     End Sub
@@ -1160,12 +1160,12 @@ Public Class frmTrademarks
         SetAlertEndDate()
         GetAlertDates()
         My.Settings.DateFromIndex = Me.cboStart.SelectedIndex
-        My.Settings.Save()
+        
     End Sub
 
     Private Sub SetAlertStartDate()
         On Error Resume Next
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Select Case Me.cboEnd.SelectedIndex
                 Case 0
                     Me.BetweenEnd.Text = Format(DateAdd(DateInterval.Day, 7, DateTime.Now.Date), "MMM dd, yyyy")
@@ -1201,7 +1201,7 @@ Public Class frmTrademarks
     Private Sub BetweenStart_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BetweenStart.Validated
         On Error Resume Next
         If IsDate(Me.BetweenStart.Text) Then
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 Me.BetweenStart.Text = Format(DateValue(Me.BetweenStart.Text), "MMM dd, yyyy")
             Else
                 Me.BetweenStart.Text = Format(DateValue(Me.BetweenStart.Text), "dd MMM yyyy")
@@ -1217,13 +1217,13 @@ Public Class frmTrademarks
         SetAlertStartDate()
         GetAlertDates()
         My.Settings.DateToIndex = Me.cboEnd.SelectedIndex
-        My.Settings.Save()
+        
     End Sub
 
     Private Sub BetweenEnd_Validated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BetweenEnd.Validated
         On Error Resume Next
         If IsDate(Me.BetweenEnd.Text) Then
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 Me.BetweenEnd.Text = Format(DateValue(Me.BetweenEnd.Text), "MMM dd, yyyy")
             Else
                 Me.BetweenEnd.Text = Format(DateValue(Me.BetweenEnd.Text), "dd MMM yyyy")
@@ -1236,7 +1236,7 @@ Public Class frmTrademarks
 
     Private Sub SetAlertEndDate()
         On Error Resume Next
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Select Case Me.cboStart.SelectedIndex
                 Case 0
                     Me.BetweenStart.Text = Format(DateAdd(DateInterval.Month, -3, DateTime.Now.Date), "MMM dd, yyyy")
@@ -1533,7 +1533,7 @@ Public Class frmTrademarks
         colCalendarItems = objCalendarFolder.Items
 
         iLeadDays = CInt(Me.LeadDays.Text)
-        sngAlertTime = Nz(My.Settings.OutlookAlertTime, 0)
+        sngAlertTime = Nz(RevaSettings.OutlookAlertTime, 0)
 
         For i = 0 To Me.grdAlerts.SelectedItems.Count - 1
             GridRow = Me.grdAlerts.SelectedItems(i).GetRow
@@ -1815,7 +1815,7 @@ Public Class frmTrademarks
         strSubject = Replace(strSubject, "[RegistrationType]", GRow.Cells("RegistrationType").Value.ToString)
         strSubject = Replace(strSubject, "[Jurisdiction]", GRow.Cells("Jurisdiction").Value.ToString)
 
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             strMessage = Replace(strMessage, "[TrademarkDate]", Format(GRow.Cells("TrademarkDate").Value, "MMM dd, yyyy"))
             strSubject = Replace(strSubject, "[TrademarkDate]", Format(GRow.Cells("TrademarkDate").Value, "MMM dd, yyyy"))
         Else
@@ -1839,7 +1839,7 @@ Public Class frmTrademarks
         With Email
             .To = strTo
             .Subject = strSubject
-            If My.Settings.EmailHTML = True Then
+            If RevaSettings.EmailHTML = True Then
                 strMessage = strMessage.Replace(vbCrLf, "<p>")
                 .HTMLBody = strMessage
             Else
@@ -1909,7 +1909,7 @@ Public Class frmTrademarks
         If AllForms.frmTrademarks Is Nothing And AllForms.frmPatents Is Nothing And AllForms.frmLogin Is Nothing _
         And AllForms.frmPreferences Is Nothing And AllForms.frmReports Is Nothing _
         And AllForms.frmCompanies Is Nothing And AllForms.frmOppositions Is Nothing Then
-            My.Settings.Save()
+            
             Application.Exit()
         End If
     End Sub
@@ -1925,7 +1925,7 @@ Public Class frmTrademarks
     Friend Sub SetDateFormats()
         On Error Resume Next
         With Me
-            If My.Settings.USADates = True Then
+            If RevaSettings.USADates = True Then
                 .grdDates.RootTable.Columns("TrademarkDate").FormatString = "MMM dd, yyyy"
                 .grdAlerts.RootTable.Columns("TrademarkDate").FormatString = "MMM dd, yyyy"
                 .grdAlerts.RootTable.ChildTables("Actions").Columns("ActionDate").FormatString = "MMM dd, yyyy"
@@ -2288,7 +2288,7 @@ Public Class frmTrademarks
 
             End Select
 
-            If My.Settings.ShowHoursExpenses = True Then
+            If RevaSettings.ShowHoursExpenses = True Then
                 .grdActions.RootTable.Columns("ActionHours").Visible = True
                 .grdActions.RootTable.Columns("ActionBilled").Visible = True
                 .grdActions.RootTable.Columns("Expenses").Visible = True
@@ -3157,9 +3157,18 @@ Public Class frmTrademarks
 
     Private Sub GetTrademarksList()
         On Error Resume Next
-        Dim strSQL As String
-        strSQL = SQL.vwTrademarksList
-        dtTrademarksList = DataStuff.GetDataTable(strSQL)
+
+        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+            Dim strSQL As String
+            strSQL = SQL.vwTrademarksList
+            dtTrademarksList = DataStuff.GetDataTable(strSQL)
+        Else
+            dtTrademarksList = RevaData.GetTrademarksList()
+        End If
+
+
+
+
         Me.grdList.DataSource = dtTrademarksList
         Me.grdList.Row = 0
     End Sub
@@ -3549,9 +3558,9 @@ Public Class frmTrademarks
             If grdDocumentLinks.GetValue("IsFolder") = False Then
                 With Me.OpenFileDialog
                     If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
-                        .InitialDirectory = My.Settings.TrademarkDocumentsDemo
+                        .InitialDirectory = RevaSettings.TrademarkDocumentsDemo
                     Else
-                        .InitialDirectory = My.Settings.TrademarkDocuments
+                        .InitialDirectory = RevaSettings.TrademarkDocuments
                     End If
                     .FileName = ""
                     .Filter = "Word Documents (*.docx)|*.docx|All Files|*.*"
@@ -3565,9 +3574,9 @@ Public Class frmTrademarks
             Else
                 With Me.FolderBrowserDialog
                     If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                        .SelectedPath = My.Settings.TrademarkDocumentsDemo
+                        .SelectedPath = RevaSettings.TrademarkDocumentsDemo
                     Else
-                        .SelectedPath = My.Settings.TrademarkDocuments
+                        .SelectedPath = RevaSettings.TrademarkDocuments
                     End If
                     If .ShowDialog = Windows.Forms.DialogResult.OK Then
                         Me.grdDocumentLinks.SetValue("DocumentLink", .SelectedPath & "")
@@ -3641,9 +3650,9 @@ Public Class frmTrademarks
         If Globals.SecurityLevel = 3 Then Exit Sub
         With Me.OpenFileDialog
             If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
-                .InitialDirectory = My.Settings.TrademarkGraphicsDemo
+                .InitialDirectory = RevaSettings.TrademarkGraphicsDemo
             Else
-                .InitialDirectory = My.Settings.TrademarkGraphics
+                .InitialDirectory = RevaSettings.TrademarkGraphics
             End If
             .FileName = ""
             .Filter = "All Files|*.*"
@@ -3751,7 +3760,7 @@ Public Class frmTrademarks
                     "where TrademarkID=" & Globals.TrademarkID & " order by TrademarkDate DESC, ListOrder DESC")
             End If
 
-            If My.Settings.BlankDatesLast = True Then
+            If RevaSettings.BlankDatesLast = True Then
                 Dim iListOrder As Integer
                 iListOrder = 1
                 'tick up the ones with dates first
@@ -4087,9 +4096,9 @@ Public Class frmTrademarks
 
         With Me.OpenFileDialog
             If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
-                .InitialDirectory = My.Settings.TrademarkDocumentsDemo
+                .InitialDirectory = RevaSettings.TrademarkDocumentsDemo
             Else
-                .InitialDirectory = My.Settings.TrademarkDocuments
+                .InitialDirectory = RevaSettings.TrademarkDocuments
             End If
             .FileName = ""
 
@@ -4115,7 +4124,7 @@ Public Class frmTrademarks
                     My.Settings.LastMergeOutlook = .FileName & ""
                 End If
 
-                My.Settings.Save()
+                
 
             End If
         End With
@@ -4178,9 +4187,9 @@ Public Class frmTrademarks
 
         With Me.SaveFileDialog
             If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
-                .InitialDirectory = My.Settings.TrademarkDocumentsDemo
+                .InitialDirectory = RevaSettings.TrademarkDocumentsDemo
             Else
-                .InitialDirectory = My.Settings.TrademarkDocuments
+                .InitialDirectory = RevaSettings.TrademarkDocuments
             End If
 
             .FileName = ""
@@ -4191,7 +4200,7 @@ Public Class frmTrademarks
             .ShowDialog()
             If Len(.FileName & "") > 3 Then
                 Me.MergeDocument.Text = .FileName & ""
-                My.Settings.Save()
+                
             End If
         End With
 
@@ -4202,7 +4211,7 @@ Public Class frmTrademarks
 
         My.Settings.LastMergeType = 1
         My.Settings.LastMergeWord = Me.MergeDocument.Text
-        My.Settings.Save()
+        
 
         Dim MM As New MarkMerge
         With MM
@@ -4224,7 +4233,7 @@ Public Class frmTrademarks
 
         My.Settings.LastMergeType = 1
         My.Settings.LastMergeWord = Me.MergeDocument.Text
-        My.Settings.Save()
+        
 
         Dim MM As New MarkMerge
         With MM
@@ -4289,7 +4298,7 @@ Public Class frmTrademarks
 
         My.Settings.LastMergeOutlook = Me.MergeDocument.Text
         My.Settings.LastMergeType = 3
-        My.Settings.Save()
+        
 
         Dim OM As New MarkOutlookMerge
         With OM
@@ -4324,7 +4333,7 @@ Public Class frmTrademarks
         'okay, go for it
 
         My.Settings.LastMergeType = 4
-        My.Settings.Save()
+        
 
         Dim OM As New MarkOutlookMerge
         With OM
@@ -5339,7 +5348,7 @@ Public Class frmTrademarks
         With Email
             .To = strTo
             .Subject = strSubject
-            If My.Settings.EmailHTML = True Then
+            If RevaSettings.EmailHTML = True Then
                 strMessage = strMessage.Replace(vbCrLf, "<p>")
                 .HTMLBody = strMessage
             Else

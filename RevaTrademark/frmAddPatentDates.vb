@@ -3,7 +3,7 @@ Public Class frmAddPatentDates
     Private Sub frmAddPatentDates_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         On Error Resume Next
         AllForms.frmAddPatentDates = Me
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Me.grdAddDates.RootTable.Columns("PatentDate").FormatString = "MMM dd, yyyy"
         Else
             Me.grdAddDates.RootTable.Columns("PatentDate").FormatString = "dd MMM yyyy"

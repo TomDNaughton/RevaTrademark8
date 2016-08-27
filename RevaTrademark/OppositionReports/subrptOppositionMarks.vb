@@ -5,7 +5,7 @@ Public Class subrptOppositionMarks
 
     Private Sub ReportHeader1_Format(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReportHeader1.Format
         On Error Resume Next
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Me.FilingDate.OutputFormat = "MMM dd, yyyy"
             Me.FirstUseDate.OutputFormat = "MMM dd, yyyy"
             Me.RegistrationDate.OutputFormat = "MMM dd, yyyy"

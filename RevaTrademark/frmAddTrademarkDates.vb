@@ -3,7 +3,7 @@ Public Class frmAddTrademarkDates
     Private Sub frmAddTrademarkDates_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         On Error Resume Next
         AllForms.frmAddTrademarkDates = Me
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Me.grdAddDates.RootTable.Columns("TrademarkDate").FormatString = "MMM dd, yyyy"
         Else
             Me.grdAddDates.RootTable.Columns("TrademarkDate").FormatString = "dd MMM yyyy"

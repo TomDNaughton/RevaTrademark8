@@ -21,9 +21,9 @@ Public Class frmReportPreview
         Dim strFileName As String
         With Me.SaveFileDialog
             If Not (AllForms.frmTrademarks Is Nothing) Then
-                .InitialDirectory = My.Settings.TrademarkDocuments
+                .InitialDirectory = RevaSettings.TrademarkDocuments
             Else
-                .InitialDirectory = My.Settings.PatentDocuments
+                .InitialDirectory = RevaSettings.PatentDocuments
             End If
 
             .FileName = ""
@@ -47,9 +47,9 @@ Public Class frmReportPreview
         Dim strFileName As String
         With Me.SaveFileDialog
             If Not (AllForms.frmTrademarks Is Nothing) Then
-                .InitialDirectory = My.Settings.TrademarkDocuments
+                .InitialDirectory = RevaSettings.TrademarkDocuments
             Else
-                .InitialDirectory = My.Settings.PatentDocuments
+                .InitialDirectory = RevaSettings.PatentDocuments
             End If
             .FileName = ""
             .Filter = "Excel Documents (*.xls)|*.xls"
@@ -72,9 +72,9 @@ Public Class frmReportPreview
         Dim strFileName As String
         With Me.SaveFileDialog
             If Not (AllForms.frmPatents Is Nothing) Then
-                .InitialDirectory = My.Settings.PatentDocuments
+                .InitialDirectory = RevaSettings.PatentDocuments
             Else
-                .InitialDirectory = My.Settings.TrademarkDocuments
+                .InitialDirectory = RevaSettings.TrademarkDocuments
             End If
 
             .FileName = ""

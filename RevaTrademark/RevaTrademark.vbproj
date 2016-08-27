@@ -110,6 +110,9 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Janus.Windows.UI.v3, Version=3.5.0.0, Culture=neutral, PublicKeyToken=21d5517571b185bf, processorArchitecture=MSIL" />
+    <Reference Include="RevaData">
+      <HintPath>..\RevaData\bin\Debug\RevaData.dll</HintPath>
+    </Reference>
     <Reference Include="RevaSettings">
       <HintPath>..\RevaSettings\bin\Debug\RevaSettings.dll</HintPath>
     </Reference>

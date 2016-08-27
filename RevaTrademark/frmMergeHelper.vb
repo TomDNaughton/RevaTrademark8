@@ -89,7 +89,7 @@ Public Class frmMergeHelper
                     SaveNewTextFile()
                     AllForms.frmTrademarks.MergeDocument.Text = Me.DocumentName
                     My.Settings.LastMergeOutlook = Me.DocumentName
-                    My.Settings.Save()
+
                 Else
                     SaveExistingTextFile()
                 End If
@@ -105,7 +105,7 @@ Public Class frmMergeHelper
                     SaveNewTextFile()
                     AllForms.frmPatents.MergeDocument.Text = Me.DocumentName
                     My.Settings.LastMergeOutlook = Me.DocumentName
-                    My.Settings.Save()
+
                 Else
                     SaveExistingTextFile()
                 End If
@@ -284,8 +284,8 @@ Public Class frmMergeHelper
     Private Sub GetTrademarkAlertFields()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "Select distinct TrademarkName, CompanyName, Jurisdiction, ApplicationNumber, RegistrationNumber," & _
-            " FileNumber, OurDocket, ClientDocket, RegistrationType, Status, TrademarkDate from " & _
+        strSQL = "Select distinct TrademarkName, CompanyName, Jurisdiction, ApplicationNumber, RegistrationNumber," &
+            " FileNumber, OurDocket, ClientDocket, RegistrationType, Status, TrademarkDate from " &
             "qvwTrademarkDates where TrademarkDateID=0"
         'limited fields for alerts
         dtMarkPatent = DataStuff.GetDataTable(strSQL)
@@ -294,8 +294,8 @@ Public Class frmMergeHelper
     Private Sub GetPatentAlertFields()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "Select distinct PatentName, CompanyName, Jurisdiction, ApplicationNumber, PatentNumber," & _
-            " FileNumber, OurDocket, ClientDocket, PatentType, Status, PatentDate from " & _
+        strSQL = "Select distinct PatentName, CompanyName, Jurisdiction, ApplicationNumber, PatentNumber," &
+            " FileNumber, OurDocket, ClientDocket, PatentType, Status, PatentDate from " &
             "qvwPatentDates where PatentDateID=0"
         'limited fields for alerts
         dtMarkPatent = DataStuff.GetDataTable(strSQL)
@@ -317,7 +317,7 @@ Public Class frmMergeHelper
     Private Sub GetOppositionAlertFields()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "Select distinct OppositionName, CompanyName, OppositionCompany as OpposingCompanyName, Jurisdiction, ProceedingNumber," & _
+        strSQL = "Select distinct OppositionName, CompanyName, OppositionCompany as OpposingCompanyName, Jurisdiction, ProceedingNumber," &
             " Status, OppositionDate from qvwOppositionDates where OppositionDateID=0"
         'limited fields for alerts
         dtMarkPatent = DataStuff.GetDataTable(strSQL)
@@ -401,9 +401,9 @@ Public Class frmMergeHelper
 
         With Me.SaveFileDialog
             If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
-                .InitialDirectory = My.Settings.TrademarkDocumentsDemo
+                .InitialDirectory = RevaSettings.TrademarkDocumentsDemo
             Else
-                .InitialDirectory = My.Settings.TrademarkDocuments
+                .InitialDirectory = RevaSettings.TrademarkDocuments
             End If
             .FileName = ""
             .Filter = "Text Documents (*.txt)|*.txt|All Files|*.*"

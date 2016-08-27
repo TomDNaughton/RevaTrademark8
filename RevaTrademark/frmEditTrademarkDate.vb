@@ -4,7 +4,7 @@ Public Class frmEditTrademarkDate
         On Error Resume Next
         AllForms.frmEditTrademarkDate = Me
         Me.lblDateName.Text = AllForms.frmTrademarks.grdDates.CurrentRow.Cells("DateName").Value
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Me.grdEditDate.RootTable.Columns("TrademarkDate").FormatString = "MMM dd, yyyy"
         Else
             Me.grdEditDate.RootTable.Columns("TrademarkDate").FormatString = "dd MMM yyyy"

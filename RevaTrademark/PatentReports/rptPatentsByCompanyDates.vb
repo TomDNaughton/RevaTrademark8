@@ -5,11 +5,11 @@ Public Class rptPatentsByCompanyDates
 
     Private Sub ReportHeader1_Format(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReportHeader1.Format
         On Error Resume Next
-        Me.ReportGraphic.Image = System.Drawing.Image.FromFile(My.Settings.ReportIcon)
+        Me.ReportGraphic.Image = System.Drawing.Image.FromFile(RevaSettings.ReportIcon)
         Me.lblReportTitle.Text = AllForms.frmReports.grdPatentReports.GetValue("ReportName")
         Me.ReportSubtitle.Value = AllForms.frmReports.PatentReportSubtitle.Text & ""
 
-        If My.Settings.USADates = True Then
+        If RevaSettings.USADates = True Then
             Me.PatentDate.OutputFormat = "MMM dd, yyyy"
         Else
             Me.PatentDate.OutputFormat = "dd MMM yyyy"

@@ -49,7 +49,7 @@ Public Class frmCompanies
         If AllForms.frmTrademarks Is Nothing And AllForms.frmPatents Is Nothing And AllForms.frmLogin Is Nothing _
         And AllForms.frmPreferences Is Nothing And AllForms.frmReports Is Nothing _
         And AllForms.frmCompanies Is Nothing And AllForms.frmOppositions Is Nothing Then
-            My.Settings.Save()
+
             Application.Exit()
         End If
     End Sub
@@ -178,7 +178,7 @@ Public Class frmCompanies
         On Error Resume Next
         If MsgBox("Are you sure want to exit RevaTrademark?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             SaveCompany()
-            My.Settings.Save()
+
             Application.Exit()
         End If
     End Sub
@@ -340,17 +340,17 @@ Public Class frmCompanies
         If e.Column.Key = "lnkDelete" Then
             If Globals.SecurityLevel > 1 Then Exit Sub
 
-            Dim strMessage As String, strSQL As String, drTrademarks As OleDb.OleDbDataReader, _
-                drPatents As OleDb.OleDbDataReader, iTrademarkID As Integer, iPatentID As Integer, _
+            Dim strMessage As String, strSQL As String, drTrademarks As OleDb.OleDbDataReader,
+                drPatents As OleDb.OleDbDataReader, iTrademarkID As Integer, iPatentID As Integer,
                 drOppositions As OleDb.OleDbDataReader, iOppositionID As Integer
 
             strMessage = "You are about to delete " & Me.grdCompanyList.GetValue("CompanyName") & ".  "
-            strMessage = strMessage & "Deleting a company will also delete all company contacts and all " & _
+            strMessage = strMessage & "Deleting a company will also delete all company contacts and all " &
                 "trademarks and patents owned by the company.  This cannot be undone.  Are you sure?"
 
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
 
-            strMessage = "LAST CHANCE TO CHANGE YOUR MIND!" & vbCrLf & vbCrLf & _
+            strMessage = "LAST CHANCE TO CHANGE YOUR MIND!" & vbCrLf & vbCrLf &
             "This will delete ALL PATENTS AND TRADEMARKS OWNED BY THIS COMPANY FROM THE DATABASE. Are you sure?"
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
 
@@ -479,7 +479,7 @@ Public Class frmCompanies
             GetLinked()
         End If
 
-        If My.Settings.OpenOnMarks = True Then
+        If RevaSettings.OpenOnMarks = True Then
             Me.tabMarksPats.SelectedIndex = 0
         Else
             Me.tabMarksPats.SelectedIndex = 1
