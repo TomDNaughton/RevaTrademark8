@@ -439,7 +439,7 @@ Public Class frmLogin
     End Sub
 
     Private Sub btnTest_Click(sender As Object, e As EventArgs) Handles btnTest.Click
-        MessageBox.Show(RevaSettings.TestSetting)
+
 
 
 
