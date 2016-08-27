@@ -164,8 +164,6 @@ Module Procs
 
     End Function
 
-
-
     Public Function GetSPDataReader(ByVal ProcName As String,
         Optional ByVal Param1 As String = "x", Optional ByVal Value1 As Object = Nothing,
         Optional ByVal Param2 As String = "x", Optional ByVal Value2 As Object = Nothing,
