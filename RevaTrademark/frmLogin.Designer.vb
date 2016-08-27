@@ -244,9 +244,9 @@ Partial Class frmLogin
         '
         'btnTest
         '
-        Me.btnTest.Location = New System.Drawing.Point(12, 195)
+        Me.btnTest.Location = New System.Drawing.Point(8, 142)
         Me.btnTest.Name = "btnTest"
-        Me.btnTest.Size = New System.Drawing.Size(54, 21)
+        Me.btnTest.Size = New System.Drawing.Size(63, 21)
         Me.btnTest.TabIndex = 28
         Me.btnTest.Text = "Test Stuff"
         Me.btnTest.UseVisualStyleBackColor = True
