@@ -11,9 +11,12 @@
         End Set
     End Property
 
+#Region "Named Functions"
+
+
     Public Function GetTrademarksList() As DataTable
         Try
-            ConnectionString = "data source = 'RevaTrademark.vdb5'"
+
             Return Procs.GetSPDataTable("prd_recTrademarksList")
 
         Catch ex As Exception
@@ -21,6 +24,8 @@
         End Try
 
     End Function
+
+#End Region
 
 
 

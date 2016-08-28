@@ -16,4 +16,6 @@ Public Class Globals
     '1 = list, 2 = alerts, 3 = trademark, 0 = new record
     Friend Shared NavigateOppositionsFrom As Integer = 1
 
+
+
 End Class
