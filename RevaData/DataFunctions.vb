@@ -13,6 +13,7 @@
 
     Public Function GetTrademarksList() As DataTable
         Try
+            ConnectionString = "data source = 'RevaTrademark.vdb5'"
             Return Procs.GetSPDataTable("prd_recTrademarksList")
 
         Catch ex As Exception
