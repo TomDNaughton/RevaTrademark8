@@ -26,11 +26,11 @@ Public Class DataStuff
     End Function
 
 
-    Public Shared Function GetAccessTable(ByVal strSQL As String) As DataTable
+    Public Shared Function GetDemoTable(ByVal strSQL As String) As DataTable
         On Error Resume Next
 
         Dim Cnn As New OleDbConnection
-        Cnn.ConnectionString = My.Settings.AccessConnection
+        Cnn.ConnectionString = My.Settings.DemoConnection
         Dim ds As New DataSet
         Dim da As New OleDbDataAdapter
         Dim cmd As New OleDbCommand
@@ -212,10 +212,10 @@ Public Class DataStuff
         Cnn.Dispose()
     End Sub
 
-    Public Shared Sub RunAccessSQL(ByVal strSQL As String)
+    Public Shared Sub RunDemoSQL(ByVal strSQL As String)
         On Error Resume Next
         Dim Cnn As New OleDbConnection
-        Cnn.ConnectionString = My.Settings.AccessConnection
+        Cnn.ConnectionString = My.Settings.DemoConnection
         Dim cmd As New OleDbCommand
 
         cmd.Connection = Cnn

@@ -32,7 +32,7 @@ Public Class frmPreferences
     Private Sub frmPreferences_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         On Error Resume Next
 
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             Me.sepDemo.Visible = True
             Me.lblDemo.Visible = True
         Else
@@ -2174,7 +2174,7 @@ Public Class frmPreferences
 
     Private Sub GetFolderPreferences()
         On Error Resume Next
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             With Me
                 .TrademarkDocs.Text = RevaSettings.TrademarkDocumentsDemo
                 .TrademarkGraphics.Text = RevaSettings.TrademarkGraphicsDemo
@@ -2203,7 +2203,7 @@ Public Class frmPreferences
                 strFolder = .SelectedPath
                 Me.TrademarkDocs.Text = strFolder
                 With My.Settings
-                    If .CurrentConnection = .AccessConnection Then
+                    If .CurrentConnection = .DemoConnection Then
                         RevaSettings.TrademarkDocumentsDemo = strFolder
                     Else
                         RevaSettings.TrademarkDocuments = strFolder
@@ -2223,7 +2223,7 @@ Public Class frmPreferences
                 strFolder = .SelectedPath
                 Me.TrademarkGraphics.Text = strFolder
                 With My.Settings
-                    If .CurrentConnection = .AccessConnection Then
+                    If .CurrentConnection = .DemoConnection Then
                         RevaSettings.TrademarkGraphicsDemo = strFolder
                     Else
                         RevaSettings.TrademarkGraphics = strFolder
@@ -2243,7 +2243,7 @@ Public Class frmPreferences
                 strFolder = .SelectedPath
                 Me.PatentDocs.Text = strFolder
                 With My.Settings
-                    If .CurrentConnection = .AccessConnection Then
+                    If .CurrentConnection = .DemoConnection Then
                         RevaSettings.PatentDocumentsDemo = strFolder
                     Else
                         RevaSettings.PatentDocuments = strFolder
@@ -2263,7 +2263,7 @@ Public Class frmPreferences
                 strFolder = .SelectedPath
                 Me.PatentGraphics.Text = strFolder
                 With My.Settings
-                    If .CurrentConnection = .AccessConnection Then
+                    If .CurrentConnection = .DemoConnection Then
                         RevaSettings.PatentGraphicsDemo = strFolder
                     Else
                         RevaSettings.PatentGraphics = strFolder
@@ -2309,7 +2309,7 @@ Public Class frmPreferences
         On Error Resume Next
         ' This is new, since we're now allowing users to type in folder locations in addition to navigating to them.
         With Me
-            If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+            If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                 RevaSettings.TrademarkDocumentsDemo = Me.TrademarkDocs.Text
                 RevaSettings.TrademarkGraphicsDemo = Me.TrademarkGraphics.Text
                 RevaSettings.PatentDocumentsDemo = Me.PatentDocs.Text
@@ -2428,7 +2428,7 @@ Public Class frmPreferences
             .InitialDirectory = Application.ExecutablePath
             If .ShowDialog() = Windows.Forms.DialogResult.OK Then
                 Me.ReportIcon.Text = .FileName
-                If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+                If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                     RevaSettings.ReportIconDemo = .FileName
                 Else
                     RevaSettings.ReportIcon = .FileName

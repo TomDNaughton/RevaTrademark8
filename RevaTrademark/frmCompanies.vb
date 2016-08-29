@@ -31,7 +31,7 @@ Public Class frmCompanies
         GetBrowseRecords()
         SetShowLinked()
 
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             Me.sepDemo.Visible = True
             Me.lblDemo.Visible = True
         Else

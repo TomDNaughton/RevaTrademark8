@@ -78,8 +78,8 @@ Public Class frmReports
         AllForms.frmReports = Me
         bSpreadsheetChanged = False
 
-        rsMarkReports.GetFromAccess("Select * from tblReports where IsTrademark <> 0 order by ReportID")
-        rsPatentReports.GetFromAccess("Select * from tblReports where IsTrademark = 0 order by ReportID")
+        rsMarkReports.GetFromDemo("Select * from tblReports where IsTrademark <> 0 order by ReportID")
+        rsPatentReports.GetFromDemo("Select * from tblReports where IsTrademark = 0 order by ReportID")
 
         dtMarkPositions = DataStuff.GetDataTable("Select * from tblPositions where IsTrademark <> 0")
         dtPatentPositions = DataStuff.GetDataTable("Select * from tblPositions where IsPatent <> 0")
@@ -144,7 +144,7 @@ Public Class frmReports
                 .Tabs.SelectedIndex = 1
             End If
 
-            If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+            If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                 .sepDemo.Visible = True
                 .lblDemo.Visible = True
             Else
@@ -251,14 +251,14 @@ Public Class frmReports
         Dim strSQL As String
         'They're all in one Access table, but we need separate Access and SQL versions because the fields being
         'stored my differ from the demo version to the SQL version.
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             ' Access version, trademark filters
             strSQL = "Select * from tblFilterNames where IsTrademark <> 0 and IsSQL = 0 order by FilterName"
-            dtMarkFilters = DataStuff.GetAccessTable(strSQL)
+            dtMarkFilters = DataStuff.GetDemoTable(strSQL)
         Else
             ' SQL version, trademark filters
             strSQL = "Select * from tblFilterNames where IsTrademark <> 0 and IsSQL <> 0 order by FilterName"
-            dtMarkFilters = DataStuff.GetAccessTable(strSQL)
+            dtMarkFilters = DataStuff.GetDemoTable(strSQL)
         End If
         Me.MarkFilterID.DataSource = dtMarkFilters
         Me.MarkFilterID.SelectedIndex = -1
@@ -267,14 +267,14 @@ Public Class frmReports
     Friend Sub GetPatentStoredFilters()
         On Error Resume Next
         Dim strSQL As String
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             ' Access version, Patent filters
             strSQL = "Select * from tblFilterNames where IsTrademark = 0 and IsSQL = 0 order by FilterName"
-            dtPatentFilters = DataStuff.GetAccessTable(strSQL)
+            dtPatentFilters = DataStuff.GetDemoTable(strSQL)
         Else
             ' SQL version, Patent filters
             strSQL = "Select * from tblFilterNames where IsTrademark = 0 and IsSQL <> 0 order by FilterName"
-            dtPatentFilters = DataStuff.GetAccessTable(strSQL)
+            dtPatentFilters = DataStuff.GetDemoTable(strSQL)
         End If
         Me.PatentFilterID.DataSource = dtPatentFilters
         Me.PatentFilterID.SelectedIndex = -1
@@ -579,8 +579,8 @@ Public Class frmReports
 
         iFilterID = Me.MarkFilterID.Value
         strSQL = "Delete from tblFilterValues where FilterID=" & iFilterID
-        DataStuff.RunAccessSQL(strSQL)
-        rsFilterValues.GetFromAccess("Select * from tblFilterValues where FilterID=" & iFilterID)
+        DataStuff.RunDemoSQL(strSQL)
+        rsFilterValues.GetFromDemo("Select * from tblFilterValues where FilterID=" & iFilterID)
 
         With Me
             ' write selected company values
@@ -727,7 +727,7 @@ Public Class frmReports
 
 
         iFilterID = Me.MarkFilterID.Value
-        dtFilters = DataStuff.GetAccessTable("Select * from tblFilterValues where FilterID=" & iFilterID & " order by DateID, FieldName")
+        dtFilters = DataStuff.GetDemoTable("Select * from tblFilterValues where FilterID=" & iFilterID & " order by DateID, FieldName")
 
         ' could be a new filter, don't want to clear selections
         If dtFilters.Rows.Count = 0 Then
@@ -2278,8 +2278,8 @@ Public Class frmReports
 
         iFilterID = Me.PatentFilterID.Value
         strSQL = "Delete from tblFilterValues where FilterID=" & iFilterID
-        DataStuff.RunAccessSQL(strSQL)
-        rsFilterValues.GetFromAccess("Select * from tblFilterValues where FilterID=" & iFilterID)
+        DataStuff.RunDemoSQL(strSQL)
+        rsFilterValues.GetFromDemo("Select * from tblFilterValues where FilterID=" & iFilterID)
 
         With Me
             ' write selected company values
@@ -2426,7 +2426,7 @@ Public Class frmReports
 
 
         iFilterID = Me.PatentFilterID.Value
-        dtFilters = DataStuff.GetAccessTable("Select * from tblFilterValues where FilterID=" & iFilterID & " order by DateID, FieldName")
+        dtFilters = DataStuff.GetDemoTable("Select * from tblFilterValues where FilterID=" & iFilterID & " order by DateID, FieldName")
 
         ' could be a new filter, don't want to clear selections
         If dtFilters.Rows.Count = 0 Then

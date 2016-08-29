@@ -74,5 +74,14 @@
     <Setting Name="BlankDatesLast" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="DemoConnection" Type="System.String" Scope="User">
+      <Value Profile="(Default)">data source = 'RevaTrademark.vdb5'</Value>
+    </Setting>
+    <Setting Name="SQLConnection" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CurrentConnection" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

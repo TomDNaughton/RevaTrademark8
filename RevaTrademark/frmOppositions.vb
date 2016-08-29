@@ -949,7 +949,7 @@ Public Class frmOppositions
 
         If Me.optEmailAlerts.Checked = True Then
             bEmailSent = Me.grdAlerts.GetValue("EmailSent")
-            If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+            If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                 strSQL = "update tblOppositionDates set EmailSent=" & IIf(bEmailSent = True, "-1", "0") &
                     " where OppositionDateID=" & iOppositionDateID
             Else
@@ -961,7 +961,7 @@ Public Class frmOppositions
 
         If Me.optAlerts.Checked = True Then
             bCompleted = Me.grdAlerts.GetValue("Completed")
-            If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+            If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                 strSQL = "update tblOppositionDates set Completed=" & IIf(bCompleted = True, "-1", "0") &
                     " where OppositionDateID=" & iOppositionDateID
             Else
@@ -1018,7 +1018,7 @@ Public Class frmOppositions
             strFilter = strFilter & "0)"
 
             If bSent = True Then
-                If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+                If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                     strSQL = "update tblOppositionDates set EmailSent= -1 where OppositionDateID in " & strFilter
                 Else
                     strSQL = "update tblOppositionDates set EmailSent= 1 where OppositionDateID in " & strFilter
@@ -1085,7 +1085,7 @@ Public Class frmOppositions
         GRow.Cells("EmailSent").Value = True
         GRow.EndEdit()
 
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             strSQL = "update tblOppositionDates set EmailSent= -1" &
                 " where OppositionDateID=" & GRow.Cells("OppositionDateID").Value
         Else
@@ -1126,7 +1126,7 @@ Public Class frmOppositions
         End If
 
         With Me
-            If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+            If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                 .sepDemo.Visible = True
                 .lblDemo.Visible = True
             Else
@@ -2341,7 +2341,7 @@ Public Class frmOppositions
 
             If grdDocumentLinks.GetValue("IsFolder") = False Then
                 With Me.OpenFileDialog
-                    If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
+                    If My.Settings.DemoConnection = My.Settings.CurrentConnection Then
                         .InitialDirectory = RevaSettings.TrademarkDocumentsDemo
                     Else
                         .InitialDirectory = RevaSettings.TrademarkDocuments
@@ -2357,7 +2357,7 @@ Public Class frmOppositions
                 End With
             Else
                 With Me.FolderBrowserDialog
-                    If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+                    If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                         .SelectedPath = RevaSettings.TrademarkDocumentsDemo
                     Else
                         .SelectedPath = RevaSettings.TrademarkDocuments

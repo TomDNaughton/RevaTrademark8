@@ -36,7 +36,7 @@ Partial Class frmLogin
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.chkSavePassword = New System.Windows.Forms.CheckBox()
         Me.optSQL = New System.Windows.Forms.RadioButton()
-        Me.optAccess = New System.Windows.Forms.RadioButton()
+        Me.optDemo = New System.Windows.Forms.RadioButton()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btnHookDev = New System.Windows.Forms.Button()
         Me.btnSQLDev = New System.Windows.Forms.Button()
@@ -47,7 +47,7 @@ Partial Class frmLogin
         '
         'btnLogIn
         '
-        Me.btnLogIn.Location = New System.Drawing.Point(71, 292)
+        Me.btnLogIn.Location = New System.Drawing.Point(92, 292)
         Me.btnLogIn.Name = "btnLogIn"
         Me.btnLogIn.Size = New System.Drawing.Size(99, 27)
         Me.btnLogIn.TabIndex = 0
@@ -57,34 +57,34 @@ Partial Class frmLogin
         'Server
         '
         Me.Server.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Server.Location = New System.Drawing.Point(77, 85)
+        Me.Server.Location = New System.Drawing.Point(86, 85)
         Me.Server.MaxLength = 500
         Me.Server.Name = "Server"
-        Me.Server.Size = New System.Drawing.Size(195, 20)
+        Me.Server.Size = New System.Drawing.Size(220, 20)
         Me.Server.TabIndex = 1
         '
         'UserID
         '
         Me.UserID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.UserID.Location = New System.Drawing.Point(134, 197)
+        Me.UserID.Location = New System.Drawing.Point(143, 197)
         Me.UserID.Name = "UserID"
-        Me.UserID.Size = New System.Drawing.Size(138, 20)
+        Me.UserID.Size = New System.Drawing.Size(163, 20)
         Me.UserID.TabIndex = 3
         '
         'Database
         '
         Me.Database.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Database.Location = New System.Drawing.Point(77, 111)
+        Me.Database.Location = New System.Drawing.Point(86, 111)
         Me.Database.Name = "Database"
-        Me.Database.Size = New System.Drawing.Size(195, 20)
+        Me.Database.Size = New System.Drawing.Size(220, 20)
         Me.Database.TabIndex = 2
         '
         'Password
         '
         Me.Password.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Password.Location = New System.Drawing.Point(134, 223)
+        Me.Password.Location = New System.Drawing.Point(143, 223)
         Me.Password.Name = "Password"
-        Me.Password.Size = New System.Drawing.Size(138, 20)
+        Me.Password.Size = New System.Drawing.Size(163, 20)
         Me.Password.TabIndex = 4
         Me.Password.UseSystemPasswordChar = True
         '
@@ -111,7 +111,7 @@ Partial Class frmLogin
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(68, 200)
+        Me.Label3.Location = New System.Drawing.Point(77, 200)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(63, 13)
         Me.Label3.TabIndex = 7
@@ -121,7 +121,7 @@ Partial Class frmLogin
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(75, 226)
+        Me.Label4.Location = New System.Drawing.Point(84, 226)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(56, 13)
         Me.Label4.TabIndex = 8
@@ -130,7 +130,7 @@ Partial Class frmLogin
         '
         'btnTestConnection
         '
-        Me.btnTestConnection.Location = New System.Drawing.Point(173, 249)
+        Me.btnTestConnection.Location = New System.Drawing.Point(194, 249)
         Me.btnTestConnection.Name = "btnTestConnection"
         Me.btnTestConnection.Size = New System.Drawing.Size(99, 27)
         Me.btnTestConnection.TabIndex = 9
@@ -162,15 +162,15 @@ Partial Class frmLogin
         Me.grpSecurityType.Controls.Add(Me.optSpecific)
         Me.grpSecurityType.Controls.Add(Me.optIntegrated)
         Me.grpSecurityType.ForeColor = System.Drawing.Color.Black
-        Me.grpSecurityType.Location = New System.Drawing.Point(77, 132)
+        Me.grpSecurityType.Location = New System.Drawing.Point(86, 132)
         Me.grpSecurityType.Name = "grpSecurityType"
-        Me.grpSecurityType.Size = New System.Drawing.Size(195, 55)
+        Me.grpSecurityType.Size = New System.Drawing.Size(220, 55)
         Me.grpSecurityType.TabIndex = 10
         Me.grpSecurityType.TabStop = False
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(173, 292)
+        Me.btnCancel.Location = New System.Drawing.Point(194, 292)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(99, 27)
         Me.btnCancel.TabIndex = 11
@@ -180,7 +180,7 @@ Partial Class frmLogin
         'chkSavePassword
         '
         Me.chkSavePassword.AutoSize = True
-        Me.chkSavePassword.Location = New System.Drawing.Point(71, 255)
+        Me.chkSavePassword.Location = New System.Drawing.Point(92, 255)
         Me.chkSavePassword.Margin = New System.Windows.Forms.Padding(1, 3, 1, 3)
         Me.chkSavePassword.Name = "chkSavePassword"
         Me.chkSavePassword.Size = New System.Drawing.Size(100, 17)
@@ -198,26 +198,26 @@ Partial Class frmLogin
         Me.optSQL.Text = "SQL Server Database"
         Me.optSQL.UseVisualStyleBackColor = True
         '
-        'optAccess
+        'optDemo
         '
-        Me.optAccess.AutoSize = True
-        Me.optAccess.Checked = True
-        Me.optAccess.Location = New System.Drawing.Point(11, 17)
-        Me.optAccess.Name = "optAccess"
-        Me.optAccess.Size = New System.Drawing.Size(152, 17)
-        Me.optAccess.TabIndex = 0
-        Me.optAccess.TabStop = True
-        Me.optAccess.Text = "Demo / Practice Database"
-        Me.optAccess.UseVisualStyleBackColor = True
+        Me.optDemo.AutoSize = True
+        Me.optDemo.Checked = True
+        Me.optDemo.Location = New System.Drawing.Point(11, 17)
+        Me.optDemo.Name = "optDemo"
+        Me.optDemo.Size = New System.Drawing.Size(152, 17)
+        Me.optDemo.TabIndex = 0
+        Me.optDemo.TabStop = True
+        Me.optDemo.Text = "Demo / Practice Database"
+        Me.optDemo.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.optSQL)
-        Me.GroupBox1.Controls.Add(Me.optAccess)
+        Me.GroupBox1.Controls.Add(Me.optDemo)
         Me.GroupBox1.ForeColor = System.Drawing.Color.Black
-        Me.GroupBox1.Location = New System.Drawing.Point(78, 12)
+        Me.GroupBox1.Location = New System.Drawing.Point(87, 12)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(195, 63)
+        Me.GroupBox1.Size = New System.Drawing.Size(220, 63)
         Me.GroupBox1.TabIndex = 25
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Connect To:"
@@ -228,7 +228,7 @@ Partial Class frmLogin
         Me.btnHookDev.Name = "btnHookDev"
         Me.btnHookDev.Size = New System.Drawing.Size(54, 21)
         Me.btnHookDev.TabIndex = 26
-        Me.btnHookDev.Text = "AC Dev"
+        Me.btnHookDev.Text = "Demo DB"
         Me.btnHookDev.UseVisualStyleBackColor = True
         Me.btnHookDev.Visible = False
         '
@@ -255,7 +255,7 @@ Partial Class frmLogin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(332, 348)
+        Me.ClientSize = New System.Drawing.Size(373, 348)
         Me.Controls.Add(Me.btnTest)
         Me.Controls.Add(Me.btnSQLDev)
         Me.Controls.Add(Me.btnHookDev)
@@ -303,7 +303,7 @@ Partial Class frmLogin
     Friend WithEvents btnCancel As System.Windows.Forms.Button
     Friend WithEvents chkSavePassword As System.Windows.Forms.CheckBox
     Friend WithEvents optSQL As System.Windows.Forms.RadioButton
-    Friend WithEvents optAccess As System.Windows.Forms.RadioButton
+    Friend WithEvents optDemo As System.Windows.Forms.RadioButton
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents btnHookDev As System.Windows.Forms.Button
     Friend WithEvents btnSQLDev As System.Windows.Forms.Button

@@ -21,9 +21,9 @@ Public Class RecordSet
         dbAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey
     End Sub
 
-    Friend Sub ConnectAccess()
+    Friend Sub ConnectDemo()
         On Error Resume Next
-        cnn.ConnectionString = My.Settings.AccessConnection
+        cnn.ConnectionString = My.Settings.DemoConnection
         dbAdapter = New OleDbDataAdapter(strSQL, cnn)
         cmdBuilder = New OleDbCommandBuilder(dbAdapter)
         cmdBuilder.DataAdapter = dbAdapter
@@ -53,10 +53,10 @@ Public Class RecordSet
         GetRecords()
     End Sub
 
-    Friend Sub GetFromAccess(ByVal SQL As String)
+    Friend Sub GetFromDemo(ByVal SQL As String)
         On Error Resume Next
         strSQL = SQL
-        ConnectAccess()
+        ConnectDemo()
         GetRecords()
     End Sub
 

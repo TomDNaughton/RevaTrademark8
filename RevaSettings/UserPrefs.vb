@@ -246,5 +246,35 @@
         End Set
     End Property
 
+    Public Property DemoConnection As String
+        Get
+            Return My.Settings.DemoConnection
+        End Get
+        Set(value As String)
+            My.Settings.DemoConnection = value
+            My.Settings.Save()
+        End Set
+    End Property
+
+    Public Property SQLConnection As String
+        Get
+            Return My.Settings.SQLConnection
+        End Get
+        Set(value As String)
+            My.Settings.SQLConnection = value
+            My.Settings.Save()
+        End Set
+    End Property
+
+    Public Property CurrentConnection As String
+        Get
+            Return My.Settings.CurrentConnection
+        End Get
+        Set(value As String)
+            My.Settings.CurrentConnection = value
+            My.Settings.Save()
+        End Set
+    End Property
+
 
 End Module

@@ -1630,11 +1630,11 @@ Public Class frmTrademarks
 
         If Me.optEmailAlerts.Checked = True Then
             bEmailSent = Me.grdAlerts.GetValue("EmailSent")
-            If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                strSQL = "update tblTrademarkDates set EmailSent=" & IIf(bEmailSent = True, "-1", "0") & _
+            If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
+                strSQL = "update tblTrademarkDates set EmailSent=" & IIf(bEmailSent = True, "-1", "0") &
                     " where TrademarkDateID=" & iTrademarkDateID
             Else
-                strSQL = "update tblTrademarkDates set EmailSent=" & IIf(bEmailSent = True, "1", "0") & _
+                strSQL = "update tblTrademarkDates set EmailSent=" & IIf(bEmailSent = True, "1", "0") &
                     " where TrademarkDateID=" & iTrademarkDateID
             End If
             DataStuff.RunSQL(strSQL)
@@ -1645,19 +1645,19 @@ Public Class frmTrademarks
             'if the DateID is zero, this is actually an Action Alert, not a TrademarkDate Alert
             'in the union query, TrademarkActionID is aliased as TrademarkDateID
             If iDateID <> 0 Then
-                If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                    strSQL = "update tblTrademarkDates set Completed=" & IIf(bCompleted = True, "-1", "0") & _
+                If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
+                    strSQL = "update tblTrademarkDates set Completed=" & IIf(bCompleted = True, "-1", "0") &
                         " where TrademarkDateID=" & iTrademarkDateID
                 Else
-                    strSQL = "update tblTrademarkDates set Completed=" & IIf(bCompleted = True, "1", "0") & _
+                    strSQL = "update tblTrademarkDates set Completed=" & IIf(bCompleted = True, "1", "0") &
                         " where TrademarkDateID=" & iTrademarkDateID
                 End If
             Else ' action alert
-                If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-                    strSQL = "update tblTrademarkActions set Completed=" & IIf(bCompleted = True, "-1", "0") & _
+                If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
+                    strSQL = "update tblTrademarkActions set Completed=" & IIf(bCompleted = True, "-1", "0") &
                         " where TrademarkActionID=" & iTrademarkDateID
                 Else
-                    strSQL = "update tblTrademarkActions set Completed=" & IIf(bCompleted = True, "1", "0") & _
+                    strSQL = "update tblTrademarkActions set Completed=" & IIf(bCompleted = True, "1", "0") &
                         " where TrademarkActionID=" & iTrademarkDateID
                 End If
             End If
@@ -1670,8 +1670,8 @@ Public Class frmTrademarks
         'NEW in version 5.0; can update from here, so run related updates, etc.
         If bCompleted = True Then
 
-            Dim DateID As Integer, RecurNumber As Integer, TrademarkDate As Date, NoDay As Boolean, NoMonth As Boolean, _
-                        Completed As Boolean, IsLocked As Boolean, EmailSent As Boolean, _
+            Dim DateID As Integer, RecurNumber As Integer, TrademarkDate As Date, NoDay As Boolean, NoMonth As Boolean,
+                        Completed As Boolean, IsLocked As Boolean, EmailSent As Boolean,
                         UpdateRelatives As Boolean, AddNext As Boolean, JurisdictionID As Integer
 
             With Me.grdAlerts
@@ -1696,7 +1696,7 @@ Public Class frmTrademarks
                 .JurisdictionID = JurisdictionID
                 .LoadMarkDates()
                 .LoadJurisdictionDates()
-                .EditTrademarkDate(DateID, RecurNumber, TrademarkDate, NoDay, NoMonth, Completed, IsLocked, _
+                .EditTrademarkDate(DateID, RecurNumber, TrademarkDate, NoDay, NoMonth, Completed, IsLocked,
                     EmailSent, UpdateRelatives, AddNext, JurisdictionID)
                 .UpdateRecurNumbers()
                 .ReOrderTrademarkDates()
@@ -1732,7 +1732,7 @@ Public Class frmTrademarks
 
         'toggle all email alerts as sent or not sent
         If e.Column.Key = "EmailSent" Then
-            Dim GRow As Janus.Windows.GridEX.GridEXRow, i As Integer, bSent As Boolean, _
+            Dim GRow As Janus.Windows.GridEX.GridEXRow, i As Integer, bSent As Boolean,
                 strFilter As String, strSQL As String
 
             bSent = Not (Me.grdAlerts.GetValue("EmailSent"))
@@ -1752,7 +1752,7 @@ Public Class frmTrademarks
             strFilter = strFilter & "0)"
 
             If bSent = True Then
-                If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+                If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                     strSQL = "update tblTrademarkDates set EmailSent= -1 where TrademarkDateID in " & strFilter
                 Else
                     strSQL = "update tblTrademarkDates set EmailSent= 1 where TrademarkDateID in " & strFilter
@@ -1770,12 +1770,12 @@ Public Class frmTrademarks
 
     Private Sub GenerateEmails(ByVal GRow As Janus.Windows.GridEX.GridEXRow, ByVal Email As Outlook.MailItem)
         On Error Resume Next
-        Dim strTo As String, strSubject As String, strMessage As String, _
+        Dim strTo As String, strSubject As String, strMessage As String,
              drToList As OleDb.OleDbDataReader, strSQL As String
 
         strTo = ""
-        strSQL = "SELECT distinct TrademarkDateID, AutoEmail, EmailSent, ReceivesAlerts, FirstName, LastName, ContactEmail " & _
-        "from qvwTrademarkDatesAndContacts WHERE AutoEmail <> 0 AND EmailSent = 0 AND ReceivesAlerts <> 0 " & _
+        strSQL = "SELECT distinct TrademarkDateID, AutoEmail, EmailSent, ReceivesAlerts, FirstName, LastName, ContactEmail " &
+        "from qvwTrademarkDatesAndContacts WHERE AutoEmail <> 0 AND EmailSent = 0 AND ReceivesAlerts <> 0 " &
         "and  TrademarkDateID=" & GRow.Cells("TrademarkDateID").Value
         drToList = DataStuff.GetDataReader(strSQL)
 
@@ -1827,11 +1827,11 @@ Public Class frmTrademarks
         GRow.Cells("EmailSent").Value = True
         GRow.EndEdit()
 
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-            strSQL = "update tblTrademarkDates set EmailSent= -1" & _
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
+            strSQL = "update tblTrademarkDates set EmailSent= -1" &
                 " where TrademarkDateID=" & GRow.Cells("TrademarkDateID").Value
         Else
-            strSQL = "update tblTrademarkDates set EmailSent= 1" & _
+            strSQL = "update tblTrademarkDates set EmailSent= 1" &
                 " where TrademarkDateID=" & GRow.Cells("TrademarkDateID").Value
         End If
         DataStuff.RunSQL(strSQL)
@@ -1866,7 +1866,7 @@ Public Class frmTrademarks
             Me.optEmailAlerts.Checked = True
         End If
 
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             Me.sepDemo.Visible = True
             Me.lblDemo.Visible = True
         Else
@@ -1909,7 +1909,7 @@ Public Class frmTrademarks
         If AllForms.frmTrademarks Is Nothing And AllForms.frmPatents Is Nothing And AllForms.frmLogin Is Nothing _
         And AllForms.frmPreferences Is Nothing And AllForms.frmReports Is Nothing _
         And AllForms.frmCompanies Is Nothing And AllForms.frmOppositions Is Nothing Then
-            
+
             Application.Exit()
         End If
     End Sub
@@ -2176,25 +2176,25 @@ Public Class frmTrademarks
                     .RecordCount.Text = ""
 
                 Case 1  'list view
-                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                     .grdList.Row < (grdList.RowCount - 1)
-                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         (.grdList.Row > 0)
                     .RecordCount.Text = (.grdList.Row + 1).ToString + " of " + .grdList.RowCount.ToString
 
                 Case 2  'either alerts view
-                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                     .grdAlerts.Row < (grdAlerts.RowCount - 1)
-                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         (.grdAlerts.Row > 0)
                     .RecordCount.Text = (.grdAlerts.Row + 1).ToString + " of " + .grdAlerts.RowCount.ToString
 
                 Case 3 'reports grid
-                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         AllForms.frmReports.grdMarks.Row < (AllForms.frmReports.grdMarks.RowCount - 1)
-                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         (AllForms.frmReports.grdMarks.Row > 0)
-                    .RecordCount.Text = (AllForms.frmReports.grdMarks.Row + 1).ToString + _
+                    .RecordCount.Text = (AllForms.frmReports.grdMarks.Row + 1).ToString +
                         " of " + AllForms.frmReports.grdMarks.RowCount.ToString
 
                 Case 4 'trademarks on companies form
@@ -2203,17 +2203,17 @@ Public Class frmTrademarks
                     .RecordCount.Text = ""
 
                 Case 5 'oppositions
-                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         AllForms.frmOppositions.grdClientMarks.Row < (AllForms.frmOppositions.grdClientMarks.RowCount - 1)
-                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         (AllForms.frmOppositions.grdClientMarks.Row > 0)
-                    .RecordCount.Text = (AllForms.frmOppositions.grdClientMarks.Row + 1).ToString + _
+                    .RecordCount.Text = (AllForms.frmOppositions.grdClientMarks.Row + 1).ToString +
                         " of " + AllForms.frmOppositions.grdClientMarks.RowCount.ToString
 
                 Case 6 'status update
-                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnNextRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                     .grdStatusCheck.Row < (grdList.RowCount - 1)
-                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And _
+                    .btnPrevRecord.Enabled = ((.Tabs.SelectedIndex = 1) Or (.Tabs.SelectedIndex = 2)) And
                         (.grdList.Row > 0)
                     .RecordCount.Text = (.grdStatusCheck.Row + 1).ToString + " of " + .grdStatusCheck.RowCount.ToString
             End Select
@@ -2438,7 +2438,7 @@ Public Class frmTrademarks
         Dim dr As OleDb.OleDbDataReader, iCompanyID As Integer, strSQL As String
         iCompanyID = Nz(rsTrademarks.CurrentRow("CompanyID"), 0)
 
-        strSQL = "SELECT CompanyID, CompanyName, City, StateProvince, PostalCode, Country, CompanyPhone," & _
+        strSQL = "SELECT CompanyID, CompanyName, City, StateProvince, PostalCode, Country, CompanyPhone," &
        "AddressOne, AddressTwo from tblCompanies where CompanyID=" & iCompanyID
 
         dr = DataStuff.GetDataReader(strSQL)
@@ -2601,15 +2601,15 @@ Public Class frmTrademarks
 
             'can't do this for treaty trademark
             If Me.bIsTreaty = True Then
-                strMessage = "You cannot change the jurisdiction of a trademark filed under a treaty agreement. " & _
+                strMessage = "You cannot change the jurisdiction of a trademark filed under a treaty agreement. " &
                     "To change the jurisdiction, first remove this trademark from the treaty filing."
                 MsgBox(strMessage)
                 Me.JurisdictionID.Value = Me.iOldJurisdictionID
                 Exit Sub
             End If
 
-            strMessage = "You are about to change the jurisdiction for this trademark.  " & _
-                "Trademark dates with the same names will remain intact, " & _
+            strMessage = "You are about to change the jurisdiction for this trademark.  " &
+                "Trademark dates with the same names will remain intact, " &
                 "but others will be deleted.  Proceed?"
 
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then
@@ -2678,7 +2678,7 @@ Public Class frmTrademarks
 
                 Dim strMessage As String
 
-                strMessage = "You are about to change to or from a treaty filing basis with its own date template." & _
+                strMessage = "You are about to change to or from a treaty filing basis with its own date template." &
                 "  Trademark dates with the same names will remain intact, but others will be deleted.  Proceed?"
 
                 If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then
@@ -2759,7 +2759,7 @@ Public Class frmTrademarks
         On Error Resume Next
         Me.Cursor = Cursors.WaitCursor
         Dim drReader As OleDb.OleDbDataReader, rptTrademark As New rtpOneTrademark, strSQL As String
-        strSQL = SQL.vwReportTrademarks & " where TrademarkID=" & Globals.TrademarkID & _
+        strSQL = SQL.vwReportTrademarks & " where TrademarkID=" & Globals.TrademarkID &
                 " order by qvwTradeMarkDates.CompanyName, TrademarkName, TrademarkDate"
         drReader = DataStuff.GetDataReader(strSQL)
         rptTrademark.DataSource = drReader
@@ -2869,7 +2869,7 @@ Public Class frmTrademarks
         End If
 
         'still here, then proceed
-        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String, _
+        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String,
             bUsesFields As Boolean, strFieldName As String
 
         strSQL = "Select * from tblFilingBasis where FilingBasisID=" & Me.FilingBasisID.Value
@@ -2913,7 +2913,7 @@ Public Class frmTrademarks
         End If
 
         'still here, then proceed
-        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String, _
+        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strAppNumber As String,
             bUsesFields As Boolean, strFieldName As String
 
         strSQL = "Select * from tblJurisdictions where JurisdictionID=" & Me.JurisdictionID.Value
@@ -2965,7 +2965,7 @@ Public Class frmTrademarks
         End If
 
         'still here, then proceed
-        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strRegNumber As String, _
+        Dim dr As OleDb.OleDbDataReader, strTargetURL As String, strRegNumber As String,
             bUsesFields As Boolean, strFieldName As String
 
         If Me.bIsTreaty = False Then
@@ -3158,16 +3158,13 @@ Public Class frmTrademarks
     Private Sub GetTrademarksList()
         On Error Resume Next
 
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             Dim strSQL As String
             strSQL = SQL.vwTrademarksList
             dtTrademarksList = DataStuff.GetDataTable(strSQL)
         Else
             dtTrademarksList = RevaData.GetTrademarksList()
         End If
-
-
-
 
         Me.grdList.DataSource = dtTrademarksList
         Me.grdList.Row = 0
@@ -3188,7 +3185,7 @@ Public Class frmTrademarks
     Private Sub GetActions()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "Select * from tblTrademarkActions where TrademarkID=" & Globals.TrademarkID & _
+        strSQL = "Select * from tblTrademarkActions where TrademarkID=" & Globals.TrademarkID &
             " order by ActionDate, TrademarkActionID"
         rsActions.GetFromSQL(strSQL)
         Me.grdActions.DataSource = rsActions.Table
@@ -3197,7 +3194,7 @@ Public Class frmTrademarks
     Friend Sub GetContacts()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "SELECT TrademarkContactID, CompanyID, ContactID, ContactName, ContactCompany as CompanyName, ContactPhone, " & _
+        strSQL = "SELECT TrademarkContactID, CompanyID, ContactID, ContactName, ContactCompany as CompanyName, ContactPhone, " &
         "PositionID, TrademarkID, ContactEmail, WordExcel, PositionName from qvwTrademarkContacts where TrademarkID=" & Globals.TrademarkID
         dtContacts = DataStuff.GetDataTable(strSQL)
         Me.grdContacts.DataSource = dtContacts
@@ -3206,7 +3203,7 @@ Public Class frmTrademarks
     Friend Sub GetMatters()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "Select * from qvwClientMattersLinked WHERE CompanyID=" & _
+        strSQL = "Select * from qvwClientMattersLinked WHERE CompanyID=" &
             Nz(rsTrademarks.CurrentRow("CompanyID"), 0) & " order by FileNumber"
         dtMatters = DataStuff.GetDataTable(strSQL)
         Me.FileID.DataSource = dtMatters
@@ -3215,8 +3212,8 @@ Public Class frmTrademarks
     Friend Sub GetDates()
         On Error Resume Next
         Dim strSQL As String
-        strSQL = "SELECT TrademarkDateID, TrademarkID, JurisdictionDateID, JurisdictionID, DateID, DateName, TrademarkDate, " & _
-        "NoDay, NoMonth, ListOrder, Completed, IsLocked, RecursAtInterval, HasRelatives, IsRelative " & _
+        strSQL = "SELECT TrademarkDateID, TrademarkID, JurisdictionDateID, JurisdictionID, DateID, DateName, TrademarkDate, " &
+        "NoDay, NoMonth, ListOrder, Completed, IsLocked, RecursAtInterval, HasRelatives, IsRelative " &
         "from qvwTrademarkDates where TrademarkID=" & Globals.TrademarkID & " order by ListOrder"
         dtDates = DataStuff.GetDataTable(strSQL)
         Me.grdDates.DataSource = dtDates
@@ -3389,9 +3386,9 @@ Public Class frmTrademarks
         iCompanyID = Nz(Me.CompanyID.Value, 0)
         If iCompanyID = 0 Then Exit Sub
 
-        strSQL = "Insert into tblTrademarkContacts (TrademarkID, ContactID, PositionID) Select " & _
-            Globals.TrademarkID & ", ContactID, PositionID from tblContacts where CompanyID=" & iCompanyID & _
-                " and PositionID is not null and PositionID in (Select PositionID from tblPositions" & _
+        strSQL = "Insert into tblTrademarkContacts (TrademarkID, ContactID, PositionID) Select " &
+            Globals.TrademarkID & ", ContactID, PositionID from tblContacts where CompanyID=" & iCompanyID &
+                " and PositionID is not null and PositionID in (Select PositionID from tblPositions" &
                 " where IsTrademark <> 0)"
         DataStuff.RunSQL(strSQL)
 
@@ -3411,7 +3408,7 @@ Public Class frmTrademarks
 
         If e.Column.Key = "ContactEmail" Then
             Me.Cursor = Cursors.WaitCursor
-            Dim OL As Outlook.Application, Email As Outlook.MailItem, strTo As String, strSubject As String, _
+            Dim OL As Outlook.Application, Email As Outlook.MailItem, strTo As String, strSubject As String,
                 GRow As Janus.Windows.GridEX.GridEXRow, i As Integer
 
             strSubject = ""
@@ -3433,7 +3430,7 @@ Public Class frmTrademarks
                 End If
                 Email = OL.CreateItem(Outlook.OlItemType.olMailItem)
                 With Me
-                    strSubject = .CompanyID.Text & " | " & .TrademarkName.Text & " | " & .JurisdictionID.Text & _
+                    strSubject = .CompanyID.Text & " | " & .TrademarkName.Text & " | " & .JurisdictionID.Text &
                         " | App# " & .ApplicationNumber.Text
                     If .RegistrationNumber.Text & "" <> "" Then
                         strSubject = strSubject & " | Reg# " & .RegistrationNumber.Text
@@ -3456,7 +3453,7 @@ Public Class frmTrademarks
         On Error Resume Next
 
         If (Globals.SecurityLevel = 1) And (e.Column.Key = "lnkDelete") Then
-            If MsgBox("Are you sure you want to delete this contact from the trademark?", _
+            If MsgBox("Are you sure you want to delete this contact from the trademark?",
                 MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
             Dim strSQL As String, iTrademarkContactID As Integer
             iTrademarkContactID = Me.grdContacts.GetValue("TrademarkContactID")
@@ -3478,7 +3475,7 @@ Public Class frmTrademarks
                 End If
                 Email = OL.CreateItem(Outlook.OlItemType.olMailItem)
                 With Me
-                    strSubject = .CompanyID.Text & " | " & .TrademarkName.Text & " | " & .JurisdictionID.Text & _
+                    strSubject = .CompanyID.Text & " | " & .TrademarkName.Text & " | " & .JurisdictionID.Text &
                         " | App# " & .ApplicationNumber.Text
                     If .RegistrationNumber.Text & "" <> "" Then
                         strSubject = strSubject & " | Reg# " & .RegistrationNumber.Text
@@ -3524,7 +3521,7 @@ Public Class frmTrademarks
         If FormStatus = Status.ResetAll Then
             Dim rsContacts As New RecordSet, dRow As DataRow
             With Me.grdContacts
-                rsContacts.GetFromSQL("Select * from tblTrademarkContacts where TrademarkContactID=" & _
+                rsContacts.GetFromSQL("Select * from tblTrademarkContacts where TrademarkContactID=" &
                     .GetValue("TrademarkContactID"))
                 dRow = rsContacts.CurrentRow
                 dRow("PositionID") = .GetValue("PositionID")
@@ -3557,7 +3554,7 @@ Public Class frmTrademarks
 
             If grdDocumentLinks.GetValue("IsFolder") = False Then
                 With Me.OpenFileDialog
-                    If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
+                    If My.Settings.DemoConnection = My.Settings.CurrentConnection Then
                         .InitialDirectory = RevaSettings.TrademarkDocumentsDemo
                     Else
                         .InitialDirectory = RevaSettings.TrademarkDocuments
@@ -3573,7 +3570,7 @@ Public Class frmTrademarks
                 End With
             Else
                 With Me.FolderBrowserDialog
-                    If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+                    If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                         .SelectedPath = RevaSettings.TrademarkDocumentsDemo
                     Else
                         .SelectedPath = RevaSettings.TrademarkDocuments
@@ -3649,7 +3646,7 @@ Public Class frmTrademarks
         On Error Resume Next
         If Globals.SecurityLevel = 3 Then Exit Sub
         With Me.OpenFileDialog
-            If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
+            If My.Settings.DemoConnection = My.Settings.CurrentConnection Then
                 .InitialDirectory = RevaSettings.TrademarkGraphicsDemo
             Else
                 .InitialDirectory = RevaSettings.TrademarkGraphics
@@ -3753,10 +3750,10 @@ Public Class frmTrademarks
 
             'if user checks re-order box first, we'll sort in reverse order
             If Me.chkReOrder.Checked = False Then
-                rsRecord.GetFromSQL("Select TrademarkDateID, TrademarkDate, ListOrder from tblTrademarkDates " & _
+                rsRecord.GetFromSQL("Select TrademarkDateID, TrademarkDate, ListOrder from tblTrademarkDates " &
                     "where TrademarkID=" & Globals.TrademarkID & " order by TrademarkDate, ListOrder")
             Else
-                rsRecord.GetFromSQL("Select TrademarkDateID, TrademarkDate, ListOrder from tblTrademarkDates " & _
+                rsRecord.GetFromSQL("Select TrademarkDateID, TrademarkDate, ListOrder from tblTrademarkDates " &
                     "where TrademarkID=" & Globals.TrademarkID & " order by TrademarkDate DESC, ListOrder DESC")
             End If
 
@@ -3878,7 +3875,7 @@ Public Class frmTrademarks
 
             If iOrder > 1 Then
                 Dim rsRecord As New RecordSet, dRow As DataRow, i As Integer
-                rsRecord.GetFromSQL("Select TrademarkDateID, ListOrder from tblTrademarkDates where TrademarkID=" & _
+                rsRecord.GetFromSQL("Select TrademarkDateID, ListOrder from tblTrademarkDates where TrademarkID=" &
                     Globals.TrademarkID)
                 For i = 0 To rsRecord.Table.Rows.Count - 1
                     dRow = rsRecord.Table.Rows(i)
@@ -3903,7 +3900,7 @@ Public Class frmTrademarks
 
             If iOrder < Me.grdDates.RowCount Then
                 Dim rsRecord As New RecordSet, dRow As DataRow, i As Integer
-                rsRecord.GetFromSQL("Select TrademarkDateID, ListOrder from tblTrademarkDates where TrademarkID=" & _
+                rsRecord.GetFromSQL("Select TrademarkDateID, ListOrder from tblTrademarkDates where TrademarkID=" &
                     Globals.TrademarkID)
                 For i = 0 To rsRecord.Table.Rows.Count - 1
                     dRow = rsRecord.Table.Rows(i)
@@ -4095,7 +4092,7 @@ Public Class frmTrademarks
         On Error Resume Next
 
         With Me.OpenFileDialog
-            If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
+            If My.Settings.DemoConnection = My.Settings.CurrentConnection Then
                 .InitialDirectory = RevaSettings.TrademarkDocumentsDemo
             Else
                 .InitialDirectory = RevaSettings.TrademarkDocuments
@@ -4124,7 +4121,7 @@ Public Class frmTrademarks
                     My.Settings.LastMergeOutlook = .FileName & ""
                 End If
 
-                
+
 
             End If
         End With
@@ -4178,15 +4175,15 @@ Public Class frmTrademarks
         Dim strMessage As String
 
         If ContactSelected() = False Then
-            strMessage = "You have not selected any contacts.  You can still create the merge document in Word," & _
-                " but there won't be any contact information if you merge the document immediately." & _
+            strMessage = "You have not selected any contacts.  You can still create the merge document in Word," &
+                " but there won't be any contact information if you merge the document immediately." &
                 " Do you still want to create the document?"
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
 
         End If
 
         With Me.SaveFileDialog
-            If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
+            If My.Settings.DemoConnection = My.Settings.CurrentConnection Then
                 .InitialDirectory = RevaSettings.TrademarkDocumentsDemo
             Else
                 .InitialDirectory = RevaSettings.TrademarkDocuments
@@ -4200,7 +4197,7 @@ Public Class frmTrademarks
             .ShowDialog()
             If Len(.FileName & "") > 3 Then
                 Me.MergeDocument.Text = .FileName & ""
-                
+
             End If
         End With
 
@@ -4211,7 +4208,7 @@ Public Class frmTrademarks
 
         My.Settings.LastMergeType = 1
         My.Settings.LastMergeWord = Me.MergeDocument.Text
-        
+
 
         Dim MM As New MarkMerge
         With MM
@@ -4233,7 +4230,7 @@ Public Class frmTrademarks
 
         My.Settings.LastMergeType = 1
         My.Settings.LastMergeWord = Me.MergeDocument.Text
-        
+
 
         Dim MM As New MarkMerge
         With MM
@@ -4298,7 +4295,7 @@ Public Class frmTrademarks
 
         My.Settings.LastMergeOutlook = Me.MergeDocument.Text
         My.Settings.LastMergeType = 3
-        
+
 
         Dim OM As New MarkOutlookMerge
         With OM
@@ -4321,7 +4318,7 @@ Public Class frmTrademarks
 
         'make sure merge texts exists
         Dim strSQL As String, dr As OleDb.OleDbDataReader
-        strSQL = "Select EmailMessage from tblJurisdictionDates where JurisdictionDateID=" & _
+        strSQL = "Select EmailMessage from tblJurisdictionDates where JurisdictionDateID=" &
             Me.grdDates.GetValue("JurisdictionDateID")
         dr = DataStuff.GetDataReader(strSQL)
         dr.Read()
@@ -4333,7 +4330,7 @@ Public Class frmTrademarks
         'okay, go for it
 
         My.Settings.LastMergeType = 4
-        
+
 
         Dim OM As New MarkOutlookMerge
         With OM
@@ -4369,7 +4366,7 @@ Public Class frmTrademarks
         Dim dtExisting As DataTable, strSQL As String
 
         With Me
-            strSQL = SQL.vwTrademarksList & " where CompanyID=" & _
+            strSQL = SQL.vwTrademarksList & " where CompanyID=" &
                 .CompanyID.Value & " and TrademarkID<>" & Globals.TrademarkID
 
             ' showing jurisdiction to add to filing
@@ -4421,7 +4418,7 @@ Public Class frmTrademarks
         On Error Resume Next
         Dim strSQL As String, dtTreatyFilings As DataTable
 
-        strSQL = "Select * from tblTreatyFilings where TreatyFilingID in " & _
+        strSQL = "Select * from tblTreatyFilings where TreatyFilingID in " &
         "(Select TreatyFilingID from tblTreatyFilingTrademarks where TrademarkID=@TrademarkID)"
 
         strSQL = strSQL.Replace("@TrademarkID", Globals.TrademarkID)
@@ -4438,7 +4435,7 @@ Public Class frmTrademarks
     Private Sub GetTreatyFilingBasis()
         On Error Resume Next
         Dim strSQL As String, dtTreatyFilingBasis As DataTable
-        strSQL = "Select FilingBasisID, FilingBasis from qvwTrademarkTreatyJurisdictions where JurisdictionID=" & _
+        strSQL = "Select FilingBasisID, FilingBasis from qvwTrademarkTreatyJurisdictions where JurisdictionID=" &
             Me.JurisdictionID.Value & " and IsParticipant <> 0 order by FilingBasis"
         dtTreatyFilingBasis = DataStuff.GetDataTable(strSQL)
         Me.grdTreatyFilings.DropDowns("cboFilingBasis").SetDataBinding(dtTreatyFilingBasis, "")
@@ -4449,7 +4446,7 @@ Public Class frmTrademarks
         Dim iJurisdictionID As Integer, strSQL As String, dtJurisdictionDates As DataTable
         'treaty filing basis is aliased as a jurisdiction; it's FilingBasisID * -1
         iJurisdictionID = Me.grdTreatyFilings.GetValue("FilingBasisID") * -1
-        strSQL = "select * from qvwTrademarkJurisdictionDates where JurisdictionID=" & iJurisdictionID & _
+        strSQL = "select * from qvwTrademarkJurisdictionDates where JurisdictionID=" & iJurisdictionID &
             " order by ListOrder"
         dtJurisdictionDates = DataStuff.GetDataTable(strSQL)
         Me.grdTreatyFilings.DropDowns("cboJurisdictionDate").SetDataBinding(dtJurisdictionDates, "")
@@ -4460,7 +4457,7 @@ Public Class frmTrademarks
         Dim strSQL As String, dtTreatyJurisdictions As DataTable, iFilingBasisID As Integer
 
         iFilingBasisID = Me.grdTreatyFilings.GetValue("FilingBasisID")
-        strSQL = "select * from qvwTrademarkTreatyJurisdictions where FilingBasisID=" & iFilingBasisID & _
+        strSQL = "select * from qvwTrademarkTreatyJurisdictions where FilingBasisID=" & iFilingBasisID &
             " and IsParticipant <> 0 order by Jurisdiction"
         dtTreatyJurisdictions = DataStuff.GetDataTable(strSQL)
         Me.grdJurisdictions.DataSource = dtTreatyJurisdictions
@@ -4471,14 +4468,14 @@ Public Class frmTrademarks
         Dim strSQL As String, dtTreatyTrademarks As DataTable
 
         ' becuz in Access, false = -1, in SQL Server, false = 1
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-            strSQL = "select * from qvwTreatyFilingTrademarks where TreatyFilingID=" & Globals.TreatyFilingID & _
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
+            strSQL = "select * from qvwTreatyFilingTrademarks where TreatyFilingID=" & Globals.TreatyFilingID &
                     " order by IsBasis, Jurisdiction"
         Else
-            strSQL = "select * from qvwTreatyFilingTrademarks where TreatyFilingID=" & Globals.TreatyFilingID & _
+            strSQL = "select * from qvwTreatyFilingTrademarks where TreatyFilingID=" & Globals.TreatyFilingID &
                     " order by IsBasis DESC, Jurisdiction"
         End If
-        
+
         dtTreatyTrademarks = DataStuff.GetDataTable(strSQL)
         Me.grdTreatyTrademarks.DataSource = dtTreatyTrademarks
         Me.grdRelated.DataSource = dtTreatyTrademarks
@@ -4519,7 +4516,7 @@ Public Class frmTrademarks
 
         If bIsTreaty = True Then
             Dim strMessage As String
-            strMessage = "This trademark is already part of a treay filing.  " & _
+            strMessage = "This trademark is already part of a treay filing.  " &
                 "Are you sure you want to create a new treaty filing based on this trademark?"
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then
                 GetTreatyFilings()
@@ -4608,7 +4605,7 @@ Public Class frmTrademarks
 
     Private Sub btnAddTreatyFiling_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAddTreatyFiling.Click
         On Error Resume Next
-        Dim iTrademarkID As Integer, GRow As Janus.Windows.GridEX.GridEXRow, _
+        Dim iTrademarkID As Integer, GRow As Janus.Windows.GridEX.GridEXRow,
             i As Integer, iTreatyFilingID As Integer, rsRecord As New RecordSet, dRow As DataRow
 
         iTreatyFilingID = Me.grdTreatyFilings.GetValue("TreatyFilingID")
@@ -4710,7 +4707,7 @@ Public Class frmTrademarks
 
             ' get required records for basis marks
             If Me.grdTreatyFilings.GetValue("CopyContacts") = True Then
-                strSQL = "Select distinct ContactID, PositionID from tblTrademarkContacts" & strBasisWhere 
+                strSQL = "Select distinct ContactID, PositionID from tblTrademarkContacts" & strBasisWhere
                 dtContacts = DataStuff.GetDataTable(strSQL)
             End If
 
@@ -4807,7 +4804,7 @@ Public Class frmTrademarks
                 If JurisdictionInTreaty(iJurisdictionID) = False Then
 
                     ' get it into tblTreatyFilingTrademarks
-                    strSQL = "insert into tblTreatyFilingTrademarks (TrademarkID, TreatyFilingID, IsBasis) values " & _
+                    strSQL = "insert into tblTreatyFilingTrademarks (TrademarkID, TreatyFilingID, IsBasis) values " &
                     "(@TrademarkID, @TreatyFilingID, 0)"
                     strSQL = strSQL.Replace("@TrademarkID", iTrademarkID)
                     strSQL = strSQL.Replace("@TreatyFilingID", iTreatyFilingID)
@@ -4882,7 +4879,7 @@ Public Class frmTrademarks
         On Error Resume Next
         Dim strMsg As String
 
-        strMsg = "This will not delete the trademark.  This will unlink the selected trademark " & _
+        strMsg = "This will not delete the trademark.  This will unlink the selected trademark " &
             "from the treaty filing.  Proceed?"
 
         If MsgBox(strMsg, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
@@ -4892,7 +4889,7 @@ Public Class frmTrademarks
         iTrademarkID = Me.grdTreatyTrademarks.GetValue("TrademarkID")
         iTreatyTrademarkID = Me.grdTreatyTrademarks.GetValue("TreatyTrademarkID")
 
-        strMsg = "This trademark has been unlinked from the treaty filing.  " & _
+        strMsg = "This trademark has been unlinked from the treaty filing.  " &
                     "You may need to change the Filing Basis, Application Number and Registration Number."
 
         ' clear the old way, just in case
@@ -4945,7 +4942,7 @@ Public Class frmTrademarks
                     And (.grdJurisdictions.SelectedItems.Count > 0) And (Globals.SecurityLevel < 3)
             End If
             'must be on basis mark screen to remove, but can't remove basis mark itself from list
-            .btnRemoveTreatyFiling.Enabled = (.grdTreatyTrademarks.SelectedItems.Count > 0) And _
+            .btnRemoveTreatyFiling.Enabled = (.grdTreatyTrademarks.SelectedItems.Count > 0) And
                 (Globals.SecurityLevel = 1) And (.grdTreatyTrademarks.GetValue("TrademarkID") <> Globals.TrademarkID)
         End With
     End Sub
@@ -5178,7 +5175,7 @@ Public Class frmTrademarks
             dtTrademarkUpdates = DataStuff.GetDataTable(strSQL)
             With .grdStatusCheck
                 .DataSource = dtTrademarkUpdates
-                
+
                 If (.RootTable.Columns.Contains("lnkSend") = False) Then
                     .RootTable.Columns.Add("lnkSend")
                     .RootTable.Columns("lnkSend").ColumnType = Janus.Windows.GridEX.ColumnType.Link
@@ -5270,7 +5267,7 @@ Public Class frmTrademarks
 
         'toggle all email alerts as sent or not sent
         If e.Column.Key = "EmailSent" Then
-            Dim GRow As Janus.Windows.GridEX.GridEXRow, i As Integer, bSent As Boolean, _
+            Dim GRow As Janus.Windows.GridEX.GridEXRow, i As Integer, bSent As Boolean,
                 strFilter As String, strSQL As String
 
             strFilter = "("
@@ -5289,7 +5286,7 @@ Public Class frmTrademarks
             strFilter = strFilter & "0)"
 
             If bSent = True Then
-                If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+                If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                     strSQL = "update tblTrademarkUpdates set EmailSent= -1 where TrademarkUpdateID in " & strFilter
                 Else
                     strSQL = "update tblTrademarkUpdates set EmailSent= 1 where TrademarkUpdateID in " & strFilter
@@ -5305,7 +5302,7 @@ Public Class frmTrademarks
 
     Private Sub GenerateStatusEmails(ByVal GRow As Janus.Windows.GridEX.GridEXRow, ByVal Email As Outlook.MailItem)
         On Error Resume Next
-        Dim strTo As String, strSubject As String, strMessage As String, _
+        Dim strTo As String, strSubject As String, strMessage As String,
              drToList As OleDb.OleDbDataReader, strSQL As String
 
         strTo = ""
@@ -5336,11 +5333,11 @@ Public Class frmTrademarks
         GRow.Cells("EmailSent").Value = True
         GRow.EndEdit()
 
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-            strSQL = "update tblTrademarkUpdates set EmailSent= -1" & _
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
+            strSQL = "update tblTrademarkUpdates set EmailSent= -1" &
                 " where TrademarkUpdateID=" & GRow.Cells("TrademarkUpdateID").Value
         Else
-            strSQL = "update tblTrademarkUpdates set EmailSent= 1" & _
+            strSQL = "update tblTrademarkUpdates set EmailSent= 1" &
                 " where TrademarkUpdateID=" & GRow.Cells("TrademarkUpdateID").Value
         End If
         DataStuff.RunSQL(strSQL)
@@ -5368,8 +5365,8 @@ Public Class frmTrademarks
         bEmailSent = Me.grdStatusCheck.GetValue("EmailSent")
         iTrademarkUpdateID = Me.grdStatusCheck.GetValue("TrademarkUpdateID")
 
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
-            strSQL = "update tblTrademarkUpdates set EmailSent=" & IIf(bEmailSent = True, "-1", "0") & _
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
+            strSQL = "update tblTrademarkUpdates set EmailSent=" & IIf(bEmailSent = True, "-1", "0") &
                 " where TrademarkUpdateID=" & iTrademarkUpdateID
         Else
             strSQL = "update tblTrademarkUpdates set EmailSent=" & IIf(bEmailSent = True, "1", "0") & _

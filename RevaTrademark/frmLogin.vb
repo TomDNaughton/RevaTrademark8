@@ -1,5 +1,4 @@
-Imports System.Data
-Imports System.Data.OleDb
+Imports System.Data.SqlClient
 Imports System.Configuration
 
 
@@ -44,13 +43,13 @@ Public Class frmLogin
         With Me
             If Globals.PurchaseLevel = 0 Then  'demo version
                 Dim strConnection As String
-                strConnection = My.Settings.AccessConnection
+                strConnection = My.Settings.DemoConnection
                 SaveCurrentConnection(strConnection)
-                .optAccess.Checked = True
+                .optDemo.Checked = True
                 .optSQL.Checked = False
                 .optSQL.Enabled = False
             Else  'default to SQL login for purchased version
-                .optAccess.Checked = False
+                .optDemo.Checked = False
                 .optSQL.Enabled = True
                 .optSQL.Checked = True
             End If
@@ -69,7 +68,7 @@ Public Class frmLogin
     Private Sub SetSecurityOptions()
         On Error Resume Next
         With Me
-            If .optAccess.Checked = True Then
+            If .optDemo.Checked = True Then
                 .Server.Text = ""
                 .Database.Text = ""
                 .UserID.Text = ""
@@ -109,9 +108,7 @@ Public Class frmLogin
                     .UserID.Text = RevaSettings.UserName & ""
                 End If
 
-
                 If RevaSettings.SavePassword = True Then
-                    '.Password.Text = GetPassword(RevaSettings.SQLConnection)
                     .Password.Text = RevaSettings.Password
                 End If
 
@@ -126,7 +123,6 @@ Public Class frmLogin
         On Error Resume Next
         If Me.optIntegrated.Checked = True Then
             RevaSettings.SecurityType = 1
-
             SetSecurityOptions()
         End If
     End Sub
@@ -135,18 +131,17 @@ Public Class frmLogin
         On Error Resume Next
         If Me.optSpecific.Checked = True Then
             RevaSettings.SecurityType = 2
-
             SetSecurityOptions()
         End If
     End Sub
 
     Private Function IsConnection() As Boolean
         On Error Resume Next
-        Dim strLogin As String, Cnn As New OleDbConnection
+        Dim strLogin As String, Cnn As New SqlConnection
 
         With Me
-            If .optAccess.Checked = True Then
-                strLogin = My.Settings.AccessConnection
+            If .optDemo.Checked = True Then
+                Return True
             Else
                 strLogin = "Provider=SQLOLEDB.1;Data Source=" & .Server.Text & ";"
                 strLogin = strLogin & "Initial Catalog=" & .Database.Text & ";"
@@ -162,9 +157,9 @@ Public Class frmLogin
         Cnn.Open()
 
         If Cnn.State = ConnectionState.Open Then
-            IsConnection = True
+            Return True
         Else
-            IsConnection = False
+            Return False
         End If
 
     End Function
@@ -213,8 +208,8 @@ Public Class frmLogin
             'save settings for next time
 
             With Me
-                If .optAccess.Checked = True Then
-                    strLogin = My.Settings.AccessConnection
+                If .optDemo.Checked = True Then
+                    strLogin = My.Settings.DemoConnection
                     SetDemoFolders()
                 Else
                     RevaSettings.DatabaseName = .Database.Text
@@ -319,7 +314,7 @@ Public Class frmLogin
 
     End Sub
 
-    Private Sub optAccess_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles optAccess.CheckedChanged
+    Private Sub optDemo_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles optDemo.CheckedChanged
         On Error Resume Next
         SetSecurityOptions()
     End Sub
@@ -329,43 +324,24 @@ Public Class frmLogin
         SetSecurityOptions()
     End Sub
 
-    Private Function GetPassword(ByVal strConnection) As String
-        On Error Resume Next
-
-        Dim strPassword As String, iStart As Integer, iEnd As Integer
-        If InStr(1, strConnection, "Password") < 2 Then
-            GetPassword = ""
-            Exit Function
-        End If
-        'parse password out of the SQL connction string
-        iStart = InStr(1, strConnection, "Password")
-        iStart = InStr(iStart + 1, strConnection, "=")
-        iStart = iStart + 1
-        If InStr(iStart + 2, strConnection, ";") < 2 Then
-            iEnd = Len(strConnection) + 1
-        Else
-            iEnd = InStr(iStart + 2, strConnection, ";")
-        End If
-        GetPassword = Mid(strConnection, iStart, (iEnd - iStart))
-
-    End Function
-
     Private Sub SetSecurity()
         On Error Resume Next
-        If Me.optAccess.Checked = True Then
+        If Me.optDemo.Checked = True Then
             Globals.SecurityLevel = 1
         Else
             Dim strUser As String, strUser2005 As String
+
             If Me.optIntegrated.Checked = True Then
                 'becuz the fucking geniuses at Microsoft decided to fuck up how we identify users in SQL 2005 ...
                 'for that fucking piece of shit, we now include the domain name in sysusers.name
                 strUser = Environment.UserName
                 strUser2005 = Environment.UserDomainName & "\" & Environment.UserName
+
                 If DataStuff.DCount("UserName", "qvwRoleMembers", "UserName='" & strUser & "'") > 0 Then
-                    Globals.SecurityLevel = DataStuff.DMin("SecurityLevel", "qvwRoleMembers", _
+                    Globals.SecurityLevel = DataStuff.DMin("SecurityLevel", "qvwRoleMembers",
                         "UserName='" & strUser & "'")
                 Else
-                    Globals.SecurityLevel = DataStuff.DMin("SecurityLevel", "qvwRoleMembers", _
+                    Globals.SecurityLevel = DataStuff.DMin("SecurityLevel", "qvwRoleMembers",
                     "UserName='" & strUser2005 & "'")
                 End If
             Else
@@ -373,7 +349,7 @@ Public Class frmLogin
                 Globals.SecurityLevel = DataStuff.DMin("SecurityLevel", "qvwRoleMembers", "UserName='" & strUser & "'")
             End If
         End If
-        
+
         'DON'T FORGET TO DELETE THIS LATER
         'Globals.SecurityLevel = 1
     End Sub
@@ -382,7 +358,7 @@ Public Class frmLogin
     Private Sub HookToDeveloperDB()
         On Error Resume Next
         Dim strLogin As String
-        strLogin = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\_TrademarkDev\RevaVB\RevaTrademark\RevaTrademark.mdb;Persist Security Info=True"
+        strLogin = "data source = 'RevaTrademark.vdb5'"
 
         SaveCurrentConnection(strLogin)
 

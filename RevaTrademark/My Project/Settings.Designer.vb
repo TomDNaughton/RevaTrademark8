@@ -57,13 +57,13 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=RevaTrademark.mdb")>  _
-        Public Property AccessConnection() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("data source = 'RevaTrademark.vdb5'")>  _
+        Public Property DemoConnection() As String
             Get
-                Return CType(Me("AccessConnection"),String)
+                Return CType(Me("DemoConnection"),String)
             End Get
             Set
-                Me("AccessConnection") = value
+                Me("DemoConnection") = value
             End Set
         End Property
         

@@ -1509,7 +1509,7 @@ Public Class frmPatents
 
         If Me.optEmailAlerts.Checked = True Then
             bEmailSent = Me.grdAlerts.GetValue("EmailSent")
-            If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+            If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                 strSQL = "update tblPatentDates set EmailSent=" & IIf(bEmailSent = True, "-1", "0") &
                     " where PatentDateID=" & iPatentDateID
             Else
@@ -1523,7 +1523,7 @@ Public Class frmPatents
             bCompleted = Me.grdAlerts.GetValue("Completed")
             ' a dateID of zero means it's an action alert
             If iDateID <> 0 Then
-                If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+                If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                     strSQL = "update tblPatentDates set Completed=" & IIf(bCompleted = True, "-1", "0") &
                         " where PatentDateID=" & iPatentDateID
                 Else
@@ -1531,7 +1531,7 @@ Public Class frmPatents
                         " where PatentDateID=" & iPatentDateID
                 End If
             Else
-                If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+                If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                     strSQL = "update tblPatentActions set Completed=" & IIf(bCompleted = True, "-1", "0") &
                         " where PatentActionID=" & iPatentDateID
                 Else
@@ -1591,7 +1591,7 @@ Public Class frmPatents
             strFilter = strFilter & "0)"
 
             If bSent = True Then
-                If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+                If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                     strSQL = "update tblPatentDates set EmailSent= -1 where PatentDateID in " & strFilter
                 Else
                     strSQL = "update tblPatentDates set EmailSent= 1 where PatentDateID in " & strFilter
@@ -1664,7 +1664,7 @@ Public Class frmPatents
         GRow.Cells("EmailSent").Value = True
         GRow.EndEdit()
 
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             strSQL = "update tblPatentDates set EmailSent= -1" &
                 " where PatentDateID=" & GRow.Cells("PatentDateID").Value
         Else
@@ -1703,7 +1703,7 @@ Public Class frmPatents
             Me.optEmailAlerts.Checked = True
         End If
 
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             Me.sepDemo.Visible = True
             Me.lblDemo.Visible = True
         Else
@@ -3251,7 +3251,7 @@ Public Class frmPatents
 
             If grdDocumentLinks.GetValue("IsFolder") = False Then
                 With Me.OpenFileDialog
-                    If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
+                    If My.Settings.DemoConnection = My.Settings.CurrentConnection Then
                         .InitialDirectory = RevaSettings.PatentDocumentsDemo
                     Else
                         .InitialDirectory = RevaSettings.PatentDocuments
@@ -3267,7 +3267,7 @@ Public Class frmPatents
                 End With
             Else
                 With Me.FolderBrowserDialog
-                    If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+                    If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
                         .SelectedPath = RevaSettings.PatentDocumentsDemo
                     Else
                         .SelectedPath = RevaSettings.PatentDocuments
@@ -3343,7 +3343,7 @@ Public Class frmPatents
         On Error Resume Next
         If Globals.SecurityLevel = 3 Then Exit Sub
         With Me.OpenFileDialog
-            If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
+            If My.Settings.DemoConnection = My.Settings.CurrentConnection Then
                 .InitialDirectory = RevaSettings.PatentGraphicsDemo
             Else
                 .InitialDirectory = RevaSettings.PatentGraphics
@@ -3783,7 +3783,7 @@ Public Class frmPatents
         On Error Resume Next
 
         With Me.OpenFileDialog
-            If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
+            If My.Settings.DemoConnection = My.Settings.CurrentConnection Then
                 .InitialDirectory = RevaSettings.PatentDocumentsDemo
             Else
                 .InitialDirectory = RevaSettings.PatentDocuments
@@ -3874,7 +3874,7 @@ Public Class frmPatents
         End If
 
         With Me.SaveFileDialog
-            If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
+            If My.Settings.DemoConnection = My.Settings.CurrentConnection Then
                 .InitialDirectory = RevaSettings.PatentDocumentsDemo
             Else
                 .InitialDirectory = RevaSettings.PatentDocuments

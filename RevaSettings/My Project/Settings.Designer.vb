@@ -341,6 +341,42 @@ Namespace My
                 Me("BlankDatesLast") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("data source = 'RevaTrademark.vdb5'")>  _
+        Public Property DemoConnection() As String
+            Get
+                Return CType(Me("DemoConnection"),String)
+            End Get
+            Set
+                Me("DemoConnection") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property SQLConnection() As String
+            Get
+                Return CType(Me("SQLConnection"),String)
+            End Get
+            Set
+                Me("SQLConnection") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property CurrentConnection() As String
+            Get
+                Return CType(Me("CurrentConnection"),String)
+            End Get
+            Set
+                Me("CurrentConnection") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

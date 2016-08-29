@@ -400,7 +400,7 @@ Public Class frmMergeHelper
         On Error Resume Next
 
         With Me.SaveFileDialog
-            If My.Settings.AccessConnection = My.Settings.CurrentConnection Then
+            If My.Settings.DemoConnection = My.Settings.CurrentConnection Then
                 .InitialDirectory = RevaSettings.TrademarkDocumentsDemo
             Else
                 .InitialDirectory = RevaSettings.TrademarkDocuments

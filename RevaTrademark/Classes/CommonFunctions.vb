@@ -12,7 +12,7 @@ Module CommonFunctions
     Public Function FixDate(ByVal strDate As String) As String
         On Error Resume Next
         'fucking Access requires a pound sign instead of a quote for dates
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             FixDate = "#" & Format(DateValue(strDate), "MM-dd-yyyy") & "#"
         Else
             FixDate = "'" & Format(DateValue(strDate), "MM-dd-yyyy") & "'"
@@ -22,7 +22,7 @@ Module CommonFunctions
     Public Function GetFilter(ByVal strField As String, ByVal strValue As String) As String
         On Error Resume Next
         ' Access and SQL have different ways of solving the quote issue
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             GetFilter = strField & "=" & Chr(34) & strValue & Chr(34)
         Else
             GetFilter = "Replace(" & strField & ",char(39),'')= '" & Replace(strValue, "'", "") & "'"

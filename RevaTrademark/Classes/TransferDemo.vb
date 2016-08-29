@@ -31,7 +31,7 @@ Public Class TransferDemo
 
     Friend Sub Connect()
         On Error Resume Next
-        AccessCnn.ConnectionString = My.Settings.AccessConnection
+        AccessCnn.ConnectionString = My.Settings.DemoConnection
         AccessdbAdapter = New OleDbDataAdapter(strAccess, AccessCnn)
         AccesscmdBuilder = New OleDbCommandBuilder(AccessdbAdapter)
         AccesscmdBuilder.DataAdapter = AccessdbAdapter

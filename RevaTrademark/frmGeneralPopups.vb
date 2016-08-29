@@ -830,7 +830,7 @@ Public Class frmGeneralPopups
         ' we'll be storing these in a local Access table either way, but we need to know if
         ' we're saving the Access values or SQL Server values
 
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             If IsTrademark = True Then
                 ' Access version, trademark filters
                 strSQL = "Select * from tblFilterNames where IsTrademark <> 0 and IsSQL = 0 order by FilterName"
@@ -848,14 +848,14 @@ Public Class frmGeneralPopups
             End If
         End If
 
-        rsRecords.GetFromAccess(strSQL)
+        rsRecords.GetFromDemo(strSQL)
         Me.grdFilters.DataSource = rsRecords.Table
 
     End Sub
 
     Private Sub grdFilters_AddingRecord(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles grdFilters.AddingRecord
         On Error Resume Next
-        If My.Settings.CurrentConnection = My.Settings.AccessConnection Then
+        If My.Settings.CurrentConnection = My.Settings.DemoConnection Then
             If iRecType = 11 Then
                 ' Access version, trademark filters
                 Me.grdFilters.SetValue("IsTrademark", True)
@@ -900,9 +900,9 @@ Public Class frmGeneralPopups
             If MsgBox(strMsg, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
 
             strSQL = "delete from tblFilterNames where FilterID = " & iFilterID
-            DataStuff.RunAccessSQL(strSQL)
+            DataStuff.RunDemoSQL(strSQL)
             strSQL = "delete from tblFilterValues where FilterID = " & iFilterID
-            DataStuff.RunAccessSQL(strSQL)
+            DataStuff.RunDemoSQL(strSQL)
 
             If iRecType = 11 Then 'trademark filters
                 GetFilters(True)
