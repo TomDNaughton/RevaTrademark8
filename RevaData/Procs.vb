@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports VistaDB.Provider
 
-Module Procs
+Public Module Procs
 
     Public CurrentConnectionString As String = String.Empty
     Public VistaConnectionString As String = "data source = 'RevaTrademark.vdb5'"

@@ -118,8 +118,8 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Provider=SQLOLEDB;Data Source=THOMASNAUGH5871\SQLEXPRESS;Password=fatdog999;User "& _ 
-            "ID=tommy;Initial Catalog=RevaTrademarkDev7")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=THOMASNAUGH5871\SQLEXPRESS;Initial Catalog=RevaTrademarkDev7;User ID="& _ 
+            "tommy;Password=fatdog999")>  _
         Public ReadOnly Property SQLConnection() As String
             Get
                 Return CType(Me("SQLConnection"),String)

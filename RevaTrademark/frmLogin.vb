@@ -43,8 +43,8 @@ Public Class frmLogin
         With Me
             If Globals.PurchaseLevel = 0 Then  'demo version
                 Dim strConnection As String
-                strConnection = My.Settings.DemoConnection
-                SaveCurrentConnection(strConnection)
+                'strConnection = RevaSettings.DemoConnection
+                'SaveCurrentConnection(strConnection)
                 .optDemo.Checked = True
                 .optSQL.Checked = False
                 .optSQL.Enabled = False
@@ -136,31 +136,44 @@ Public Class frmLogin
     End Sub
 
     Private Function IsConnection() As Boolean
-        On Error Resume Next
-        Dim strLogin As String, Cnn As New SqlConnection
+        Try
 
-        With Me
-            If .optDemo.Checked = True Then
-                Return True
-            Else
-                strLogin = "Provider=SQLOLEDB.1;Data Source=" & .Server.Text & ";"
-                strLogin = strLogin & "Initial Catalog=" & .Database.Text & ";"
-                If .optIntegrated.Checked = True Then
-                    strLogin = strLogin & "Integrated Security=SSPI"
-                Else
-                    strLogin = strLogin & "User ID=" & .UserID.Text & ";Password=" & .Password.Text
+
+            With Me
+                If .optDemo.Checked = True Then
+                    RevaData.ConnectionString = My.Settings.DemoConnection
+                    Return RevaData.TestDemoConnection
                 End If
-            End If
-        End With
 
-        Cnn.ConnectionString = strLogin
-        Cnn.Open()
+                If .optDemo.Checked = False Then
 
-        If Cnn.State = ConnectionState.Open Then
-            Return True
-        Else
+                    Dim strLogin As String = String.Empty, Cnn As New SqlConnection
+
+                    strLogin = "Data Source=" & .Server.Text & ";"
+                    strLogin = strLogin & "Initial Catalog=" & .Database.Text & ";"
+
+                    If .optIntegrated.Checked = True Then
+                        strLogin = strLogin & "Integrated Security=SSPI"
+                    Else
+                        strLogin = strLogin & "User ID=" & .UserID.Text & ";Password=" & .Password.Text
+                    End If
+
+                    Cnn.ConnectionString = strLogin
+                    Cnn.Open()
+
+                    If Cnn.State = ConnectionState.Open Then
+                        Return True
+                    Else
+                        Return False
+                    End If
+
+                End If
+
+            End With
+
+        Catch ex As Exception
             Return False
-        End If
+        End Try
 
     End Function
 
@@ -209,7 +222,7 @@ Public Class frmLogin
 
             With Me
                 If .optDemo.Checked = True Then
-                    strLogin = My.Settings.DemoConnection
+                    strLogin = RevaSettings.DemoConnection
                     SetDemoFolders()
                 Else
                     RevaSettings.DatabaseName = .Database.Text
@@ -217,20 +230,22 @@ Public Class frmLogin
                     RevaSettings.UserName = .UserID.Text
                     RevaSettings.Password = .Password.Text
                     RevaSettings.SavePassword = .chkSavePassword.Checked
-                    strLogin = "Provider=SQLOLEDB.1;Data Source=" & .Server.Text & ";"
+
+                    strLogin = "Data Source=" & .Server.Text & ";"
                     strLogin = strLogin & "Initial Catalog=" & .Database.Text & ";"
+
                     If .optIntegrated.Checked = True Then
                         strLogin = strLogin & "Integrated Security=SSPI"
                     Else
                         strLogin = strLogin & "User ID=" & .UserID.Text & ";Password=" & .Password.Text
                     End If
-                    SaveSQLConnection(strLogin)
+
                 End If
             End With
 
-            SaveCurrentConnection(strLogin)
-            RevaData.ConnectionString = My.Settings.CurrentConnection
-
+            RevaSettings.SQLConnection = strLogin
+            RevaSettings.CurrentConnection = strLogin
+            RevaData.ConnectionString = strLogin
 
             If Not (AllForms.frmTrademarks Is Nothing) Then
                 AllForms.frmTrademarks.Close()
@@ -274,150 +289,161 @@ Public Class frmLogin
         End If
     End Sub
 
-    Private Sub SaveCurrentConnection(ByVal strConnection As String)
-        On Error Resume Next
-        'not sure why this works; got it off the internet.
-        Dim Config As Configuration
-        Dim Section As ConnectionStringsSection
-        Dim Setting As ConnectionStringSettings
-        Dim ConnectionFullName As String
-
-        ConnectionFullName = String.Format("{0}.My.MySettings.{1}", System.Reflection.Assembly.GetExecutingAssembly.GetName.Name, "CurrentConnection")
-
-        Config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
-        Section = CType(Config.GetSection("connectionStrings"), ConnectionStringsSection)
-        Setting = Section.ConnectionStrings(ConnectionFullName)
-        Setting.ConnectionString = strConnection
-        Config.Save(ConfigurationSaveMode.Full, False)
-        My.MySettings.Default.Item("CurrentConnection") = strConnection
-
-
-    End Sub
-
-    Private Sub SaveSQLConnection(ByVal strConnection As String)
-        On Error Resume Next
-        'not sure why this works; got it off the internet.
-        Dim Config As Configuration
-        Dim Section As ConnectionStringsSection
-        Dim Setting As ConnectionStringSettings
-        Dim ConnectionFullName As String
-
-        ConnectionFullName = String.Format("{0}.My.MySettings.{1}", System.Reflection.Assembly.GetExecutingAssembly.GetName.Name, "SQLConnection")
-
-        Config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
-        Section = CType(Config.GetSection("connectionStrings"), ConnectionStringsSection)
-        Setting = Section.ConnectionStrings(ConnectionFullName)
-        Setting.ConnectionString = strConnection
-        Config.Save(ConfigurationSaveMode.Full, True)
-        My.MySettings.Default.Item("SQLConnection") = strConnection
-
-
-    End Sub
-
     Private Sub optDemo_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles optDemo.CheckedChanged
-        On Error Resume Next
         SetSecurityOptions()
     End Sub
 
     Private Sub optSQL_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles optSQL.CheckedChanged
-        On Error Resume Next
         SetSecurityOptions()
     End Sub
 
     Private Sub SetSecurity()
-        On Error Resume Next
-        If Me.optDemo.Checked = True Then
-            Globals.SecurityLevel = 1
-        Else
-            Dim strUser As String, strUser2005 As String
-
-            If Me.optIntegrated.Checked = True Then
-                'becuz the fucking geniuses at Microsoft decided to fuck up how we identify users in SQL 2005 ...
-                'for that fucking piece of shit, we now include the domain name in sysusers.name
-                strUser = Environment.UserName
-                strUser2005 = Environment.UserDomainName & "\" & Environment.UserName
-
-                If DataStuff.DCount("UserName", "qvwRoleMembers", "UserName='" & strUser & "'") > 0 Then
-                    Globals.SecurityLevel = DataStuff.DMin("SecurityLevel", "qvwRoleMembers",
-                        "UserName='" & strUser & "'")
-                Else
-                    Globals.SecurityLevel = DataStuff.DMin("SecurityLevel", "qvwRoleMembers",
-                    "UserName='" & strUser2005 & "'")
-                End If
-            Else
-                strUser = Me.UserID.Text
-                Globals.SecurityLevel = DataStuff.DMin("SecurityLevel", "qvwRoleMembers", "UserName='" & strUser & "'")
+        Try
+            If Me.optDemo.Checked = True Then
+                Globals.SecurityLevel = 1
             End If
-        End If
 
-        'DON'T FORGET TO DELETE THIS LATER
-        'Globals.SecurityLevel = 1
-    End Sub
+            If Me.optSQL.Checked = True Then
 
+                Dim strUser As String
 
-    Private Sub HookToDeveloperDB()
-        On Error Resume Next
-        Dim strLogin As String
-        strLogin = "data source = 'RevaTrademark.vdb5'"
+                If optIntegrated.Checked = True Then
+                    strUser = Environment.UserDomainName & "\" & Environment.UserName
+                Else
+                    strUser = Environment.UserName
+                End If
 
-        SaveCurrentConnection(strLogin)
+                Globals.SecurityLevel = RevaData.RunSPWithResult("prd_recSecurityLevel", "@UserName", strUser)
 
+                'If Me.optIntegrated.Checked = True Then
+                '    strUser = Environment.UserName
+                '    strUser2005 = Environment.UserDomainName & "\" & Environment.UserName
 
-        AllForms.frmTrademarks.Close()
-        AllForms.frmPatents.Close()
-        AllForms.frmReports.Close()
-        AllForms.frmCompanies.Close()
-        AllForms.frmPreferences.Close()
-        AllForms.frmReportPreview.Close()
+                '    If DataStuff.DCount("UserName", "qvwRoleMembers", "UserName='" & strUser & "'") > 0 Then
+                '        Globals.SecurityLevel = RevaData.DMin("SecurityLevel", "qvwRoleMembers",
+                '            "UserName='" & strUser & "'")
+                '    Else
+                '        Globals.SecurityLevel = RevaData.DMin("SecurityLevel", "qvwRoleMembers",
+                '        "UserName='" & strUser2005 & "'")
+                '    End If
+                'Else
+                '    strUser = Me.UserID.Text
+                '    Globals.SecurityLevel = RevaData.DMin("SecurityLevel", "qvwRoleMembers", "UserName='" & strUser & "'")
+                'End If
+            End If
 
-        SetSecurity()
-
-        If RevaSettings.OpenOnMarks = True Then
-            AllForms.OpenTrademarks()
-        Else
-            AllForms.OpenPatents()
-        End If
-
-        Me.Close()
-
-    End Sub
-
-    Private Sub HookToSQL()
-        On Error Resume Next
-        Dim strLogin As String, strUser As String
-        strLogin = "Provider=SQLOLEDB;Data Source=THOMASNAUGH5871\SQLEXPRESS;Password=fatdog999;User ID=tommy;Initial Catalog=RevaTrademarkDev7"
-
-        SaveCurrentConnection(strLogin)
-        RevaData.ConnectionString = My.Settings.CurrentConnection
-
-        AllForms.frmTrademarks.Close()
-        AllForms.frmPatents.Close()
-        AllForms.frmReports.Close()
-        AllForms.frmCompanies.Close()
-        AllForms.frmPreferences.Close()
-        AllForms.frmReportPreview.Close()
-
-        SetSecurity()
-        strUser = "RevaTest"
-        Globals.SecurityLevel = DataStuff.DMin("SecurityLevel", "qvwRoleMembers", "UserName='" & strUser & "'")
-        Globals.SecurityLevel = 1
-        Globals.PurchaseLevel = 5
-        If RevaSettings.OpenOnMarks = True Then
-            AllForms.OpenTrademarks()
-        Else
-            AllForms.OpenPatents()
-        End If
-
-        Me.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
 
     End Sub
 
     Private Sub btnHookDev_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHookDev.Click
-        HookToDeveloperDB()
+        Try
+            Dim strLogin As String
+            strLogin = "data source = 'RevaTrademark.vdb5'"
+
+            RevaSettings.CurrentConnection = strLogin
+            RevaData.ConnectionString = strLogin
+
+            If Not (AllForms.frmTrademarks Is Nothing) Then
+                AllForms.frmTrademarks.Close()
+            End If
+
+            If Not (AllForms.frmPatents Is Nothing) Then
+                AllForms.frmPatents.Close()
+            End If
+
+            If Not (AllForms.frmReports Is Nothing) Then
+                AllForms.frmReports.Close()
+            End If
+
+            If Not (AllForms.frmCompanies Is Nothing) Then
+                AllForms.frmCompanies.Close()
+            End If
+
+            If Not (AllForms.frmPreferences Is Nothing) Then
+                AllForms.frmPreferences.Close()
+            End If
+
+            If Not (AllForms.frmReportPreview Is Nothing) Then
+                AllForms.frmReportPreview.Close()
+            End If
+
+            If Not (AllForms.frmOppositions Is Nothing) Then
+                AllForms.frmOppositions.Close()
+            End If
+
+
+            SetSecurity()
+
+            If RevaSettings.OpenOnMarks = True Then
+                AllForms.OpenTrademarks()
+            Else
+                AllForms.OpenPatents()
+            End If
+
+            Me.Close()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
     End Sub
 
     Private Sub btnSQLDev_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSQLDev.Click
-        HookToSQL()
+        Try
+            Dim strLogin As String, strUser As String
+            strLogin = "Data Source=THOMASNAUGH5871\SQLEXPRESS;Initial Catalog=RevaTrademarkDev7;User ID=tommy;Password=fatdog999"
+
+            RevaSettings.CurrentConnection = strLogin
+            RevaData.ConnectionString = strLogin
+
+            If Not (AllForms.frmTrademarks Is Nothing) Then
+                AllForms.frmTrademarks.Close()
+            End If
+
+            If Not (AllForms.frmPatents Is Nothing) Then
+                AllForms.frmPatents.Close()
+            End If
+
+            If Not (AllForms.frmReports Is Nothing) Then
+                AllForms.frmReports.Close()
+            End If
+
+            If Not (AllForms.frmCompanies Is Nothing) Then
+                AllForms.frmCompanies.Close()
+            End If
+
+            If Not (AllForms.frmPreferences Is Nothing) Then
+                AllForms.frmPreferences.Close()
+            End If
+
+            If Not (AllForms.frmReportPreview Is Nothing) Then
+                AllForms.frmReportPreview.Close()
+            End If
+
+            If Not (AllForms.frmOppositions Is Nothing) Then
+                AllForms.frmOppositions.Close()
+            End If
+
+            SetSecurity()
+            strUser = "RevaTest"
+            Globals.SecurityLevel = RevaData.DMin("SecurityLevel", "qvwRoleMembers", "UserName='" & strUser & "'")
+            Globals.SecurityLevel = 1
+            Globals.PurchaseLevel = 5
+
+            If RevaSettings.OpenOnMarks = True Then
+                AllForms.OpenTrademarks()
+            Else
+                AllForms.OpenPatents()
+            End If
+
+            Me.Close()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
     End Sub
 
     Private Sub btnTest_Click(sender As Object, e As EventArgs) Handles btnTest.Click

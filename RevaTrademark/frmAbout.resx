@@ -112,17 +112,17 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnLicense.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAALEAAA
-        CxABrSO9dQAAAVlJREFUOE+lzE8og3Ecx/GVGdnjgpHSSmvRWmsaRRN7JmHlYIrW8mdOMyEHOWwH5bBs
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAALDwAA
+        Cw8BkvkDpQAAAVlJREFUOE+lzE8og3Ecx/GVGdnjgpHSSmvRWmsaRRN7JmHlYIrW8mdOMyEHOWwH5bBs
         0doRUW4uKynlImdxcXNhtdZao1nMED6e78Fhe74Hy+HVr97fTz8FgH9hYznYWA5ZmOjXmC9P53Gy58TO
         eg8iy3ps+5ox3ltvLN0SWTiKDAH5A+AjhqdUVHqPkU+H4HUopXPxlshCdNUMFGLIJoLwe0zIJbeAtxhm
         7JXSuXhLZGHTq8P7QxB43gWyG8DrIe6uF2EzqKRz8ZbIgsvWqPe7W4BMQPoghOTNLAYstRBNwlzplsgC

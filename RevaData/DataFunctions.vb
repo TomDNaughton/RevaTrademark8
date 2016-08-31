@@ -13,6 +13,14 @@
 
 #Region "Named Functions"
 
+    Public Function TestDemoConnection() As Boolean
+
+        If RunSPWithResult("prd_TestConnection") = 1 Then
+            Return True
+        End If
+
+        Return False
+    End Function
 
     Public Function GetTrademarksList() As DataTable
         Try

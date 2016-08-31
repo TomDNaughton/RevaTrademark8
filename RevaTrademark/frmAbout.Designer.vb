@@ -21,17 +21,17 @@ Partial Class frmAbout
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmAbout))
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.LicenseNumber = New System.Windows.Forms.TextBox
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.btnLicense = New Janus.Windows.EditControls.UIButton
-        Me.lblUser = New System.Windows.Forms.Label
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.lblSecurity = New System.Windows.Forms.Label
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.LicenseNumber = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.btnLicense = New Janus.Windows.EditControls.UIButton()
+        Me.lblUser = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.lblSecurity = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
@@ -42,7 +42,7 @@ Partial Class frmAbout
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(209, 17)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "RevaTrademark version 6.0"
+        Me.Label1.Text = "RevaTrademark version 8.0"
         '
         'Label2
         '
@@ -52,7 +52,7 @@ Partial Class frmAbout
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(186, 13)
         Me.Label2.TabIndex = 1
-        Me.Label2.Text = "Copyright 2014, RevaWare Inc."
+        Me.Label2.Text = "Copyright 2016, RevaWare Inc."
         '
         'Label3
         '
@@ -147,7 +147,7 @@ Partial Class frmAbout
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.DarkSeaGreen
+        Me.BackColor = System.Drawing.Color.LightSteelBlue
         Me.ClientSize = New System.Drawing.Size(349, 270)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.lblSecurity)

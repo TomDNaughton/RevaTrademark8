@@ -8,44 +8,49 @@ Public NotInheritable Class frmAbout
     End Sub
 
     Private Sub btnLicense_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLicense.Click
-        On Error Resume Next
-        Dim strLicense As String
-        strLicense = Me.LicenseNumber.Text & ""
+        Try
+            Dim strLicense As String
+            strLicense = Me.LicenseNumber.Text & ""
 
-        Select Case strLicense
-            Case "DemoVersion"
-                Globals.PurchaseLevel = 0
-                SaveLicense()
+            Select Case strLicense
+                Case "DemoVersion"
+                    Globals.PurchaseLevel = 0
+                    SaveLicense()
 
-            Case "MJ239397"
-                Globals.PurchaseLevel = 1
-                SaveLicense()
+                Case "MJ239397"
+                    Globals.PurchaseLevel = 1
+                    SaveLicense()
 
-            Case "SD110603"
-                Globals.PurchaseLevel = 2
-                SaveLicense()
+                Case "SD110603"
+                    Globals.PurchaseLevel = 2
+                    SaveLicense()
 
-            Case "CS101672"
-                Globals.PurchaseLevel = 3
-                SaveLicense()
+                Case "CS101672"
+                    Globals.PurchaseLevel = 3
+                    SaveLicense()
 
-            Case "TD111458"
-                Globals.PurchaseLevel = 4
-                SaveLicense()
+                Case "TD111458"
+                    Globals.PurchaseLevel = 4
+                    SaveLicense()
 
-            Case "RE082834"
-                Globals.PurchaseLevel = 5
-                SaveLicense()
+                Case "RE082834"
+                    Globals.PurchaseLevel = 5
+                    SaveLicense()
 
-            Case "ServerDemo"
-                Globals.PurchaseLevel = 6
-                SaveLicense()
+                Case "ServerDemo"
+                    Globals.PurchaseLevel = 6
+                    SaveLicense()
 
-            Case Else
-                MsgBox("Sorry, that is not a legitimate license number.  Please try again.")
-                Me.LicenseNumber.Text = RevaSettings.LicenseKey & ""
+                Case Else
+                    MsgBox("Sorry, that is not a legitimate license number.  Please try again.")
+                    Me.LicenseNumber.Text = RevaSettings.LicenseKey & ""
 
-        End Select
+            End Select
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
     End Sub
 
     Private Sub SaveLicense()
