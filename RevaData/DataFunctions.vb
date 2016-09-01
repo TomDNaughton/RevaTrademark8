@@ -14,7 +14,6 @@
 #Region "Named Functions"
 
     Public Function TestDemoConnection() As Boolean
-
         If RunSPWithResult("prd_TestConnection") = 1 Then
             Return True
         End If
@@ -24,13 +23,10 @@
 
     Public Function GetTrademarksList() As DataTable
         Try
-
             Return Procs.GetSPDataTable("prd_recTrademarksList")
-
         Catch ex As Exception
             Return Nothing
         End Try
-
     End Function
 
 #End Region

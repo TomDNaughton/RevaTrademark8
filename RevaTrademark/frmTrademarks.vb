@@ -1881,7 +1881,7 @@ Public Class frmTrademarks
         GetTrademarksList()
         FillCompanies()
         FillRegClasses()
-        FillJurisdictions()
+        Me.JurisdictionID.DataSource = RevaData.tblTrademarkJurisdicitons
         FillTrademarkTypes()
         FillRegTypes()
         FillFilingBasis()
@@ -3087,13 +3087,13 @@ Public Class frmTrademarks
         Me.grdLicensed.DropDowns("cboCompany").SetDataBinding(dtCompanies, "")
     End Sub
 
-    Friend Sub FillJurisdictions()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select JurisdictionID, Jurisdiction from tblJurisdictions where IsTrademark <> 0 Order by Jurisdiction"
-        dtJurisdictions = DataStuff.GetDataTable(strSQL)
-        Me.JurisdictionID.DataSource = dtJurisdictions
-    End Sub
+    'Friend Sub FillJurisdictions()
+    '    On Error Resume Next
+    '    Dim strSQL As String
+    '    strSQL = "Select JurisdictionID, Jurisdiction from tblJurisdictions where IsTrademark <> 0 Order by Jurisdiction"
+    '    dtJurisdictions = DataStuff.GetDataTable(strSQL)
+    '    Me.JurisdictionID.DataSource = dtJurisdictions
+    'End Sub
 
     Friend Sub FillTrademarkTypes()
         On Error Resume Next

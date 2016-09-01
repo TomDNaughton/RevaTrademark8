@@ -52,7 +52,7 @@ Public Class frmGeneralPopups
                 TJ.UpdateTrademarkTreaties()
                 TJ.UpdatePatentTreaties()
 
-                If Not (AllForms.frmTrademarks Is Nothing) Then AllForms.frmTrademarks.FillJurisdictions()
+                ' If Not (AllForms.frmTrademarks Is Nothing) Then AllForms.frmTrademarks.FillJurisdictions()
                 If Not (AllForms.frmPreferences Is Nothing) Then AllForms.frmPreferences.FillJurisdictions()
                 If Not (AllForms.frmCompanies Is Nothing) Then AllForms.frmCompanies.FillJurisdictions()
 
