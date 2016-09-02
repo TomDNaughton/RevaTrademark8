@@ -11,7 +11,6 @@ Public Class frmPatents
     Private dtContacts As DataTable
     Private dtMatters As DataTable
     Private dvTreatyTypes As DataView
-    Private dtPositions As DataTable
     Private dtDates As DataTable
     Private dtDocLinks As DataTable
     Private dtLicensed As DataTable
@@ -446,7 +445,7 @@ Public Class frmPatents
             End If
 
             If .optSetContacts.Checked = True Then
-                FillPositions()
+                FillDropDowns()
                 GetPatentsList()
             End If
 
@@ -537,7 +536,7 @@ Public Class frmPatents
                 .grdSetContacts.Visible = True
                 .grpCustomize.Visible = False
                 .cboSetContact.SetDataBinding(RevaData.tblContactsList, "")
-                .cboSetPosition.SetDataBinding(dtPositions, "")
+                .cboSetPosition.SetDataBinding(RevaData.tblPatentPositions, "")
                 .btnAddContacts.Visible = True
                 .btnRemoveContacts.Visible = True
                 .lblReportWidth.Visible = False
@@ -569,7 +568,7 @@ Public Class frmPatents
                 .pnlBrowse.Height = 80
                 .grpCustomize.Visible = True
                 .grpCustomize.Dock = DockStyle.Top
-                .cboSetPosition.SetDataBinding(dtPositions, "")
+                .cboSetPosition.SetDataBinding(RevaData.tblPatentPositions, "")
                 .cboSetContact.DataBindings.Clear()
                 .cboSetContact.Clear()
                 .grpSetContact.Visible = True
@@ -628,7 +627,7 @@ Public Class frmPatents
                 .btnRemoveContacts.Visible = False
                 .pnlBrowse.Height = 46
                 .grpCustomize.Visible = True
-                .cboSetPosition.SetDataBinding(dtPositions, "")
+                .cboSetPosition.SetDataBinding(RevaData.tblPatentPositions, "")
                 .cboSetContact.DataBindings.Clear()
                 .cboSetContact.Clear()
                 .grpSetContact.Visible = False
@@ -1710,13 +1709,10 @@ Public Class frmPatents
         ClearNulls()
         SetDateFormats()
         GetPatentsList()
-
         FillDropDowns()
-        FillPatentClasses()
-        FillPositions()
         SetSecurity()
         SetContactActionView()
-        'SetCustomized()
+
         'now form is loaded and we let stuff happen
         bFormLoaded = True
         SetBrowseGrid()
@@ -2774,6 +2770,7 @@ Public Class frmPatents
         Me.CompanyID.DataSource = RevaData.tblCompaniesList
         Me.grdLicensed.DropDowns("cboCompany").SetDataBinding(RevaData.tblCompaniesList, "")
         Me.grdContacts.DropDowns("cboContact").SetDataBinding(RevaData.tblContactsList, "")
+        Me.grdContacts.DropDowns("cboPositions").SetDataBinding(RevaData.tblPatentPositions, "")
 
         Me.StatusID.DataSource = RevaData.tblPatentStatus
         Me.grdTreatyFilings.DropDowns("cboStatus").SetDataBinding(RevaData.tblPatentStatus, "")
@@ -2784,26 +2781,11 @@ Public Class frmPatents
         Me.PatentTypeID.DataSource = RevaData.tblPatentTypes
         dvTreatyTypes = New DataView(RevaData.tblPatentTypes, "IsTreaty<>0", "PatentType", DataViewRowState.CurrentRows)
 
-    End Sub
-
-
-    Friend Sub FillPatentClasses()
-        On Error Resume Next
-        Dim strSQL As String, dr As OleDb.OleDbDataReader
         Me.grdClasses.RootTable.Columns("PatentClassID").ValueList.Clear()
-        strSQL = "Select PatentClassID, PatentClass from tblPatentClass order by PatentClass"
-        dr = DataStuff.GetDataReader(strSQL)
-        While dr.Read()
+        For Each dr As DataRow In RevaData.tblPatentClasses.Rows
             Me.grdClasses.RootTable.Columns("PatentClassID").ValueList.Add(dr("PatentClassID"), dr("PatentClass"))
-        End While
-    End Sub
+        Next
 
-    Friend Sub FillPositions()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select PositionID, [PositionName] from tblPositions where IsPatent <> 0 order by [PositionName]"
-        dtPositions = DataStuff.GetDataTable(strSQL)
-        Me.grdContacts.DropDowns("cboPositions").SetDataBinding(dtPositions, "")
     End Sub
 
     Private Sub GetPatentsList()

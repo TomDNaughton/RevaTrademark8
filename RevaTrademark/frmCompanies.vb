@@ -527,8 +527,8 @@ Public Class frmCompanies
         End If
 
         If Not (AllForms.frmOppositions Is Nothing) Then
-            AllForms.frmOppositions.FillCompanies()
-            AllForms.frmOppositions.FillContactList()
+            'AllForms.frmOppositions.FillCompanies()
+            'AllForms.frmOppositions.FillContactList()
             AllForms.frmOppositions.GetContacts()
         End If
 

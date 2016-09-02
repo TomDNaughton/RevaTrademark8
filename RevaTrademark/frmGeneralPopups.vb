@@ -57,10 +57,10 @@ Public Class frmGeneralPopups
                 If Not (AllForms.frmCompanies Is Nothing) Then AllForms.frmCompanies.FillJurisdictions()
 
             Case 6
-                If Not (AllForms.frmTrademarks Is Nothing) Then AllForms.frmTrademarks.FillPositions()
-                If Not (AllForms.frmPatents Is Nothing) Then AllForms.frmPatents.FillPositions()
+                'If Not (AllForms.frmTrademarks Is Nothing) Then AllForms.frmTrademarks.FillPositions()
+                'If Not (AllForms.frmPatents Is Nothing) Then AllForms.frmPatents.FillPositions()
                 If Not (AllForms.frmContact Is Nothing) Then AllForms.frmContact.FillPositions()
-                If Not (AllForms.frmOppositions Is Nothing) Then AllForms.frmOppositions.FillPositions()
+            '  If Not (AllForms.frmOppositions Is Nothing) Then AllForms.frmOppositions.FillPositions()
 
             Case 7
                 If Not (AllForms.frmTrademarks Is Nothing) Then AllForms.frmTrademarks.GetMatters()

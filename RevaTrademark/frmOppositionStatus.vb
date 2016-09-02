@@ -44,7 +44,7 @@ Public Class frmOppositionStatus
 
     Private Sub frmOppositionStatus_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
         On Error Resume Next
-        AllForms.frmOppositions.FillStatus()
+        'AllForms.frmOppositions.FillStatus()
         AllForms.frmOppositionStatus = Nothing
     End Sub
 

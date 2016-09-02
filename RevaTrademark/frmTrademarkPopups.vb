@@ -28,10 +28,10 @@ Public Class frmTrademarkPopups
         'requery Trademarks form depending on what we updated here
         Select Case iRecType
             Case 1
-                AllForms.frmTrademarks.FillRegTypes()
+                ' AllForms.frmTrademarks.FillRegTypes()
 
             Case 2
-                AllForms.frmTrademarks.FillRegClasses()
+                'AllForms.frmTrademarks.FillRegClasses()
 
             Case 3
                 Dim TJ As New TreatyJurisdictions

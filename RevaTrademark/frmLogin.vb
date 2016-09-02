@@ -356,7 +356,12 @@ Public Class frmLogin
             RevaData.FillPatentStatus()
             RevaData.FillTrademarkTypes()
             RevaData.FillPatentTypes()
-
+            RevaData.FillTrademarkRegTypes()
+            RevaData.FillTrademarkRegClasses()
+            RevaData.FillPatentClasses()
+            RevaData.FillTrademarkPositions()
+            RevaData.FillPatentPositions()
+            RevaData.FillOppositionStatus()
         Catch ex As Exception
 
         End Try

@@ -1,4 +1,3 @@
-Imports System.Data.OleDb
 Imports System.Data
 Imports Microsoft.Office.Interop
 
@@ -10,12 +9,7 @@ Public Class frmOppositions
 
     'data tables for Grids and Drop-Down lists
     Private dtOppositionsList As DataTable
-    Private dtCompanies As DataTable
-    Private dtContactList As DataTable
     Private dtContacts As DataTable
-    Private dtJurisdictions As DataTable
-    Private dtStatus As DataTable
-    Private dtPositions As DataTable
     Private dtMarkDates As DataTable
     Private dtMarkJurisDates As DataTable
     Private dtDateList As DataTable
@@ -211,7 +205,7 @@ Public Class frmOppositions
         If Me.optAlerts.Checked = True Then
             With Me
                 .pnlBrowse.Height = 46
-                .cboSetPosition.SetDataBinding(dtPositions, "")
+                .cboSetPosition.SetDataBinding(RevaData.tblTrademarkPositions, "")
                 .cboSetContact.DataBindings.Clear()
                 .cboSetContact.Clear()
                 .grpSetContact.Visible = True
@@ -257,7 +251,7 @@ Public Class frmOppositions
         If Me.optEmailAlerts.Checked = True Then
             With Me
                 .pnlBrowse.Height = 46
-                .cboSetPosition.SetDataBinding(dtPositions, "")
+                .cboSetPosition.SetDataBinding(RevaData.tblTrademarkPositions, "")
                 .cboSetContact.DataBindings.Clear()
                 .cboSetContact.Clear()
                 .grpSetContact.Visible = False
@@ -1144,18 +1138,11 @@ Public Class frmOppositions
         SetTrademarksView()
         SetDateFormats()
         GetOppositionsList()
-        FillCompanies()
-        FillJurisdictions()
-        FillStatus()
-        FillContactList()
-        FillPositions()
         SetSecurity()
 
         'now we consider the form loaded, let stuff happen
         bFormLoaded = True
         SetBrowseGrid()
-        'SetOptions()
-        'SetNavigationButtons()
 
     End Sub
 
@@ -1216,10 +1203,6 @@ Public Class frmOppositions
         On Error Resume Next
 
         With Me
-            '.StatusID.ReadOnly = (iSecurityLevel = 3)
-            '.CompanyID.ReadOnly = (iSecurityLevel = 3)
-            '.OpposingCompanyID.ReadOnly = (iSecurityLevel = 3)
-            '.JurisdictionID.ReadOnly = (iSecurityLevel = 3)
 
             .OppositionName.ReadOnly = (iSecurityLevel = 3)
             .OppositionNotes.ReadOnly = (iSecurityLevel = 3)
@@ -1685,47 +1668,24 @@ Public Class frmOppositions
 
 #Region "Fill Data Tables / Drop Downs"
 
-    Friend Sub FillCompanies()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select CompanyID, CompanyName from tblCompanies order by CompanyName"
-        dtCompanies = DataStuff.GetDataTable(strSQL)
-        Me.CompanyID.DataSource = dtCompanies
-        Me.OpposingCompanyID.DataSource = dtCompanies
+    Friend Sub FillDropDowns()
+        Try
+            Me.CompanyID.DataSource = RevaData.tblCompaniesList
+            Me.OpposingCompanyID.DataSource = RevaData.tblCompaniesList
+            Me.StatusID.DataSource = RevaData.tblOppositionStatus
+
+            Me.JurisdictionID.DataSource = RevaData.tblTrademarkJurisdicitons
+            Me.cboMarkJurisdiction.DataSource = RevaData.tblTrademarkJurisdicitons
+            Me.grdContacts.DropDowns("cboPositions").SetDataBinding(RevaData.tblTrademarkPositions, "")
+
+            Me.grdContacts.DropDowns("cboContact").SetDataBinding(RevaData.tblContactsList, "")
+            Me.grdContacts.DropDowns("cboPositions").SetDataBinding(RevaData.tblTrademarkPositions, "")
+
+        Catch ex As Exception
+
+        End Try
     End Sub
 
-    Friend Sub FillJurisdictions()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select JurisdictionID, Jurisdiction from tblJurisdictions where IsTrademark <> 0 Order by Jurisdiction"
-        dtJurisdictions = DataStuff.GetDataTable(strSQL)
-        Me.JurisdictionID.DataSource = dtJurisdictions
-        Me.cboMarkJurisdiction.DataSource = dtJurisdictions
-    End Sub
-
-    Friend Sub FillStatus()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select StatusID, Status from tblOppositionStatus order by Status"
-        dtStatus = DataStuff.GetDataTable(strSQL)
-        Me.StatusID.DataSource = dtStatus
-    End Sub
-
-    Friend Sub FillContactList()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select distinct ContactID, ContactName, CompanyName from qvwContactsAndCompanies where ContactID is not null order by ContactName"
-        dtContactList = DataStuff.GetDataTable(strSQL)
-        Me.grdContacts.DropDowns("cboContact").SetDataBinding(dtContactList, "")
-    End Sub
-
-    Friend Sub FillPositions()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select PositionID, [PositionName] from tblPositions where IsTrademark <> 0 order by [PositionName]"
-        dtPositions = DataStuff.GetDataTable(strSQL)
-        Me.grdContacts.DropDowns("cboPositions").SetDataBinding(dtPositions, "")
-    End Sub
 
     Private Sub GetOppositionsList()
         On Error Resume Next

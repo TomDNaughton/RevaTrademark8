@@ -10,8 +10,6 @@ Public Class frmTrademarks
     Private dtTrademarksList As DataTable
     Private dtContacts As DataTable
     Private dtMatters As DataTable
-    Private dtRegTypes As DataTable
-    Private dtPositions As DataTable
     Private dtTrademarkUpdates As DataTable
 
     Private rsActions As New RecordSet 'new in version 5
@@ -473,7 +471,7 @@ Public Class frmTrademarks
             End If
 
             If .optSetContacts.Checked = True Then
-                FillPositions()
+                FillDropDowns()
                 GetTrademarksList()
             End If
 
@@ -569,7 +567,7 @@ Public Class frmTrademarks
                 .grdSetContacts.Visible = True
                 .grpCustomize.Visible = False
                 .cboSetContact.SetDataBinding(RevaData.tblContactsList, "")
-                .cboSetPosition.SetDataBinding(dtPositions, "")
+                .cboSetPosition.SetDataBinding(RevaData.tblTrademarkPositions, "")
                 .btnAddContacts.Visible = True
                 .btnRemoveContacts.Visible = True
                 .btnCreateOpposition.Visible = False
@@ -608,7 +606,7 @@ Public Class frmTrademarks
                 ' .pnlBrowse.Height = 46
                 .grpCustomize.Dock = DockStyle.Top
                 .grpCustomize.Visible = True
-                .cboSetPosition.SetDataBinding(dtPositions, "")
+                .cboSetPosition.SetDataBinding(RevaData.tblTrademarkPositions, "")
                 .cboSetContact.DataBindings.Clear()
                 .cboSetContact.Clear()
                 .grpSetContact.Visible = True
@@ -672,7 +670,7 @@ Public Class frmTrademarks
                 .pnlBrowse.Height = 46
                 .grpCustomize.Dock = DockStyle.Top
                 .grpCustomize.Visible = True
-                .cboSetPosition.SetDataBinding(dtPositions, "")
+                .cboSetPosition.SetDataBinding(RevaData.tblTrademarkPositions, "")
                 .cboSetContact.DataBindings.Clear()
                 .cboSetContact.Clear()
                 .grpSetContact.Visible = False
@@ -1873,14 +1871,7 @@ Public Class frmTrademarks
         ClearNulls()
         SetDateFormats()
         GetTrademarksList()
-
         FillDropDowns()
-
-
-        FillRegClasses()
-
-        FillRegTypes()
-        FillPositions()
         SetSecurity()
         SetContactActionView()
         'now we consider the form loaded, let stuff happen
@@ -3077,45 +3068,26 @@ Public Class frmTrademarks
             Me.JurisdictionID.DataSource = RevaData.tblTrademarkJurisdicitons
             Me.CompanyID.DataSource = RevaData.tblCompaniesList
             Me.grdLicensed.DropDowns("cboCompany").SetDataBinding(RevaData.tblCompaniesList, "")
-            Me.grdContacts.DropDowns("cboContact").SetDataBinding(RevaData.tblContactsList, "")
             Me.FilingBasisID.DataSource = RevaData.tblTrademarkFilingBasis
+
+            Me.grdContacts.DropDowns("cboContact").SetDataBinding(RevaData.tblContactsList, "")
+            Me.grdContacts.DropDowns("cboPositions").SetDataBinding(RevaData.tblTrademarkPositions, "")
 
             Me.StatusID.DataSource = RevaData.tblTrademarkStatus
             Me.grdTreatyFilings.DropDowns("cboStatus").SetDataBinding(RevaData.tblTrademarkStatus, "")
 
-            Me.TrademarkTypeID.DataSource = RevaData.tblPatentTypes
+            Me.TrademarkTypeID.DataSource = RevaData.tblTrademarkTypes
+            Me.RegTypeID.DataSource = RevaData.tblTrademarkRegTypes
+
+            Me.grdClasses.RootTable.Columns("RegClassID").ValueList.Clear()
+            For Each dr As DataRow In RevaData.tblTrademarkRegClasses.Rows
+                Me.grdClasses.RootTable.Columns("RegClassID").ValueList.Add(dr("RegClassID"), dr("RegClass"))
+            Next
+
 
         Catch ex As Exception
 
         End Try
-    End Sub
-
-
-    Friend Sub FillRegTypes()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select RegTypeID, RegistrationType from tblRegistrationTypes order by RegTypeID"
-        dtRegTypes = DataStuff.GetDataTable(strSQL)
-        Me.RegTypeID.DataSource = dtRegTypes
-    End Sub
-
-    Friend Sub FillRegClasses()
-        On Error Resume Next
-        Dim strSQL As String, dr As OleDb.OleDbDataReader
-        strSQL = "Select RegClassID, RegClass from tblRegistrationClass order by RegClass"
-        Me.grdClasses.RootTable.Columns("RegClassID").ValueList.Clear()
-        dr = DataStuff.GetDataReader(strSQL)
-        While dr.Read()
-            Me.grdClasses.RootTable.Columns("RegClassID").ValueList.Add(dr("RegClassID"), dr("RegClass"))
-        End While
-    End Sub
-
-    Friend Sub FillPositions()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select PositionID, [PositionName] from tblPositions where IsTrademark <> 0 order by [PositionName]"
-        dtPositions = DataStuff.GetDataTable(strSQL)
-        Me.grdContacts.DropDowns("cboPositions").SetDataBinding(dtPositions, "")
     End Sub
 
     Private Sub GetTrademarksList()

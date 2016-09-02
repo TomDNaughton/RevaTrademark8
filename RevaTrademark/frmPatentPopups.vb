@@ -42,7 +42,7 @@ Public Class frmPatentPopups
                 End If
 
             Case 3
-                AllForms.frmPatents.FillPatentClasses()
+                'AllForms.frmPatents.FillPatentClasses()
 
         End Select
     End Sub

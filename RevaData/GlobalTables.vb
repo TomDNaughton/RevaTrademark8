@@ -12,8 +12,14 @@ Public Module GlobalTables
     Private dtPatentFilingBasis As DataTable
     Private dtTrademarkStatus As DataTable
     Private dtPatentStatus As DataTable
+    Private dtOppositionStatus As DataTable
     Private dtTrademarkTypes As DataTable
     Private dtPatentTypes As DataTable
+    Private dtTrademarkRegTypes As DataTable
+    Private dtTrademarkRegClasses As DataTable
+    Private dtPatentClasses As DataTable
+    Private dtTrademarkPositions As DataTable
+    Private dtPatentPositions As DataTable
 
     Public ReadOnly Property tblTrademarkJurisdicitons As DataTable
         Get
@@ -151,6 +157,23 @@ Public Module GlobalTables
         End Try
     End Sub
 
+    Public ReadOnly Property tblOppositionStatus As DataTable
+        Get
+            If dtOppositionStatus Is Nothing Then
+                FillOppositionStatus()
+            End If
+            Return dtOppositionStatus
+        End Get
+    End Property
+
+    Public Sub FillOppositionStatus()
+        Try
+            dtOppositionStatus = GetDataTable("Select StatusID, Status from tblOppositionStatus order by Status")
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
     Public ReadOnly Property tblTrademarkTypes As DataTable
         Get
             If dtTrademarkTypes Is Nothing Then
@@ -180,6 +203,92 @@ Public Module GlobalTables
     Public Sub FillPatentTypes()
         Try
             dtPatentTypes = GetDataTable("Select PatentTypeID, PatentType, IsTreaty from tblPatentTypes order by PatentTypeID")
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Public ReadOnly Property tblTrademarkRegTypes As DataTable
+        Get
+            If dtTrademarkRegTypes Is Nothing Then
+                FillTrademarkRegTypes()
+            End If
+            Return dtTrademarkRegTypes
+        End Get
+    End Property
+
+    Public Sub FillTrademarkRegTypes()
+        Try
+            dtTrademarkRegTypes = GetDataTable("Select RegTypeID, RegistrationType from tblRegistrationTypes order by RegTypeID")
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Public ReadOnly Property tblTrademarkRegClasses As DataTable
+        Get
+            If dtTrademarkRegClasses Is Nothing Then
+                FillTrademarkRegClasses()
+            End If
+            Return dtTrademarkRegClasses
+        End Get
+    End Property
+
+    Public Sub FillTrademarkRegClasses()
+        Try
+            dtTrademarkRegClasses = GetDataTable("Select RegClassID, RegClass from tblRegistrationClass order by RegClass")
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Public ReadOnly Property tblPatentClasses As DataTable
+        Get
+            If dtPatentClasses Is Nothing Then
+                FillPatentClasses()
+            End If
+            Return dtPatentClasses
+        End Get
+    End Property
+
+    Public Sub FillPatentClasses()
+        Try
+            dtPatentClasses = GetDataTable("Select PatentClassID, PatentClass from tblPatentClass order by PatentClass")
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Public ReadOnly Property tblTrademarkPositions As DataTable
+        Get
+            If dtTrademarkPositions Is Nothing Then
+                FillTrademarkPositions()
+            End If
+            Return dtTrademarkPositions
+        End Get
+    End Property
+
+    Public Sub FillTrademarkPositions()
+        Try
+            dtTrademarkPositions = GetDataTable("Select PositionID, PositionName from tblPositions where IsTrademark = 1 order by PositionName")
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+
+    Public ReadOnly Property tblPatentPositions As DataTable
+        Get
+            If dtPatentPositions Is Nothing Then
+                FillPatentPositions()
+            End If
+            Return dtPatentPositions
+        End Get
+    End Property
+
+    Public Sub FillPatentPositions()
+        Try
+            dtPatentPositions = GetDataTable("Select PositionID, PositionName from tblPositions where IsPatent = 1 order by PositionName")
         Catch ex As Exception
 
         End Try
