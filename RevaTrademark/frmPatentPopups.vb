@@ -28,12 +28,14 @@ Public Class frmPatentPopups
         'requery patents form depending on what we updated here
         Select Case iRecType
             Case 1
-                AllForms.frmPatents.FillFilingBasis()
+                ' AllForms.frmPatents.FillFilingBasis()
 
             Case 2
                 Dim TJ As New TreatyJurisdictions
                 TJ.UpdatePatentTreaties()
-                If Not (AllForms.frmPatents Is Nothing) Then AllForms.frmPatents.FillPatentTypes()
+                If Not (AllForms.frmPatents Is Nothing) Then
+                    '  AllForms.frmPatents.FillPatentTypes()
+                End If
                 If Not (AllForms.frmPreferences Is Nothing) Then
                     AllForms.frmPreferences.FillPatentTypes()
                     AllForms.frmPreferences.FillWebLinks()

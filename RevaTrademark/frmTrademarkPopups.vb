@@ -36,7 +36,9 @@ Public Class frmTrademarkPopups
             Case 3
                 Dim TJ As New TreatyJurisdictions
                 TJ.UpdateTrademarkTreaties()
-                If Not (AllForms.frmTrademarks Is Nothing) Then AllForms.frmTrademarks.FillFilingBasis()
+                If Not (AllForms.frmTrademarks Is Nothing) Then
+                    ' AllForms.frmTrademarks.FillFilingBasis()
+                End If
                 If Not (AllForms.frmPreferences Is Nothing) Then
                     AllForms.frmPreferences.FillWebLinks()
                     AllForms.frmPreferences.FillFilingBasis()

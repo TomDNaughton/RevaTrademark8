@@ -8,16 +8,10 @@ Public Class frmTrademarks
 
     'data tables for Grids and Drop-Down lists
     Private dtTrademarksList As DataTable
-    Private dtCompanies As DataTable
-    Private dtContactList As DataTable
     Private dtContacts As DataTable
     Private dtMatters As DataTable
-    Private dtJurisdictions As DataTable
     Private dtRegTypes As DataTable
-    Private dtFilingBasis As DataTable
-    Private dtStatus As DataTable
     Private dtPositions As DataTable
-    Private dtTrademarkTypes As DataTable
     Private dtTrademarkUpdates As DataTable
 
     Private rsActions As New RecordSet 'new in version 5
@@ -574,7 +568,7 @@ Public Class frmTrademarks
                 .grpSetContact.Visible = True
                 .grdSetContacts.Visible = True
                 .grpCustomize.Visible = False
-                .cboSetContact.SetDataBinding(dtContactList, "")
+                .cboSetContact.SetDataBinding(RevaData.tblContactsList, "")
                 .cboSetPosition.SetDataBinding(dtPositions, "")
                 .btnAddContacts.Visible = True
                 .btnRemoveContacts.Visible = True
@@ -1862,7 +1856,7 @@ Public Class frmTrademarks
         iTotalRecords = DataStuff.RecordCount
 
         'if there email alerts due, open that form
-        If DataStuff.DCount("TrademarkDateID", "qvwTrademarkEmailAlerts", "TrademarkID<>0") > 0 Then
+        If RevaData.DCount("TrademarkDateID", "qvwTrademarkEmailAlerts", "TrademarkID<>0") > 0 Then
             Me.optEmailAlerts.Checked = True
         End If
 
@@ -1875,18 +1869,17 @@ Public Class frmTrademarks
         End If
 
         FormStatus = Status.ResetAll
-        ContActView = ActionContactView.NormalView
+        ContactView = ActionContactView.NormalView
         ClearNulls()
         SetDateFormats()
         GetTrademarksList()
-        FillCompanies()
+
+        FillDropDowns()
+
+
         FillRegClasses()
-        Me.JurisdictionID.DataSource = RevaData.tblTrademarkJurisdicitons
-        FillTrademarkTypes()
+
         FillRegTypes()
-        FillFilingBasis()
-        FillStatus()
-        FillContactList()
         FillPositions()
         SetSecurity()
         SetContactActionView()
@@ -3078,47 +3071,25 @@ Public Class frmTrademarks
 
 #Region "Fill Data Tables / Drop Downs"
 
-    Friend Sub FillCompanies()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select CompanyID, CompanyName from tblCompanies order by CompanyName"
-        dtCompanies = DataStuff.GetDataTable(strSQL)
-        Me.CompanyID.DataSource = dtCompanies
-        Me.grdLicensed.DropDowns("cboCompany").SetDataBinding(dtCompanies, "")
+    Friend Sub FillDropDowns()
+        Try
+
+            Me.JurisdictionID.DataSource = RevaData.tblTrademarkJurisdicitons
+            Me.CompanyID.DataSource = RevaData.tblCompaniesList
+            Me.grdLicensed.DropDowns("cboCompany").SetDataBinding(RevaData.tblCompaniesList, "")
+            Me.grdContacts.DropDowns("cboContact").SetDataBinding(RevaData.tblContactsList, "")
+            Me.FilingBasisID.DataSource = RevaData.tblTrademarkFilingBasis
+
+            Me.StatusID.DataSource = RevaData.tblTrademarkStatus
+            Me.grdTreatyFilings.DropDowns("cboStatus").SetDataBinding(RevaData.tblTrademarkStatus, "")
+
+            Me.TrademarkTypeID.DataSource = RevaData.tblPatentTypes
+
+        Catch ex As Exception
+
+        End Try
     End Sub
 
-    'Friend Sub FillJurisdictions()
-    '    On Error Resume Next
-    '    Dim strSQL As String
-    '    strSQL = "Select JurisdictionID, Jurisdiction from tblJurisdictions where IsTrademark <> 0 Order by Jurisdiction"
-    '    dtJurisdictions = DataStuff.GetDataTable(strSQL)
-    '    Me.JurisdictionID.DataSource = dtJurisdictions
-    'End Sub
-
-    Friend Sub FillTrademarkTypes()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select TrademarkTypeID, TrademarkType from tblTrademarkTypes Order by TrademarkType"
-        dtTrademarkTypes = DataStuff.GetDataTable(strSQL)
-        Me.TrademarkTypeID.DataSource = dtTrademarkTypes
-    End Sub
-
-    Friend Sub FillStatus()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select StatusID, Status from tblStatus where IsTrademark <> 0 Order by Status"
-        dtStatus = DataStuff.GetDataTable(strSQL)
-        Me.StatusID.DataSource = dtStatus
-        Me.grdTreatyFilings.DropDowns("cboStatus").SetDataBinding(dtStatus, "")
-    End Sub
-
-    Friend Sub FillFilingBasis()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select FilingBasisID, FilingBasis, IsTreaty from tblFilingBasis Order by FilingBasisID"
-        dtFilingBasis = DataStuff.GetDataTable(strSQL)
-        Me.FilingBasisID.DataSource = dtFilingBasis
-    End Sub
 
     Friend Sub FillRegTypes()
         On Error Resume Next
@@ -3126,14 +3097,6 @@ Public Class frmTrademarks
         strSQL = "Select RegTypeID, RegistrationType from tblRegistrationTypes order by RegTypeID"
         dtRegTypes = DataStuff.GetDataTable(strSQL)
         Me.RegTypeID.DataSource = dtRegTypes
-    End Sub
-
-    Friend Sub FillContactList()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select distinct ContactID, ContactName, CompanyName from qvwContactsAndCompanies order by ContactName"
-        dtContactList = DataStuff.GetDataTable(strSQL)
-        Me.grdContacts.DropDowns("cboContact").SetDataBinding(dtContactList, "")
     End Sub
 
     Friend Sub FillRegClasses()
@@ -3298,36 +3261,36 @@ Public Class frmTrademarks
         ExpandContact = 2
     End Enum
 
-    Dim ContActView As ActionContactView
+    Dim ContactView As ActionContactView
 
     Private Sub btnContractActions_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnContractActions.Click
         On Error Resume Next
-        ContActView = ActionContactView.NormalView
+        ContactView = ActionContactView.NormalView
         SetContactActionView()
     End Sub
 
     Private Sub btnExpandActions_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExpandActions.Click
         On Error Resume Next
-        ContActView = ActionContactView.ExpandAction
+        ContactView = ActionContactView.ExpandAction
         SetContactActionView()
     End Sub
 
     Private Sub btnExpandContacts_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExpandContacts.Click
         On Error Resume Next
-        ContActView = ActionContactView.ExpandContact
+        ContactView = ActionContactView.ExpandContact
         SetContactActionView()
     End Sub
 
     Private Sub btnContractContacts_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnContractContacts.Click
         On Error Resume Next
-        ContActView = ActionContactView.NormalView
+        ContactView = ActionContactView.NormalView
         SetContactActionView()
     End Sub
 
     Private Sub SetContactActionView()
         On Error Resume Next
         With Me
-            Select Case ContActView
+            Select Case ContactView
                 Case ActionContactView.NormalView
                     .grdActions.Height = 164
                     .grdActions.Visible = True
@@ -5369,7 +5332,7 @@ Public Class frmTrademarks
             strSQL = "update tblTrademarkUpdates set EmailSent=" & IIf(bEmailSent = True, "-1", "0") &
                 " where TrademarkUpdateID=" & iTrademarkUpdateID
         Else
-            strSQL = "update tblTrademarkUpdates set EmailSent=" & IIf(bEmailSent = True, "1", "0") & _
+            strSQL = "update tblTrademarkUpdates set EmailSent=" & IIf(bEmailSent = True, "1", "0") &
                 " where TrademarkUpdateID=" & iTrademarkUpdateID
         End If
         DataStuff.RunSQL(strSQL)
@@ -5388,7 +5351,7 @@ Public Class frmTrademarks
 
 #End Region
 
-    
+
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         On Error Resume Next
@@ -5433,7 +5396,7 @@ Public Class frmTrademarks
     End Sub
 
 
-   
+
     Private Sub TrademarkTypeID_MouseWheel(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles TrademarkTypeID.MouseWheel
         ' Ctype(Janus.Windows.GridEX.EditControls.MultiColumnCombo, sender).
         'Dim Combo As Janus.Windows.GridEX.EditControls.MultiColumnCombo
@@ -5449,8 +5412,8 @@ Public Class frmTrademarks
         'Combo.SelectedIndex = Combo.
     End Sub
 
-   
 
 
-    
+
+
 End Class

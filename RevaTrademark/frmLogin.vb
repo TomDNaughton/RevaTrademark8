@@ -347,6 +347,16 @@ Public Class frmLogin
     Private Sub FillDomainTables()
         Try
             RevaData.FillTrademarkJurisdictions()
+            RevaData.FillPatentJurisdictions()
+            RevaData.FillCompaniesList()
+            RevaData.FillContactsList()
+            RevaData.FillTrademarkFilingBasis()
+            RevaData.FillPatentFilingBasis()
+            RevaData.FillTrademarkStatus()
+            RevaData.FillPatentStatus()
+            RevaData.FillTrademarkTypes()
+            RevaData.FillPatentTypes()
+
         Catch ex As Exception
 
         End Try

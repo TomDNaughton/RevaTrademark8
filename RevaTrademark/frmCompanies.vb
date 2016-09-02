@@ -513,15 +513,15 @@ Public Class frmCompanies
         GetBrowseRecords()
 
         If Not (AllForms.frmTrademarks Is Nothing) Then
-            AllForms.frmTrademarks.FillCompanies()
-            AllForms.frmTrademarks.FillContactList()
+            'AllForms.frmTrademarks.FillCompanies()
+            ' AllForms.frmTrademarks.FillContactList()
             AllForms.frmTrademarks.GetCompany()
             AllForms.frmTrademarks.GetContacts()
         End If
 
         If Not (AllForms.frmPatents Is Nothing) Then
-            AllForms.frmPatents.FillCompanies()
-            AllForms.frmPatents.FillContactList()
+            ' AllForms.frmPatents.FillCompanies()
+            ' AllForms.frmPatents.FillContactList()
             AllForms.frmPatents.GetCompany()
             AllForms.frmPatents.GetContacts()
         End If

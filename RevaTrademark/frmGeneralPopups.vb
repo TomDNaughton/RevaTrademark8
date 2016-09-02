@@ -44,8 +44,8 @@ Public Class frmGeneralPopups
         'requery form depending on what we updated here
         Select Case iRecType
             Case 4
-                If Not (AllForms.frmTrademarks Is Nothing) Then AllForms.frmTrademarks.FillStatus()
-                If Not (AllForms.frmPatents Is Nothing) Then AllForms.frmPatents.FillStatus()
+                ' If Not (AllForms.frmTrademarks Is Nothing) Then AllForms.frmTrademarks.FillStatus()
+                ' If Not (AllForms.frmPatents Is Nothing) Then AllForms.frmPatents.FillStatus()
 
             Case 5
                 Dim TJ As New TreatyJurisdictions
@@ -73,7 +73,9 @@ Public Class frmGeneralPopups
                 AllForms.frmCompanies.FillEntityTypes()
 
             Case 10
-                If Not (AllForms.frmTrademarks Is Nothing) Then AllForms.frmTrademarks.FillTrademarkTypes()
+                If Not (AllForms.frmTrademarks Is Nothing) Then
+                    ' AllForms.frmTrademarks.FillTrademarkTypes()
+                End If
 
             Case 11
                 AllForms.frmReports.GetTrademarkStoredFilters()

@@ -214,12 +214,12 @@ Public Class frmContactFromOutlook
         AllForms.frmCompanies.GetContacts()
         AllForms.frmCompanies.GetBrowseRecords()
         If Not (AllForms.frmTrademarks Is Nothing) Then
-            AllForms.frmTrademarks.FillContactList()
+            ' AllForms.frmTrademarks.FillContactList()
             AllForms.frmTrademarks.GetContacts()
         End If
 
         If Not (AllForms.frmPatents Is Nothing) Then
-            AllForms.frmPatents.FillContactList()
+            'AllForms.frmPatents.FillContactList()
             AllForms.frmPatents.GetContacts()
         End If
 

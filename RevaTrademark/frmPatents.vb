@@ -8,15 +8,9 @@ Public Class frmPatents
 
     'data tables for Grids and Drop-Down lists
     Private dtPatentsList As DataTable
-    Private dtCompanies As DataTable
-    Private dtContactList As DataTable
     Private dtContacts As DataTable
     Private dtMatters As DataTable
-    Private dtJurisdictions As DataTable
-    Private dtPatentTypes As DataTable
     Private dvTreatyTypes As DataView
-    Private dtFilingBasis As DataTable
-    Private dtStatus As DataTable
     Private dtPositions As DataTable
     Private dtDates As DataTable
     Private dtDocLinks As DataTable
@@ -542,7 +536,7 @@ Public Class frmPatents
                 .grpSetContact.Visible = True
                 .grdSetContacts.Visible = True
                 .grpCustomize.Visible = False
-                .cboSetContact.SetDataBinding(dtContactList, "")
+                .cboSetContact.SetDataBinding(RevaData.tblContactsList, "")
                 .cboSetPosition.SetDataBinding(dtPositions, "")
                 .btnAddContacts.Visible = True
                 .btnRemoveContacts.Visible = True
@@ -1699,7 +1693,7 @@ Public Class frmPatents
         iTotalRecords = DataStuff.RecordCount
 
         'if there email alerts due, open that form
-        If DataStuff.DCount("PatentDateID", "qvwPatentEmailAlerts", "PatentID<>0") > 0 Then
+        If RevaData.DCount("PatentDateID", "qvwPatentEmailAlerts", "PatentID<>0") > 0 Then
             Me.optEmailAlerts.Checked = True
         End If
 
@@ -1712,17 +1706,13 @@ Public Class frmPatents
         End If
 
         FormStatus = Status.ResetAll
-        ContActView = ActionContactView.NormalView
+        ContactView = ActionContactView.NormalView
         ClearNulls()
         SetDateFormats()
         GetPatentsList()
-        FillCompanies()
+
+        FillDropDowns()
         FillPatentClasses()
-        FillJurisdictions()
-        FillPatentTypes()
-        FillFilingBasis()
-        FillStatus()
-        FillContactList()
         FillPositions()
         SetSecurity()
         SetContactActionView()
@@ -1802,12 +1792,6 @@ Public Class frmPatents
         Dim iSecurityLevel As Integer
         iSecurityLevel = Globals.SecurityLevel
         With Me
-            '.StatusID.ReadOnly = (iSecurityLevel = 3)
-            '.FilingBasisID.ReadOnly = (iSecurityLevel = 3)
-            '.PatentTypeID.ReadOnly = (iSecurityLevel = 3)
-            '.CompanyID.ReadOnly = (iSecurityLevel = 3)
-            '.FileID.ReadOnly = (iSecurityLevel = 3)
-            '.JurisdictionID.ReadOnly = (iSecurityLevel = 3)
 
             .PatentName.ReadOnly = (iSecurityLevel = 3)
             .OurDocket.ReadOnly = (iSecurityLevel = 3)
@@ -2785,57 +2769,23 @@ Public Class frmPatents
 
 #Region "Fill Data Tables / Drop Downs"
 
-    Friend Sub FillCompanies()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select CompanyID, CompanyName from tblCompanies order by CompanyName"
-        dtCompanies = DataStuff.GetDataTable(strSQL)
-        Me.CompanyID.DataSource = dtCompanies
-        Me.grdLicensed.DropDowns("cboCompany").SetDataBinding(dtCompanies, "")
+    Friend Sub FillDropDowns()
+        Me.JurisdictionID.DataSource = RevaData.tblPatentJurisdicitons
+        Me.CompanyID.DataSource = RevaData.tblCompaniesList
+        Me.grdLicensed.DropDowns("cboCompany").SetDataBinding(RevaData.tblCompaniesList, "")
+        Me.grdContacts.DropDowns("cboContact").SetDataBinding(RevaData.tblContactsList, "")
+
+        Me.StatusID.DataSource = RevaData.tblPatentStatus
+        Me.grdTreatyFilings.DropDowns("cboStatus").SetDataBinding(RevaData.tblPatentStatus, "")
+
+        Me.FilingBasisID.DataSource = RevaData.tblPatentFilingBasis
+        Me.grdTreatyFilings.DropDowns("cboFilingBasis").SetDataBinding(RevaData.tblPatentFilingBasis, "")
+
+        Me.PatentTypeID.DataSource = RevaData.tblPatentTypes
+        dvTreatyTypes = New DataView(RevaData.tblPatentTypes, "IsTreaty<>0", "PatentType", DataViewRowState.CurrentRows)
+
     End Sub
 
-    Friend Sub FillJurisdictions()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select JurisdictionID, Jurisdiction from tblJurisdictions where IsPatent <> 0 Order by Jurisdiction"
-        dtJurisdictions = DataStuff.GetDataTable(strSQL)
-        Me.JurisdictionID.DataSource = dtJurisdictions
-    End Sub
-
-    Friend Sub FillStatus()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select StatusID, Status from tblStatus where IsPatent <> 0 Order by Status"
-        dtStatus = DataStuff.GetDataTable(strSQL)
-        Me.StatusID.DataSource = dtStatus
-        Me.grdTreatyFilings.DropDowns("cboStatus").SetDataBinding(dtStatus, "")
-    End Sub
-
-    Friend Sub FillFilingBasis()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select FilingBasisID, FilingBasis from tblPatentFilingBasis Order by FilingBasisID"
-        dtFilingBasis = DataStuff.GetDataTable(strSQL)
-        Me.FilingBasisID.DataSource = dtFilingBasis
-        Me.grdTreatyFilings.DropDowns("cboFilingBasis").SetDataBinding(dtFilingBasis, "")
-    End Sub
-
-    Friend Sub FillPatentTypes()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select PatentTypeID, PatentType, IsTreaty from tblPatentTypes order by PatentTypeID"
-        dtPatentTypes = DataStuff.GetDataTable(strSQL)
-        Me.PatentTypeID.DataSource = dtPatentTypes
-        dvTreatyTypes = New DataView(dtPatentTypes, "IsTreaty<>0", "PatentType", DataViewRowState.CurrentRows)
-    End Sub
-
-    Friend Sub FillContactList()
-        On Error Resume Next
-        Dim strSQL As String
-        strSQL = "Select distinct ContactID, ContactName, CompanyName from qvwContactsAndCompanies order by ContactName"
-        dtContactList = DataStuff.GetDataTable(strSQL)
-        Me.grdContacts.DropDowns("cboContact").SetDataBinding(dtContactList, "")
-    End Sub
 
     Friend Sub FillPatentClasses()
         On Error Resume Next
@@ -2995,36 +2945,36 @@ Public Class frmPatents
         ExpandContact = 2
     End Enum
 
-    Dim ContActView As ActionContactView
+    Dim ContactView As ActionContactView
 
     Private Sub btnContractActions_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnContractActions.Click
         On Error Resume Next
-        ContActView = ActionContactView.NormalView
+        ContactView = ActionContactView.NormalView
         SetContactActionView()
     End Sub
 
     Private Sub btnExpandActions_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExpandActions.Click
         On Error Resume Next
-        ContActView = ActionContactView.ExpandAction
+        ContactView = ActionContactView.ExpandAction
         SetContactActionView()
     End Sub
 
     Private Sub btnExpandContacts_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExpandContacts.Click
         On Error Resume Next
-        ContActView = ActionContactView.ExpandContact
+        ContactView = ActionContactView.ExpandContact
         SetContactActionView()
     End Sub
 
     Private Sub btnContractContacts_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnContractContacts.Click
         On Error Resume Next
-        ContActView = ActionContactView.NormalView
+        ContactView = ActionContactView.NormalView
         SetContactActionView()
     End Sub
 
     Private Sub SetContactActionView()
         On Error Resume Next
         With Me
-            Select Case ContActView
+            Select Case ContactView
                 Case ActionContactView.NormalView
                     .grdActions.Height = 164
                     .grdActions.Visible = True
@@ -4122,7 +4072,7 @@ Public Class frmPatents
                     And (Globals.SecurityLevel < 3)
             End If
 
-            .btnRemoveTreatyFiling.Enabled = (.grdLinked.SelectedItems.Count > 0) And _
+            .btnRemoveTreatyFiling.Enabled = (.grdLinked.SelectedItems.Count > 0) And
                 (Globals.SecurityLevel = 1) And (.grdLinked.GetValue("PatentID") <> Globals.PatentID)
 
         End With
@@ -4149,27 +4099,27 @@ Public Class frmPatents
         PatentID = Globals.PatentID
 
 
-        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdLinked.Tables("Patent01").Columns("PatentID"), _
+        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdLinked.Tables("Patent01").Columns("PatentID"),
             Janus.Windows.GridEX.ConditionOperator.Equal, PatentID)
         fc.FormatStyle.BackColor = Color.Yellow
         Me.grdLinked.Tables("Patent01").FormatConditions.Add(fc)
 
-        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdLinked.Tables("Patent02").Columns("PatentID"), _
+        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdLinked.Tables("Patent02").Columns("PatentID"),
             Janus.Windows.GridEX.ConditionOperator.Equal, PatentID)
         fc.FormatStyle.BackColor = Color.Yellow
         Me.grdLinked.Tables("Patent02").FormatConditions.Add(fc)
 
-        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdLinked.Tables("Patent03").Columns("PatentID"), _
+        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdLinked.Tables("Patent03").Columns("PatentID"),
             Janus.Windows.GridEX.ConditionOperator.Equal, PatentID)
         fc.FormatStyle.BackColor = Color.Yellow
         Me.grdLinked.Tables("Patent03").FormatConditions.Add(fc)
 
-        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdLinked.Tables("Patent04").Columns("PatentID"), _
+        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdLinked.Tables("Patent04").Columns("PatentID"),
             Janus.Windows.GridEX.ConditionOperator.Equal, PatentID)
         fc.FormatStyle.BackColor = Color.Yellow
         Me.grdLinked.Tables("Patent04").FormatConditions.Add(fc)
 
-        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdLinked.Tables("Patent05").Columns("PatentID"), _
+        fc = New Janus.Windows.GridEX.GridEXFormatCondition(Me.grdLinked.Tables("Patent05").Columns("PatentID"),
             Janus.Windows.GridEX.ConditionOperator.Equal, PatentID)
         fc.FormatStyle.BackColor = Color.Yellow
         Me.grdLinked.Tables("Patent05").FormatConditions.Add(fc)
@@ -4186,7 +4136,7 @@ Public Class frmPatents
         On Error Resume Next
         Dim strSQL As String
         If Me.optTreaties.Checked = True Then
-            strSQL = "Select * from tblPatentTreatyFilings where PatentID=" & Globals.PatentID & _
+            strSQL = "Select * from tblPatentTreatyFilings where PatentID=" & Globals.PatentID &
                 " and IsTreaty <> 0 order by FilingDate"
             With Me.grdTreatyFilings
                 .RootTable.Columns("PatentTypeID").Position = 2
@@ -4198,13 +4148,13 @@ Public Class frmPatents
 
         If Me.optLinkedPatents.Checked = True Then
             'we treat Linked Patent records as treaty filings; there's just no treaty
-            strSQL = "Select * from tblPatentTreatyFilings where PatentID=" & Globals.PatentID & _
+            strSQL = "Select * from tblPatentTreatyFilings where PatentID=" & Globals.PatentID &
                  " and IsTreaty = 0 order by FilingDate"
             With Me.grdTreatyFilings
                 .RootTable.Columns("FilingBasisID").Position = 2
                 .RootTable.Columns("PatentTypeID").Position = 3
                 .DataSource = DataStuff.GetDataTable(strSQL)
-                .DropDowns("cboPatentType").SetDataBinding(dtPatentTypes, "")
+                .DropDowns("cboPatentType").SetDataBinding(RevaData.tblPatentTypes, "")
             End With
         End If
 
@@ -4214,7 +4164,7 @@ Public Class frmPatents
         On Error Resume Next
         Dim strSQL As String, dtJurisdictionDates As DataTable, iPatentTypeID As Integer
         iPatentTypeID = Me.grdTreatyFilings.GetValue("PatentTypeID")
-        strSQL = "select JurisdictionDateID, DateID, DateName from qvwPatentJurisdictionDates where JurisdictionID=" & _
+        strSQL = "select JurisdictionDateID, DateID, DateName from qvwPatentJurisdictionDates where JurisdictionID=" &
             Me.JurisdictionID.Value & " and PatentTypeID=" & iPatentTypeID & " order by ListOrder"
         dtJurisdictionDates = DataStuff.GetDataTable(strSQL)
         Me.grdTreatyFilings.DropDowns("cboJurisdictionDate").SetDataBinding(dtJurisdictionDates, "")
@@ -4224,7 +4174,7 @@ Public Class frmPatents
         On Error Resume Next
         Dim strSQL As String, dtTreatyJurisdictions As DataTable, iPatentTypeID As Integer
         iPatentTypeID = Me.grdTreatyFilings.GetValue("PatentTypeID")
-        strSQL = "select * from qvwPatentTreatyJurisdictions where PatentTypeID=" & iPatentTypeID & _
+        strSQL = "select * from qvwPatentTreatyJurisdictions where PatentTypeID=" & iPatentTypeID &
             " and IsParticipant <> 0 order by Jurisdiction"
         dtTreatyJurisdictions = DataStuff.GetDataTable(strSQL)
         Me.grdJurisdictions.DataSource = dtTreatyJurisdictions
@@ -4235,7 +4185,7 @@ Public Class frmPatents
         Dim TopPatentID As Integer, PatentID As Integer, strSQL As String
 
         TopPatentID = GetTopPatentID()
-        strSQL = "Select PatentID, ApplicationNumber, FilingBasis, Jurisdiction from " & _
+        strSQL = "Select PatentID, ApplicationNumber, FilingBasis, Jurisdiction from " &
             "qvwPatents where PatentID=" & TopPatentID
 
         Me.grdLinked.DataSource = DataStuff.GetDataTable(strSQL)
@@ -4311,7 +4261,7 @@ Public Class frmPatents
 
         If Me.optTreaties.Checked = True Then
             If e.ChildTable.Key = "Dates01" Then
-                strSQL = "Select distinct PatentDateID, PatentDate, DateName, Completed from qvwPatentDates " & _
+                strSQL = "Select distinct PatentDateID, PatentDate, DateName, Completed from qvwPatentDates " &
                 " where PatentID=" & PatentID
                 e.ChildList = DataStuff.GetDataTable(strSQL)
             End If
@@ -4320,49 +4270,49 @@ Public Class frmPatents
         If Me.optLinkedPatents.Checked = True Then
             'linked patents display a slew of possible child tables
             If e.ChildTable.Key = "Patent02" Then
-                strSQL = "Select distinct PatentID, ApplicationNumber, FilingBasis, Jurisdiction" & _
+                strSQL = "Select distinct PatentID, ApplicationNumber, FilingBasis, Jurisdiction" &
                     " from qvwPatents where ParentPatentID=" & PatentID
                 e.ChildList = DataStuff.GetDataTable(strSQL)
             End If
 
             If e.ChildTable.Key = "Dates02" Then
-                strSQL = "Select distinct PatentDateID, PatentDate, DateName, Completed from qvwPatentDates " & _
+                strSQL = "Select distinct PatentDateID, PatentDate, DateName, Completed from qvwPatentDates " &
                     " where DisplayInLinked <> 0 and PatentID=" & PatentID
                 e.ChildList = DataStuff.GetDataTable(strSQL)
             End If
 
             If e.ChildTable.Key = "Patent03" Then
-                strSQL = "Select distinct PatentID, ApplicationNumber, FilingBasis, Jurisdiction" & _
+                strSQL = "Select distinct PatentID, ApplicationNumber, FilingBasis, Jurisdiction" &
                        " from qvwPatents where ParentPatentID=" & PatentID
                 e.ChildList = DataStuff.GetDataTable(strSQL)
             End If
 
             If e.ChildTable.Key = "Dates03" Then
-                strSQL = "Select distinct PatentDateID, PatentDate, DateName, Completed from qvwPatentDates " & _
+                strSQL = "Select distinct PatentDateID, PatentDate, DateName, Completed from qvwPatentDates " &
                     " where DisplayInLinked <> 0 and PatentID=" & PatentID
                 e.ChildList = DataStuff.GetDataTable(strSQL)
             End If
 
             If e.ChildTable.Key = "Patent04" Then
-                strSQL = "Select distinct PatentID, ApplicationNumber, FilingBasis, Jurisdiction" & _
+                strSQL = "Select distinct PatentID, ApplicationNumber, FilingBasis, Jurisdiction" &
                       " from qvwPatents where ParentPatentID=" & PatentID
                 e.ChildList = DataStuff.GetDataTable(strSQL)
             End If
 
             If e.ChildTable.Key = "Dates04" Then
-                strSQL = "Select distinct PatentDateID, PatentDate, DateName, Completed from qvwPatentDates " & _
+                strSQL = "Select distinct PatentDateID, PatentDate, DateName, Completed from qvwPatentDates " &
                     " where DisplayInLinked <> 0 and PatentID=" & PatentID
                 e.ChildList = DataStuff.GetDataTable(strSQL)
             End If
 
             If e.ChildTable.Key = "Patent05" Then
-                strSQL = "Select distinct PatentID, ApplicationNumber, FilingBasis, Jurisdiction" & _
+                strSQL = "Select distinct PatentID, ApplicationNumber, FilingBasis, Jurisdiction" &
                     " from qvwPatents where ParentPatentID=" & PatentID
                 e.ChildList = DataStuff.GetDataTable(strSQL)
             End If
 
             If e.ChildTable.Key = "Dates05" Then
-                strSQL = "Select distinct PatentDateID, PatentDate, DateName, Completed from qvwPatentDates " & _
+                strSQL = "Select distinct PatentDateID, PatentDate, DateName, Completed from qvwPatentDates " &
                     " where DisplayInLinked <> 0 and PatentID=" & PatentID
                 e.ChildList = DataStuff.GetDataTable(strSQL)
             End If
@@ -4495,7 +4445,7 @@ Public Class frmPatents
         iPatentID = Me.grdLinked.GetValue("PatentID")
 
         If Me.optTreaties.Checked = True Then
-            strMessage = "This will not delete the patent.  This will unlink the selected patent " & _
+            strMessage = "This will not delete the patent.  This will unlink the selected patent " &
             "from the treaty filing.  Proceed?"
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
             strSQL = "update tblPatents set TreatyFilingID=null where PatentID=" & iPatentID
@@ -4508,7 +4458,7 @@ Public Class frmPatents
         End If
 
         If Me.optLinkedPatents.Checked = True Then
-            strMessage = "This will not delete the patent.  This will unlink the selected patent " & _
+            strMessage = "This will not delete the patent.  This will unlink the selected patent " &
                 "from the its parent patent.  Proceed?"
             If MsgBox(strMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
             strSQL = "update tblPatents set ParentPatentID=null where PatentID=" & iPatentID
@@ -4543,7 +4493,7 @@ Public Class frmPatents
 
     Private Sub LinkTreatyPatents()
         On Error Resume Next
-        Dim iPatentID As Integer, iJurisdictionID As Integer, GRow As Janus.Windows.GridEX.GridEXRow, _
+        Dim iPatentID As Integer, iJurisdictionID As Integer, GRow As Janus.Windows.GridEX.GridEXRow,
             strFilter As String, i As Integer, iTreatyFilingID As Integer
 
         If Me.grdLinkExisting.SelectedItems.Count < 1 Then
@@ -4587,7 +4537,7 @@ Public Class frmPatents
         iPatentID = Me.grdLinkExisting.GetValue("PatentID")
         iParentPatentID = Me.grdLinked.GetValue("PatentID")
 
-        DataStuff.RunSQL("update tblPatents set ParentPatentID=" & iParentPatentID & _
+        DataStuff.RunSQL("update tblPatents set ParentPatentID=" & iParentPatentID &
             " where PatentID=" & iPatentID)
 
         GetLinkedPatents()
@@ -4597,7 +4547,7 @@ Public Class frmPatents
 
     Private Sub NewTreatyPatents()
         On Error Resume Next
-        Dim iPatentID As Integer, iJurisdictionID As Integer, GRow As Janus.Windows.GridEX.GridEXRow, _
+        Dim iPatentID As Integer, iJurisdictionID As Integer, GRow As Janus.Windows.GridEX.GridEXRow,
             strFilter As String, iPatentTypeID As Integer, i As Integer, iTreatyFilingID As Integer
 
         iTreatyFilingID = Me.grdTreatyFilings.GetValue("TreatyFilingID")
@@ -4609,9 +4559,9 @@ Public Class frmPatents
             Exit Sub
         End If
 
-        Dim rsPatents As New RecordSet, dPatentRow As DataRow, _
-            dPatentRows As DataRow(), iStatusID As Integer, NewPatentID As Integer, _
-            dtTempPatents As New DataTable, dTempRow As DataRow, j As Integer, _
+        Dim rsPatents As New RecordSet, dPatentRow As DataRow,
+            dPatentRows As DataRow(), iStatusID As Integer, NewPatentID As Integer,
+            dtTempPatents As New DataTable, dTempRow As DataRow, j As Integer,
             iDateID As Integer, PatentDate As Date
 
         'we're using a temporary table to avoid having to open and close the Patents table several times
@@ -4773,8 +4723,8 @@ Public Class frmPatents
 
     Private Sub NewChildPatent()
         On Error Resume Next
-        Dim GRow As Janus.Windows.GridEX.GridEXRow, iPatentTypeID As Integer, rsPatents As New RecordSet, _
-             dPatentRow As DataRow, iStatusID As Integer, NewPatentID As Integer, _
+        Dim GRow As Janus.Windows.GridEX.GridEXRow, iPatentTypeID As Integer, rsPatents As New RecordSet,
+             dPatentRow As DataRow, iStatusID As Integer, NewPatentID As Integer,
                j As Integer, iDateID As Integer, PatentDate As Date
 
         iPatentTypeID = Me.grdTreatyFilings.GetValue("PatentTypeID")
@@ -5031,6 +4981,6 @@ Public Class frmPatents
 
 #End Region
 
-    
-    
+
+
 End Class
