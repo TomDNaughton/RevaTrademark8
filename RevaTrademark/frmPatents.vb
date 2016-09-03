@@ -2766,7 +2766,7 @@ Public Class frmPatents
 #Region "Fill Data Tables / Drop Downs"
 
     Friend Sub FillDropDowns()
-        Me.JurisdictionID.DataSource = RevaData.tblPatentJurisdicitons
+        Me.JurisdictionID.DataSource = RevaData.tblPatentJurisdictions
         Me.CompanyID.DataSource = RevaData.tblCompaniesList
         Me.grdLicensed.DropDowns("cboCompany").SetDataBinding(RevaData.tblCompaniesList, "")
         Me.grdContacts.DropDowns("cboContact").SetDataBinding(RevaData.tblContactsList, "")

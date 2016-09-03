@@ -1674,8 +1674,8 @@ Public Class frmOppositions
             Me.OpposingCompanyID.DataSource = RevaData.tblCompaniesList
             Me.StatusID.DataSource = RevaData.tblOppositionStatus
 
-            Me.JurisdictionID.DataSource = RevaData.tblTrademarkJurisdicitons
-            Me.cboMarkJurisdiction.DataSource = RevaData.tblTrademarkJurisdicitons
+            Me.JurisdictionID.DataSource = RevaData.tblTrademarkJurisdictions
+            Me.cboMarkJurisdiction.DataSource = RevaData.tblTrademarkJurisdictions
             Me.grdContacts.DropDowns("cboPositions").SetDataBinding(RevaData.tblTrademarkPositions, "")
 
             Me.grdContacts.DropDowns("cboContact").SetDataBinding(RevaData.tblContactsList, "")

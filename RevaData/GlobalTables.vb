@@ -4,52 +4,110 @@ Public Module GlobalTables
 
     ' Not going to bother with stored procedures for these itty-bitty tables that rarely need updating.
 
-    Private dtTrademarkJurisdictions As DataTable
-    Private dtPatentJurisdictions As DataTable
     Private dtCompaniesList As DataTable
     Private dtContactsList As DataTable
-    Private dtTrademarkFilingBasis As DataTable
-    Private dtPatentFilingBasis As DataTable
+
+    ' dtPositions is all of them, the next two are filtered to Mark/Patent
+    Private dtPositions As DataTable
+    Private dtTrademarkPositions As DataTable
+    Private dtPatentPositions As DataTable
+
+    Private dtJurisdictions As DataTable
+    Private dtTrademarkJurisdictions As DataTable
+    Private dtPatentJurisdictions As DataTable
+
+    Private dtStatus As DataTable
     Private dtTrademarkStatus As DataTable
     Private dtPatentStatus As DataTable
+
+    Private dtTrademarkFilingBasis As DataTable
+    Private dtPatentFilingBasis As DataTable
     Private dtOppositionStatus As DataTable
     Private dtTrademarkTypes As DataTable
     Private dtPatentTypes As DataTable
     Private dtTrademarkRegTypes As DataTable
     Private dtTrademarkRegClasses As DataTable
     Private dtPatentClasses As DataTable
-    Private dtTrademarkPositions As DataTable
-    Private dtPatentPositions As DataTable
 
-    Public ReadOnly Property tblTrademarkJurisdicitons As DataTable
+    Public ReadOnly Property tblTrademarkStatus As DataTable
         Get
-            If dtTrademarkJurisdictions Is Nothing Then
-                FillTrademarkJurisdictions()
+            If dtStatus Is Nothing Then
+                FillStatus()
             End If
-            Return dtTrademarkJurisdictions
+            Return dtTrademarkStatus
         End Get
     End Property
 
-    Public Sub FillTrademarkJurisdictions()
+    Public ReadOnly Property tblPatentStatus As DataTable
+        Get
+            If dtStatus Is Nothing Then
+                FillStatus()
+            End If
+            Return dtPatentStatus
+        End Get
+    End Property
+
+    Public Sub FillStatus()
         Try
-            dtTrademarkJurisdictions = GetDataTable("Select JurisdictionID, Jurisdiction from tblJurisdictions where IsTrademark=1 Order by Jurisdiction")
+            dtStatus = GetDataTable("Select * from tblStatus order by Status")
+            dtTrademarkStatus = dtStatus.Select("IsTrademark=1").CopyToDataTable()
+            dtPatentStatus = dtStatus.Select("IsPatent=1").CopyToDataTable()
         Catch ex As Exception
 
         End Try
     End Sub
 
-    Public ReadOnly Property tblPatentJurisdicitons As DataTable
+    Public ReadOnly Property tblTrademarkJurisdictions As DataTable
         Get
-            If dtPatentJurisdictions Is Nothing Then
-                FillPatentJurisdictions()
+            If dtJurisdictions Is Nothing Then
+                FillJurisdictions()
+            End If
+            Return dtTrademarkJurisdictions
+        End Get
+    End Property
+
+    Public ReadOnly Property tblPatentJurisdictions As DataTable
+        Get
+            If dtJurisdictions Is Nothing Then
+                FillJurisdictions()
             End If
             Return dtPatentJurisdictions
         End Get
     End Property
 
-    Public Sub FillPatentJurisdictions()
+    Public Sub FillJurisdictions()
         Try
-            dtPatentJurisdictions = GetDataTable("Select JurisdictionID, Jurisdiction from tblJurisdictions where IsPatent=1 Order by Jurisdiction")
+            dtJurisdictions = GetDataTable("Select JurisdictionID, Jurisdiction, IsTrademark, IsPatent from tblJurisdictions order by Jurisdiction")
+            dtTrademarkJurisdictions = dtJurisdictions.Select("IsTrademark=1").CopyToDataTable()
+            dtPatentJurisdictions = dtJurisdictions.Select("IsPatent=1").CopyToDataTable()
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Public ReadOnly Property tblTrademarkPositions As DataTable
+        Get
+            If dtPositions Is Nothing Then
+                FillPositions()
+            End If
+            Return dtTrademarkPositions
+        End Get
+    End Property
+
+    Public ReadOnly Property tblPatentPositions As DataTable
+        Get
+            If dtPositions Is Nothing Then
+                FillPositions()
+            End If
+            Return dtPatentPositions
+        End Get
+    End Property
+
+    Public Sub FillPositions()
+        Try
+            dtPositions = GetDataTable("Select PositionID, PositionName, IsTrademark, IsPatent from tblPositions order by PositionName")
+            dtTrademarkPositions = dtPositions.Select("IsTrademark=1").CopyToDataTable()
+            dtPatentPositions = dtPositions.Select("IsPatent=1").CopyToDataTable()
         Catch ex As Exception
 
         End Try
@@ -118,40 +176,6 @@ Public Module GlobalTables
     Public Sub FillPatentFilingBasis()
         Try
             dtPatentFilingBasis = GetDataTable("Select FilingBasisID, FilingBasis from tblPatentFilingBasis Order by FilingBasisID")
-        Catch ex As Exception
-
-        End Try
-    End Sub
-
-    Public ReadOnly Property tblTrademarkStatus As DataTable
-        Get
-            If dtTrademarkStatus Is Nothing Then
-                FillTrademarkStatus()
-            End If
-            Return dtTrademarkStatus
-        End Get
-    End Property
-
-    Public Sub FillTrademarkStatus()
-        Try
-            dtTrademarkStatus = GetDataTable("Select StatusID, Status from tblStatus where IsTrademark =1 Order by Status")
-        Catch ex As Exception
-
-        End Try
-    End Sub
-
-    Public ReadOnly Property tblPatentStatus As DataTable
-        Get
-            If dtPatentStatus Is Nothing Then
-                FillPatentStatus()
-            End If
-            Return dtPatentStatus
-        End Get
-    End Property
-
-    Public Sub FillPatentStatus()
-        Try
-            dtPatentStatus = GetDataTable("Select StatusID, Status from tblStatus where IsPatent =1 Order by Status")
         Catch ex As Exception
 
         End Try
@@ -259,39 +283,6 @@ Public Module GlobalTables
         End Try
     End Sub
 
-    Public ReadOnly Property tblTrademarkPositions As DataTable
-        Get
-            If dtTrademarkPositions Is Nothing Then
-                FillTrademarkPositions()
-            End If
-            Return dtTrademarkPositions
-        End Get
-    End Property
 
-    Public Sub FillTrademarkPositions()
-        Try
-            dtTrademarkPositions = GetDataTable("Select PositionID, PositionName from tblPositions where IsTrademark = 1 order by PositionName")
-        Catch ex As Exception
-
-        End Try
-    End Sub
-
-
-    Public ReadOnly Property tblPatentPositions As DataTable
-        Get
-            If dtPatentPositions Is Nothing Then
-                FillPatentPositions()
-            End If
-            Return dtPatentPositions
-        End Get
-    End Property
-
-    Public Sub FillPatentPositions()
-        Try
-            dtPatentPositions = GetDataTable("Select PositionID, PositionName from tblPositions where IsPatent = 1 order by PositionName")
-        Catch ex As Exception
-
-        End Try
-    End Sub
 
 End Module

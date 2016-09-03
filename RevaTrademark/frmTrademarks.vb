@@ -3068,7 +3068,7 @@ Public Class frmTrademarks
     Friend Sub FillDropDowns()
         Try
 
-            Me.JurisdictionID.DataSource = RevaData.tblTrademarkJurisdicitons
+            Me.JurisdictionID.DataSource = RevaData.tblTrademarkJurisdictions
             Me.CompanyID.DataSource = RevaData.tblCompaniesList
             Me.grdLicensed.DropDowns("cboCompany").SetDataBinding(RevaData.tblCompaniesList, "")
             Me.FilingBasisID.DataSource = RevaData.tblTrademarkFilingBasis
