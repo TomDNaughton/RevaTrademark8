@@ -263,10 +263,10 @@
     <Compile Include="frmOppositions.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmOppositionStatus.designer.vb">
+    <Compile Include="PopupForms\frmOppositionStatus.designer.vb">
       <DependentUpon>frmOppositionStatus.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmOppositionStatus.vb">
+    <Compile Include="PopupForms\frmOppositionStatus.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmPatentPopups.designer.vb">
@@ -472,6 +472,12 @@
     <Compile Include="OppositionReports\rptOppositionsList.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PopupForms\frmStatus.Designer.vb">
+      <DependentUpon>frmStatus.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PopupForms\frmStatus.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TrademarkReports\rptTrademarkActions.designer.vb">
       <DependentUpon>rptTrademarkActions.vb</DependentUpon>
     </Compile>
@@ -626,7 +632,7 @@
       <DependentUpon>frmOppositions.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmOppositionStatus.resx">
+    <EmbeddedResource Include="PopupForms\frmOppositionStatus.resx">
       <DependentUpon>frmOppositionStatus.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -762,6 +768,9 @@
       <DependentUpon>rptOppositionsList.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PopupForms\frmStatus.resx">
+      <DependentUpon>frmStatus.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TrademarkReports\rptTrademarkActions.resx">
       <DependentUpon>rptTrademarkActions.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -821,6 +830,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Documents\Sec8Affidavit.doc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -2798,12 +2798,15 @@ Public Class frmTrademarks
     End Sub
 
     Private Sub btnStatus_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStatus.Click
-        On Error Resume Next
-        SaveTrademark()
-        Dim f As New frmGeneralPopups
-        f.GetRecordset(4)
-        f.ShowDialog(Me)
-        f = Nothing
+        Try
+            SaveTrademark()
+            Dim f As New frmStatus
+            f.ShowDialog(Me)
+            f = Nothing
+        Catch ex As Exception
+
+        End Try
+
     End Sub
 
     Private Sub btnJurisdiction_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnJurisdiction.Click
