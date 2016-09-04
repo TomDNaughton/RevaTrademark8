@@ -2766,25 +2766,29 @@ Public Class frmPatents
 #Region "Fill Data Tables / Drop Downs"
 
     Friend Sub FillDropDowns()
-        Me.JurisdictionID.DataSource = RevaData.tblPatentJurisdictions
-        Me.CompanyID.DataSource = RevaData.tblCompaniesList
-        Me.grdLicensed.DropDowns("cboCompany").SetDataBinding(RevaData.tblCompaniesList, "")
-        Me.grdContacts.DropDowns("cboContact").SetDataBinding(RevaData.tblContactsList, "")
-        Me.grdContacts.DropDowns("cboPositions").SetDataBinding(RevaData.tblPatentPositions, "")
+        Try
+            Me.JurisdictionID.DataSource = RevaData.tblPatentJurisdictions
+            Me.CompanyID.DataSource = RevaData.tblCompaniesList
+            Me.grdLicensed.DropDowns("cboCompany").SetDataBinding(RevaData.tblCompaniesList, "")
+            Me.grdContacts.DropDowns("cboContact").SetDataBinding(RevaData.tblContactsList, "")
+            Me.grdContacts.DropDowns("cboPositions").SetDataBinding(RevaData.tblPatentPositions, "")
 
-        Me.StatusID.DataSource = RevaData.tblPatentStatus
-        Me.grdTreatyFilings.DropDowns("cboStatus").SetDataBinding(RevaData.tblPatentStatus, "")
+            Me.StatusID.DataSource = RevaData.tblPatentStatus
+            Me.grdTreatyFilings.DropDowns("cboStatus").SetDataBinding(RevaData.tblPatentStatus, "")
 
-        Me.FilingBasisID.DataSource = RevaData.tblPatentFilingBasis
-        Me.grdTreatyFilings.DropDowns("cboFilingBasis").SetDataBinding(RevaData.tblPatentFilingBasis, "")
+            Me.FilingBasisID.DataSource = RevaData.tblPatentFilingBasis
+            Me.grdTreatyFilings.DropDowns("cboFilingBasis").SetDataBinding(RevaData.tblPatentFilingBasis, "")
 
-        Me.PatentTypeID.DataSource = RevaData.tblPatentTypes
-        dvTreatyTypes = New DataView(RevaData.tblPatentTypes, "IsTreaty<>0", "PatentType", DataViewRowState.CurrentRows)
+            Me.PatentTypeID.DataSource = RevaData.tblPatentTypes
+            dvTreatyTypes = New DataView(RevaData.tblPatentTypes, "IsTreaty<>0", "PatentType", DataViewRowState.CurrentRows)
 
-        Me.grdClasses.RootTable.Columns("PatentClassID").ValueList.Clear()
-        For Each dr As DataRow In RevaData.tblPatentClasses.Rows
-            Me.grdClasses.RootTable.Columns("PatentClassID").ValueList.Add(dr("PatentClassID"), dr("PatentClass"))
-        Next
+            Me.grdClasses.RootTable.Columns("PatentClassID").ValueList.Clear()
+            For Each dr As DataRow In RevaData.tblPatentClasses.Rows
+                Me.grdClasses.RootTable.Columns("PatentClassID").ValueList.Add(dr("PatentClassID"), dr("PatentClass"))
+            Next
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 

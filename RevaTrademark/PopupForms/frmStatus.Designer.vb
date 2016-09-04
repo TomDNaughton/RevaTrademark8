@@ -57,7 +57,6 @@ Partial Class frmStatus
         Me.grdStatus.TabIndex = 37
         Me.grdStatus.TabStop = False
         Me.grdStatus.ThemedAreas = Janus.Windows.GridEX.ThemedArea.None
-        Me.grdStatus.Visible = False
         '
         'Panel1
         '

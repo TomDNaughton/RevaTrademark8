@@ -29,6 +29,15 @@ Public Module GlobalTables
     Private dtTrademarkRegClasses As DataTable
     Private dtPatentClasses As DataTable
 
+    Public ReadOnly Property tblStatus As DataTable
+        Get
+            If dtStatus Is Nothing Then
+                FillStatus()
+            End If
+            Return dtStatus
+        End Get
+    End Property
+
     Public ReadOnly Property tblTrademarkStatus As DataTable
         Get
             If dtStatus Is Nothing Then
